@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, Text, View, TextInput, Image, ImageBackground,  TouchableOpacity, StatusBar, ScrollView, TouchableNativeFeedback} from 'react-native';
+import {Platform, Text, View, TextInput, Image, ImageBackground,  TouchableOpacity, StatusBar, ScrollView} from 'react-native';
 import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
@@ -59,9 +59,9 @@ import Loader from './Loader';
       <View style={styles.mainContainer}>
       <View style={styles.upperContainer}>
         <View style={styles.imgContainer}>
-         <TouchableNativeFeedback onPress={() => this.goToLogin()}>
+         <TouchableOpacity onPress={() => this.goToLogin()}>
          <Image source={constants.backicon} style={styles.icon}/>
-         </TouchableNativeFeedback>
+         </TouchableOpacity>
          </View>
          <View style={styles.welcomeHeadlineSignUp}>
          <Text style={styles.headlineText}>Freelancer</Text>
@@ -76,16 +76,16 @@ import Loader from './Loader';
                 <View style={styles.topSpace}>
                 <View style={styles.rowAlign}>
                 <Image source={constants.phoneIcon} style={styles.inputIcon}/>
-                <TextInput placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
+                <TextInput  style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
              this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
                 </View>
                 </View>
             </View>
             </View>
             <View style={styles.loginContainer} >
-            <TouchableNativeFeedback style={styles.buttonWidth} onPress={() => this.submit()}>
+            <TouchableOpacity style={styles.buttonWidth} onPress={() => this.submit()}>
              <Text style={styles.signUpButton} >Reset Password</Text>
-             </TouchableNativeFeedback>
+             </TouchableOpacity>
              </View>
             
       

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, ImageBackground, Button, TouchableNativeFeedback} from 'react-native';
+import {Platform, StyleSheet, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
 
@@ -27,25 +27,25 @@ export default class Home extends Component {
    
     return (
         
-      <View
+     <SafeAreaView
       source={constants.loginbg}
       style={styles.container}>
     
     <View style={styles.toolbar} >
-        <TouchableNativeFeedback onPress={() => this.openDrawer()}>
+        <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
          <Text style={styles.toolbarTitle}>Home</Text>
-         <TouchableNativeFeedback onPress={() => this.searchPage()}>
+         <TouchableOpacity onPress={() => this.searchPage()}>
         <Image source={constants.searchicon} style={styles.searchIcon} />
-        </TouchableNativeFeedback>
+        </TouchableOpacity>
      </View>
      <View style={styles.homeContent}>
          <View style={styles.messageBox}>
          <Image source={constants.cardimage} style={styles.cardImage}/>
          </View>
      </View>
- </View>
+ </SafeAreaView>
       
      
     );

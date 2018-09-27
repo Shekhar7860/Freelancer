@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
+import {Platform, StyleSheet, Text, View, SafeAreaView,Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
 import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 
@@ -15,7 +15,6 @@ export default class SelectAccount extends Component {
 
   // going to next screen
   goToLogin = () =>{
-	  alert("working");
    this.props.navigation.navigate('Login')
   }
   goToSignUp = () =>{
@@ -27,7 +26,7 @@ export default class SelectAccount extends Component {
   
   render() {
     return (
-	<View>
+<SafeAreaView>
 	    <View style={styles.toolbar}>
 			<Text style={styles.toolbarButton} onPress={() => this.goToWelcome()}>
 			<Image source={constants.backicon} style={styles.icon}/>
@@ -44,7 +43,7 @@ export default class SelectAccount extends Component {
 		    <Text style={styles.selectAccountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>
 	     </View>
 	   
-	   </View>
+       </SafeAreaView>
 	   
     );
   }

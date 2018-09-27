@@ -65,10 +65,11 @@ export default styles = StyleSheet.create({
      //Step 1
 },
 toolbarButton:{
-    width: 50,            //Step 2
+    width: 30,            //Step 2
     color:colors.white,
     textAlign:align.center,
-    marginTop:5
+    marginTop: (Platform.OS === 'ios') ? 15 : 5,
+    marginLeft: (Platform.OS === 'ios') ? 10 : 0
 },
 toolbarTitle:{
     color:colors.white,
@@ -110,14 +111,14 @@ toolbarTitle:{
    marginTop:10,
    position:'absolute',
    width:'100%',
-   bottom:170
+   bottom: (Platform.OS === 'ios') ? 205 : 170
   },
   centerAlignLogIn :{
     alignItems:align.center,
     marginTop:10,
     position:'absolute',
     width:'100%',
-    bottom:150
+    bottom: (Platform.OS === 'ios') ? 185 : 150
    },
   loginText:{
     color:colors.red,
@@ -194,7 +195,7 @@ rowAlign:{
   flexDirection:'row',
   borderBottomColor: colors.black,
   borderBottomWidth: 1,
-  width:230
+  width:dimensions.fullWidth - 140 
 },
 loginContainer:{
   alignItems:align.center
@@ -276,7 +277,7 @@ cardContainerSignUp:{
  signUpButton:{
   backgroundColor:colors.themeColor,
   color:colors.white,
-  width:230,
+  width:dimensions.fullWidth - 140,
   textAlign:align.center,
   height:40,
   borderRadius:padding.md,
@@ -551,7 +552,8 @@ cardContainerSignUp:{
     inputIcon:{
       width:20,
       height:20,
-      marginTop:10
+      marginTop:10,
+      bottom: (Platform.OS === 'ios') ? 5 : 0
     },
     centerItems:{
       alignItems:align.center
@@ -559,6 +561,9 @@ cardContainerSignUp:{
     loginInputsSpace:{
     marginTop:70
     },
+    signUpInputsSpace:{
+      marginTop:70
+      },
     forgotInputsSpace:{
       marginTop:30
       },
@@ -568,6 +573,10 @@ cardContainerSignUp:{
       marginTop:10,
       fontSize:15,
       textDecorationLine: 'underline'
+    },
+    textInputWidth:{
+      width:'100%',
+      marginLeft: (Platform.OS === 'ios') ? 5 : 0
     }
       
 

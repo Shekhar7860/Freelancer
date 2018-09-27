@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, Text, TextInput, Image, ToastAndroid, TouchableNativeFeedback, ImageBackground, TouchableOpacity, StatusBar, ScrollView, View} from 'react-native';
+import {Platform, SafeAreaView, Text, TextInput, Image, ToastAndroid, TouchableNativeFeedback, ImageBackground, TouchableOpacity, StatusBar, ScrollView, View} from 'react-native';
 import styles from '../styles/styles';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
@@ -92,12 +92,12 @@ export default class Login extends Component {
 
   render() {
     return (
-      <View style={styles.mainContainer}>
+      <SafeAreaView style={styles.mainContainer}>
       <View style={styles.upperContainer}>
         <View style={styles.imgContainer}>
-         <TouchableNativeFeedback onPress={() => this.goToSignUp()}>
+         <TouchableOpacity onPress={() => this.goToSignUp()}>
          <Image source={constants.backicon} style={styles.icon}/>
-         </TouchableNativeFeedback>
+         </TouchableOpacity>
          </View>
          <View style={styles.welcomeHeadlineSignUp}>
          <Text style={styles.headlineText}>Freelancer</Text>
@@ -111,22 +111,22 @@ export default class Login extends Component {
                 <View style={styles.topSpace}>
                 <View style={styles.rowAlign}>
                 <Image source={constants.phoneIcon} style={styles.inputIcon}/>
-                <TextInput placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
+                <TextInput style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
              this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
                 </View>
                 </View>
                 <View style={styles.topSpace}>
                 <View style={styles.rowAlign}>
                 <Image source={constants.passwordIcon} style={styles.inputIcon}/>
-                <TextInput placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
+                <TextInput style={styles.textInputWidth} placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
                 </View>
                 </View>
             </View>
             </View>
             <View style={styles.loginContainer} >
-            <TouchableNativeFeedback style={styles.buttonWidth} onPress={() => this.login()}>
+            <TouchableOpacity style={styles.buttonWidth} onPress={() => this.login()}>
              <Text style={styles.signUpButton} >Log In</Text>
-             </TouchableNativeFeedback>
+             </TouchableOpacity>
              </View>
              <Text  style={styles.forgotText} onPress={() => this.goToForgot()}>Forgot Password</Text>
        </View>
@@ -134,7 +134,7 @@ export default class Login extends Component {
       <CustomToast ref = "defaultToastBottom"/>
         <Loader
           loading={this.state.loading} />
-     </View>
+     </SafeAreaView>
     
         
     

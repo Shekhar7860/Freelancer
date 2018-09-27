@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert, TouchableNativeFeedback} from 'react-native';
+import {ScrollView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
 
@@ -129,17 +129,17 @@ componentDidMount() {
         <View style={styles.sideMenu}>
           {userImage}
           {userName}
-          <TouchableNativeFeedback onPress = {() => this.takePicture()}>
+          <TouchableOpacity onPress = {() => this.takePicture()}>
                   <Image source={constants.cameraIcon} style={styles.cameraIcon}/>
-          </TouchableNativeFeedback>
+          </TouchableOpacity>
             <View style={[styles.iconsAlign, styles.topPadding]}>
-                <TouchableNativeFeedback style={styles.viewWidth} >
+                <TouchableOpacity style={styles.viewWidth} >
                   <Image source={constants.shareIcon} style={styles.shareIcon}/>
-                </TouchableNativeFeedback>
+                </TouchableOpacity>
                 <View style={styles.viewWidthEmpty}></View>
-                <TouchableNativeFeedback style={styles.viewWidth}>
+                <TouchableOpacity style={styles.viewWidth}>
                   <Image source={constants.starIcon} style={styles.shareIcon}/>
-                </TouchableNativeFeedback>
+                </TouchableOpacity>
             </View>
             <View style={styles.iconsAlign}>
                 <View style={styles.viewWidth}>
@@ -158,9 +158,9 @@ componentDidMount() {
                      onPress = {() => this.alertItemName(item)}>
                      
                      <View style={styles.list}>
-                       <TouchableNativeFeedback style={styles.listIconsWidth}>
+                       <TouchableOpacity style={styles.listIconsWidth}>
                           <Image source={item.icon} style={styles.shareIcon}/>
-                        </TouchableNativeFeedback>
+                        </TouchableOpacity>
                         <View style={styles.listItemsBlank}></View>
                         <View style={styles.listTextWidth}>
                            <Text style={styles.listTextFontSize}>{item.name}</Text>
@@ -170,27 +170,27 @@ componentDidMount() {
                ))
             }
             <View style={styles.list}>
-                       <TouchableNativeFeedback style={styles.listIconsWidth2}>
+                       <TouchableOpacity style={styles.listIconsWidth2}>
                           <Image source={constants.notificationIcon} style={styles.shareIcon}/>
-                        </TouchableNativeFeedback>
+                        </TouchableOpacity>
                         <View style={styles.listItemsBlank}></View>
                         <View style={styles.listTextWidth2}>
                            <Text style={styles.listTextFontSize}>Notifications</Text>
                         </View>
-                        <TouchableNativeFeedback style={styles.listToggleIconsWidth2}>
+                        <TouchableOpacity style={styles.listToggleIconsWidth2}>
                         <Switch style={styles.switch}
                         onValueChange={isSwitchOn => this.setState({isSwitchOn})}
                         value={this.state.isSwitchOn} 
                          />
-                        </TouchableNativeFeedback>
+                        </TouchableOpacity>
             </View>
          </View>
           
               <TouchableOpacity  style={styles.footer} onPress={() => this.logOut()}>
                    <View style={styles.list}>
-                       <TouchableNativeFeedback style={styles.listIconsWidth2}>
+                       <TouchableOpacity style={styles.listIconsWidth2}>
                           <Image source={constants.logoutIcon} style={styles.shareIcon}/>
-                        </TouchableNativeFeedback>
+                        </TouchableOpacity>
                         <View style={styles.listItemsBlank}></View>
                         <View style={styles.listTextWidth}>
                            <Text style={styles.listTextFontSize}>LOGOUT</Text>
