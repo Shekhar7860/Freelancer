@@ -17,6 +17,7 @@ import SideMenu from './components/SideMenu';
 import Welcome from './components/Welcome';
 import SelectAccount from './components/SelectAccount';
 import ForgotPassword from './components/ForgotPassword';
+import MobileSignin from './components/MobileSignIn';
 
 export const Menu = DrawerNavigator({
   HomePage: { screen: Home}

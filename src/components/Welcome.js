@@ -24,7 +24,13 @@ export default class Welcome extends Component {
 		   <TouchableOpacity style={styles.buttonBackground} onPress={() => this.goToSelect()}>
 		     <Text style={styles.buttonText}>Create An Account</Text>
 		   </TouchableOpacity>
-		    <Text style={styles.accountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>
+
+       <View style={styles.rowAlignSideMenu}>
+		    <Text style={styles.accountText}>Already have an account? </Text>
+        <TouchableOpacity>
+        <Text onPress={() => this.goToLogin()} style={styles.welcomeLoginText}>Login</Text>
+        </TouchableOpacity>
+        </View>
 	     </View>
 	   </View>
 	   

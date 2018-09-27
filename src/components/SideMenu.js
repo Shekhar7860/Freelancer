@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
+import {ScrollView, SafeAreaView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
 
@@ -17,28 +17,28 @@ class SideMenu extends Component {
        names: [
         {
            id: 0,
-           name: 'Home',
-           icon:constants.homeIcon
+           name: 'Messages',
+           icon:constants.messagesIcon
         },
         {
            id: 1,
-           name: 'Offers',
-           icon:constants.offerIcon
+           name: 'My Payment',
+           icon:constants.paymentIcon
         },
         {
            id: 2,
-           name: 'Favourite',
-           icon:constants.favIcon
+           name: 'Find Freelancer',
+           icon:constants.searchFreelancerIcon
         },
         {
            id: 3,
-           name: 'Top up Sizzerz Credits',
-           icon:constants.creditIcon,
+           name: 'My Projects',
+           icon:constants.projectsIcon,
         },
         {
           id: 4,
-          name: 'Help',
-          icon:constants.helpIcon,
+          name: 'Account',
+          icon:constants.accountIcon,
        }
      ]
      }; 
@@ -72,7 +72,7 @@ exit = () => {
   this.props.navigation.navigate('Login')
 }
 alertItemName = (item) => {
-  alert(item.name)
+  alert("going to" + "" + item.name)
 }
 
 componentDidMount() {
@@ -84,11 +84,13 @@ componentDidMount() {
   render () {
    // console.log("Fbdata",  this.state.userFbData, "GoogleData", this.state.userGoogleData)
   
-  const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic} />
+   const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic}/>
    const fbImage = <Image source={{uri: this.state.userFbData.picture_large.data.url}} style={styles.profilePic} />;
    const GoogleImage = <Image source={{uri: this.state.userGoogleData.photo }} style={styles.profilePic} />;
    const fbName = <Text style={styles.userName}>{this.state.userFbData.name}</Text>
    const GoogleName = <Text style={styles.userName}>{this.state.userGoogleData.name}</Text>
+   const DefaultName = <Text style={styles.defaultUserName}>Ankit</Text>
+   const ProfileName = <Text style={styles.defaultUserName}>Client</Text>
 
       
      var userImage;
@@ -123,11 +125,51 @@ componentDidMount() {
       
     return (
      
-      <ImageBackground
+      <SafeAreaView
       source={constants.loginbg}
       style={styles.container}>
+          <View style={styles.upperContainerSideMenu}>
+            <View style={styles.sideMenuAlign}>
+          {NewImage}
+            <View style={styles.rowAlignSideMenu}>
+                  <View style={styles.name}>
+                  {DefaultName}
+                  </View>
+                  <View style={styles.blank}>
+                  </View>
+                  <View style={styles.arrowView}>
+                  <Image source={constants.downIcon} style={styles.shareIcon}/>
+                  </View>
+             </View>
+             {ProfileName}
+             </View>
+          </View>
+          <View style={styles.lowerContainerSideMenu}>
+          <View style={styles.topMargin}> 
+            {
+               this.state.names.map((item, index) => (
+                  <TouchableOpacity
+                     key = {item.id}
+                     onPress = {() => this.alertItemName(item)}>
+                     
+                     <View style={styles.list}>
+                       <TouchableOpacity style={styles.listIconsWidth}>
+                          <Image source={item.icon} style={styles.listIcon}/>
+                        </TouchableOpacity>
+                        <View style={styles.listItemsBlank}></View>
+                        <View style={styles.listTextWidth}>
+                           <Text style={styles.listTextFontSize}>{item.name}</Text>
+                        </View>
+                     </View>
+                  </TouchableOpacity>
+               ))
+            }
+         </View>
+          </View>
+       
+
         <View style={styles.sideMenu}>
-          {userImage}
+          {/* {userImage}
           {userName}
           <TouchableOpacity onPress = {() => this.takePicture()}>
                   <Image source={constants.cameraIcon} style={styles.cameraIcon}/>
@@ -196,9 +238,9 @@ componentDidMount() {
                            <Text style={styles.listTextFontSize}>LOGOUT</Text>
                         </View>
                      </View>
-              </TouchableOpacity >
+              </TouchableOpacity > */}
         </View>
-   </ImageBackground>
+   </SafeAreaView>
      
      
     );

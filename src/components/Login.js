@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, SafeAreaView, Text, TextInput, Image, ToastAndroid, TouchableNativeFeedback, ImageBackground, TouchableOpacity, StatusBar, ScrollView, View} from 'react-native';
+import {Platform, SafeAreaView, Text, AlertIOS, ToastAndroid, TextInput, Image, TouchableNativeFeedback, ImageBackground, TouchableOpacity, StatusBar, ScrollView, View} from 'react-native';
 import styles from '../styles/styles';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
@@ -48,44 +48,70 @@ export default class Login extends Component {
         this.setState({ mobile:ValueHolder})
         this.setState({ mobileLength:Value})
        }
-      login = () =>{
+      login = () =>
+      {
        
-    if(this.state.mobile.trim() === "" && this.state.password.trim() === "")
-    {
-      this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile And Password');
-    }
-    else
-    {
-        if (this.state.mobile.trim() === "") 
-        {
-          this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile');
-        } 
-        else if (this.state.password.trim() === "") {
-          this.refs.defaultToastBottom.ShowToastFunction('Please Enter Password');
-        } 
-        else if (this.state.mobileLength != 10) {
-          this.refs.defaultToastBottom.ShowToastFunction('Please enter Valid Mobile Number');
-        } 
-        else{
-          this.setState ({ loading: true});
-          setTimeout(() => 
-          {this.setState({loading: false})
-         this.props.navigation.navigate('Home')
-           }, 3000)
+                if(this.state.mobile.trim() === "" && this.state.password.trim() === "")
+                {
+                
+                  this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile And Password');
+                }
+                else
+                {
+                    if (this.state.mobile.trim() === "") 
+                    {
+                      this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile');
+                    } 
+                    else if (this.state.password.trim() === "") {
+                      this.refs.defaultToastBottom.ShowToastFunction('Please Enter Password');
+                    } 
+                    else if (this.state.mobileLength != 10) {
+                      this.refs.defaultToastBottom.ShowToastFunction('Please enter Valid Mobile Number');
+                    } 
+                    else{
+                      this.setState ({ loading: true});
+                      setTimeout(() => 
+                      {
+                      this.setState({loading: false})
+                      service.login(this.state.mobile, this.state.password).then((res) => {
+                        if(res.status_code)
+                        {
+                            if(res.status == "success")
+                            {
+                              this.refs.defaultToastBottom.ShowToastFunction('Login Successfully');
+                              this.goToHome();
+                            }
+                            else
+                            {
+                              this.refs.defaultToastBottom.ShowToastFunction('Wrong Mobile Or Password');
+                            }
+                        }
+                        else 
+                        {
+                          this.refs.defaultToastBottom.ShowToastFunction('Network Error');
+                        }
+
+                        })
+                     
+                      }, 3000)
+                    }
+                    
+                }
         }
+
         
-     }
-        
-        
-          
-      //  this.refs.defaultToastBottom.ShowToastFunction('Login SuccessFull');
-      
-      
-       }
+        goToHome = () => 
+        {
+          setTimeout(() => 
+          {
+          this.props.navigation.navigate('Home')
+          }, 1000);
+        }
       
       state = {
       value: '',
    };
+
 
   handleTextChange = (newText) => this.setState({ value: newText });
 
@@ -104,34 +130,36 @@ export default class Login extends Component {
          </View>
       </View>
       <View style={styles.lowerContainer}>
-      <View style={styles.centerAlignLogIn}>
+      <View style={styles.centerAlign}>
          <View style={styles.cardContainerSignUp}>
-            <Text style={styles.signUpText}>Sign In</Text>   
-             <View style={styles.loginInputsSpace}>
-                <View style={styles.topSpace}>
-                <View style={styles.rowAlign}>
-                <Image source={constants.phoneIcon} style={styles.inputIcon}/>
-                <TextInput style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
-             this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                <Text style={styles.signUpText}>Sign In</Text>   
+                <View style={styles.loginInputsSpace}>
+                    <View style={styles.topSpace}>
+                    <View style={styles.rowAlign}>
+                    <Image source={constants.phoneIcon} style={styles.inputIcon}/>
+                    <TextInput style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
+                    this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                    </View>
+                    </View>
+                    <View style={styles.topSpace}>
+                    <View style={styles.rowAlign}>
+                    <Image source={constants.passwordIcon} style={styles.inputIcon}/>
+                    <TextInput style={styles.textInputWidth} placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
+                    </View>
+                    </View>
                 </View>
+                <View style={styles.loginContainer} >
+                        <TouchableOpacity style={styles.buttonBackgroundLogin} onPress={() => this.login()}>
+                        <Text style={styles.accountButtonText}>Log In</Text>
+                        </TouchableOpacity>
                 </View>
-                <View style={styles.topSpace}>
-                <View style={styles.rowAlign}>
-                <Image source={constants.passwordIcon} style={styles.inputIcon}/>
-                <TextInput style={styles.textInputWidth} placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
-                </View>
-                </View>
+                <Text  style={styles.forgotText} onPress={() => this.goToForgot()}>Forgot Password</Text>
             </View>
-            </View>
-            <View style={styles.loginContainer} >
-            <TouchableOpacity style={styles.buttonWidth} onPress={() => this.login()}>
-             <Text style={styles.signUpButton} >Log In</Text>
-             </TouchableOpacity>
-             </View>
-             <Text  style={styles.forgotText} onPress={() => this.goToForgot()}>Forgot Password</Text>
+            
+            <CustomToast ref = "defaultToastBottom"/> 
        </View>
       </View>
-      <CustomToast ref = "defaultToastBottom"/>
+      
         <Loader
           loading={this.state.loading} />
      </SafeAreaView>

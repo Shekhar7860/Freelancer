@@ -6,7 +6,7 @@ import Service from '../services/Service';
 import CustomToast from './CustomToast';
 import { withNavigation } from "react-navigation";
 import Loader from './Loader';
- class  ForgotPassword extends Component {
+ class  MobileSignIn extends Component {
   constructor(props){
     super(props);
     service = new Service();
@@ -78,8 +78,8 @@ import Loader from './Loader';
       <View style={styles.lowerContainer}>
       <View style={styles.centerAlign}>
          <View style={styles.cardContainerSignUp}>
-            <Text style={styles.signUpText}>Reset Password</Text>
-            <Text style={styles.forgotTextHeadline}>We just need your registed email address/mobile number to send you password reset</Text>   
+            <Text style={styles.signUpText}>Sign In</Text>
+            <Text style={styles.forgotTextHeadline}></Text>   
              <View style={styles.forgotInputsSpace}>
                 <View style={styles.topSpace}>
                 <View style={styles.rowAlign}>
@@ -89,9 +89,9 @@ import Loader from './Loader';
                 </View>
                 </View>
             </View>
-            <View style={styles.loginContainer} >
+            <View style={styles.loginContainerForgot} >
                         <TouchableOpacity style={styles.buttonBackgroundLogin} onPress={() => this.submit()}>
-                        <Text style={styles.accountButtonText}>Reset Password</Text>
+                        <Text style={styles.accountButtonText}>Sign In</Text>
                         </TouchableOpacity>
                 </View>
             </View>
@@ -110,6 +110,6 @@ import Loader from './Loader';
     );
 }
 }
-export default withNavigation(ForgotPassword);
+export default withNavigation(MobileSignIn);
 
 

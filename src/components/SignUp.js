@@ -24,6 +24,7 @@ export default class SignuUp extends Component {
     }
     service = new Service();
     constants = new Constants();
+    console.log(this.props.navigation.state.params.type)
   }
   
  
@@ -57,16 +58,20 @@ export default class SignuUp extends Component {
           this.setState ({ loading: true});
           setTimeout(() => 
           {this.setState({loading: false})
-         this.props.navigation.navigate('Login')
+          this.refs.defaultToastBottom.ShowToastFunction('Signup Successfully');
+          this.openLogin();
            }, 3000)
         }
-    }
+     } 
+   }
+
+   openLogin(){
+     setTimeout(() => {
+     this.props.navigation.navigate('Login')
+     }, 1000)
+   }
     
    
-
-  
-   // alert(this.state.password)
-   }
    GetValueFunction = (ValueHolder) =>{
     var Value = ValueHolder.length.toString() ;
     this.setState({ mobile:ValueHolder})
@@ -92,38 +97,40 @@ export default class SignuUp extends Component {
           </View>
           <View style={styles.lowerContainer}>
             <View style={styles.centerAlign}>
-              <View style={styles.cardContainerSignUp}>
-                  <Text style={styles.signUpText}>Sign Up</Text>
-                  <View style={styles.signUpInputsSpace}>
-                  <View style={styles.topSpace}>
-                  <View style={styles.rowAlign}>
-                  <Image source={constants.phoneIcon} style={styles.inputIcon}/>
-                  <TextInput style={styles.textInputWidth} placeholder="Mobile Number"  onChangeText={(text)=>
-                  this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                  <View style={styles.cardContainerSignUp}>
+                      <Text style={styles.signUpText}>Sign Up</Text>
+                      <View style={styles.signUpInputsSpace}>
+                      <View style={styles.topSpace}>
+                      <View style={styles.rowAlign}>
+                      <Image source={constants.phoneIcon} style={styles.inputIcon}/>
+                      <TextInput style={styles.textInputWidth} placeholder="Mobile Number"  onChangeText={(text)=>
+                      this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                      </View>
+                      </View>
+                      <View style={styles.topSpace}>
+                      <View style={styles.rowAlign}>
+                      <Image source={constants.passwordIcon} style={styles.inputIcon}/>
+                      <TextInput style={styles.textInputWidth} placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
+                      </View>
+                      </View>
+                      <View style={styles.topSpace}>
+                      <View style={styles.rowAlign}>
+                      <Image source={constants.passwordIcon} style={styles.inputIcon}/>
+                      <TextInput style={styles.textInputWidth} placeholder="Confirm Password" secureTextEntry={true}  value={this.state.confirmPassword} onChangeText={(text)=>this.setState({ confirmPassword:text})}></TextInput>
+                      </View>
+                      </View>
+                      </View>
+                      <View style={styles.loginContainer} >
+                        <TouchableOpacity style={styles.commonButtonBackground} onPress={() => this.signUp()}>
+                        <Text style={styles.accountButtonText}>Sign Up</Text>
+                        </TouchableOpacity>
+                      </View>
                   </View>
-                  </View>
-                  <View style={styles.topSpace}>
-                  <View style={styles.rowAlign}>
-                  <Image source={constants.passwordIcon} style={styles.inputIcon}/>
-                  <TextInput style={styles.textInputWidth} placeholder="Password" secureTextEntry={true} value={this.state.password} onChangeText={(text)=>this.setState({ password:text})}></TextInput>
-                  </View>
-                  </View>
-                  <View style={styles.topSpace}>
-                  <View style={styles.rowAlign}>
-                  <Image source={constants.passwordIcon} style={styles.inputIcon}/>
-                  <TextInput style={styles.textInputWidth} placeholder="Confirm Password" secureTextEntry={true}  value={this.state.confirmPassword} onChangeText={(text)=>this.setState({ confirmPassword:text})}></TextInput>
-                  </View>
-                  </View>
-                  </View>
-                  </View>
-                  <View style={styles.loginContainer} >
-                  <TouchableOpacity style={styles.buttonWidth} onPress={() => this.signUp()}>
-                    <Text style={styles.signUpButton} >Sign Up</Text>
-                  </TouchableOpacity>
-                  </View>
+                 
             </View>
+            <CustomToast ref = "defaultToastBottom"/>
           </View>
-          <CustomToast ref = "defaultToastBottom"/>
+         
           <Loader
               loading={this.state.loading} />
       </SafeAreaView>

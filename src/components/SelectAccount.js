@@ -17,8 +17,8 @@ export default class SelectAccount extends Component {
   goToLogin = () =>{
    this.props.navigation.navigate('Login')
   }
-  goToSignUp = () =>{
-       this.props.navigation.navigate('SignUp')
+  goToSignUp = (userType) =>{
+  this.props.navigation.navigate('SignUp', { type: userType })
       }
  goToWelcome = () => {
 	this.props.navigation.navigate('Welcome')
@@ -26,18 +26,18 @@ export default class SelectAccount extends Component {
   
   render() {
     return (
-<SafeAreaView>
+  <SafeAreaView>
 	    <View style={styles.toolbar}>
-			<Text style={styles.toolbarButton} onPress={() => this.goToWelcome()}>
+			<Text style={styles.backButton} onPress={() => this.goToWelcome()}>
 			<Image source={constants.backicon} style={styles.icon}/>
 			</Text>
       </View>
 	     <View style={styles.accountHeadline}>
 	       <Text style={styles.accountHeadlineText}>Select Account Type</Text>
-		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp()}>
+		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp('client')}>
 		     <Text style={styles.accountButtonText}>I Want To Hire Freelancers</Text>
 		   </TouchableOpacity>
-		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp()}>
+		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp('freelancer')}>
 		     <Text style={styles.accountButtonText}>I Am Looking To Work </Text>
 		   </TouchableOpacity>
 		    <Text style={styles.selectAccountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>

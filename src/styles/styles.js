@@ -57,7 +57,7 @@ export default styles = StyleSheet.create({
       marginBottom:padding.sm
   },
   toolbar:{
-    paddingTop:5,
+    paddingTop:10,
     paddingBottom:padding.sm,
     flexDirection:'row',
     backgroundColor:colors.themeColor,
@@ -71,11 +71,19 @@ toolbarButton:{
     marginTop: (Platform.OS === 'ios') ? 15 : 5,
     marginLeft: (Platform.OS === 'ios') ? 10 : 0
 },
+backButton:{
+  width: 30,            //Step 2
+  color:colors.white,
+  textAlign:align.center,
+  marginTop: (Platform.OS === 'ios') ? 10 : 5,
+  marginLeft: (Platform.OS === 'ios') ? 10 : 0
+},
 toolbarTitle:{
     color:colors.white,
     textAlign:align.center,
     fontWeight:'bold',
-    flex:1                //Step 3
+    flex:1,
+    marginTop: (Platform.OS === 'ios') ? 5 : 0               //Step 3
  },
   messageBoxBodyText:{
       color:colors.white,
@@ -111,11 +119,11 @@ toolbarTitle:{
    marginTop:10,
    position:'absolute',
    width:'100%',
-   bottom: (Platform.OS === 'ios') ? 205 : 170
+   bottom: (Platform.OS === 'ios') ? 220 : 170
   },
   centerAlignLogIn :{
     alignItems:align.center,
-    marginTop:10,
+    marginTop:30,
     position:'absolute',
     width:'100%',
     bottom: (Platform.OS === 'ios') ? 185 : 150
@@ -195,10 +203,15 @@ rowAlign:{
   flexDirection:'row',
   borderBottomColor: colors.black,
   borderBottomWidth: 1,
-  width:dimensions.fullWidth - 140 
+  width:dimensions.fullWidth - 140 ,
+  paddingTop: (Platform.OS === 'ios') ? 10 : 0
 },
 loginContainer:{
   alignItems:align.center
+},
+loginContainerForgot:{
+  alignItems:align.center,
+  marginTop:10
 },
 buttonWidth:{
   width:300,
@@ -271,8 +284,7 @@ cardContainerSignUp:{
   backgroundColor:colors.white,
  },
  topSpace:{
-   marginTop:0,
-   alignItems:align.center,
+   alignItems:align.center
  },
  signUpButton:{
   backgroundColor:colors.themeColor,
@@ -286,7 +298,7 @@ cardContainerSignUp:{
   paddingTop:10,
    },
    forgotTextHeadline:{
-     paddingTop:padding.md,
+     paddingTop:padding.lg,
      width:'100%'
    },
    hamburgerIcon:{
@@ -310,13 +322,17 @@ cardContainerSignUp:{
      alignItems:align.center,
      },
     profilePic:{
-      marginTop:20,
-      borderRadius:100,
+      marginTop:30,
       width:80,
-     height:80
+     height:80,
     },
     userName:{
       paddingTop:padding.sm,
+      color:colors.white
+    },
+    defaultUserName:{
+      paddingTop:padding.sm,
+      paddingLeft:padding.md,
       color:colors.white
     },
     error:{
@@ -325,7 +341,6 @@ cardContainerSignUp:{
     },
     MainContainer :{
       height:'100%',
-      justifyContent: 'center',
       alignItems: 'center',
       },
        
@@ -386,6 +401,11 @@ cardContainerSignUp:{
       shareIcon:{
         width:25,
         height:25
+      },
+      listIcon:{
+        width:25,
+        height:25,
+        marginLeft:25
       },
       viewWidth:{
         width:'42%'
@@ -538,9 +558,22 @@ cardContainerSignUp:{
 	  upperContainer:{
 		  height:'30%',
 		  backgroundColor:colors.themeColor
-	  },
+    },
+    upperContainerSideMenu:{
+		  height:'30%',
+      backgroundColor:colors.themeColor,
+    },
+    lowerContainerSideMenu:{
+      height:'70%',
+      alignItems:align.center
+		  
+    }, 
+    sideMenuAlign:{
+      marginLeft:'10%'
+    },  
 	  lowerContainer:{
-		  height:'70%'
+      height:'70%',
+      alignItems:align.center
 		  
     },
     signUpText:{
@@ -559,24 +592,62 @@ cardContainerSignUp:{
       alignItems:align.center
     },
     loginInputsSpace:{
-    marginTop:70
+    marginTop:50
     },
     signUpInputsSpace:{
-      marginTop:70
+      marginTop:40
       },
     forgotInputsSpace:{
-      marginTop:30
+      marginTop:35
+      },
+      signInInputsSpace:{
+        marginTop:85
       },
     forgotText:{
       color:colors.themecolor,
       fontFamily:fonts.themeFontBold,
-      marginTop:10,
+      marginTop:20,
       fontSize:15,
-      textDecorationLine: 'underline'
+      textDecorationLine: 'underline',
+      textAlign:align.center
     },
     textInputWidth:{
       width:'100%',
       marginLeft: (Platform.OS === 'ios') ? 5 : 0
+    },
+    commonButtonBackground:{
+      marginTop:45,
+		  backgroundColor:colors.themeColor,
+      width:dimensions.fullWidth - 140 ,
+		  borderRadius:25,
+		  height:40,
+		  alignItems:align.center,
+		  justifyContent:align.center
+    },
+    buttonBackgroundLogin:{
+      marginTop:75,
+		  backgroundColor:colors.themeColor,
+      width:dimensions.fullWidth - 140 ,
+		  borderRadius:25,
+		  height:40,
+		  alignItems:align.center,
+		  justifyContent:align.center
+    },
+    rowAlignSideMenu:{
+      flexDirection:'row'
+    },
+    name:{
+      width:'25%'
+    },
+    blank:{
+      width:'55%'
+    },
+    arrowView:{
+      width:'20%'
+    },
+    welcomeLoginText :{
+      color:colors.white,
+      paddingTop:10
     }
       
 
