@@ -148,13 +148,19 @@ export default class Login extends Component {
                     </View>
                     </View>
                 </View>
-                <View style={styles.loginContainer} >
+              
+				
+				  <View style={styles.loginContainer} >
                         <TouchableOpacity style={styles.buttonBackgroundLogin} onPress={() => this.login()}>
                         <Text style={styles.accountButtonText}>Log In</Text>
                         </TouchableOpacity>
-                </View>
-                <Text  style={styles.forgotText} onPress={() => this.goToForgot()}>Forgot Password</Text>
-            </View>
+                 </View>
+				
+				 
+             </View>
+			  <TouchableOpacity onPress={() => this.goToForgot()}>
+                 <Text  style={styles.forgotText} >Forgot Password</Text>
+				</TouchableOpacity>
             
             <CustomToast ref = "defaultToastBottom"/> 
        </View>

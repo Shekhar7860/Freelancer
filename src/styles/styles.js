@@ -121,12 +121,12 @@ toolbarTitle:{
    width:'100%',
    bottom: (Platform.OS === 'ios') ? 220 : 170
   },
-  centerAlignLogIn :{
+  centerAlignSignUp :{
     alignItems:align.center,
-    marginTop:30,
+    marginTop:10,
     position:'absolute',
     width:'100%',
-    bottom: (Platform.OS === 'ios') ? 185 : 150
+    bottom: (Platform.OS === 'ios') ? 185 : 190
    },
   loginText:{
     color:colors.red,
@@ -389,7 +389,7 @@ cardContainerSignUp:{
         height:20
       },
       forgotText:{
-       paddingTop:padding.sm
+       paddingTop:padding.md
       },
       textWidth:{
         width:'100%'
@@ -606,7 +606,7 @@ cardContainerSignUp:{
     forgotText:{
       color:colors.themecolor,
       fontFamily:fonts.themeFontBold,
-      marginTop:20,
+      marginTop:30,
       fontSize:15,
       textDecorationLine: 'underline',
       textAlign:align.center
@@ -616,16 +616,16 @@ cardContainerSignUp:{
       marginLeft: (Platform.OS === 'ios') ? 5 : 0
     },
     commonButtonBackground:{
-      marginTop:45,
+      marginTop:25,
 		  backgroundColor:colors.themeColor,
       width:dimensions.fullWidth - 140 ,
 		  borderRadius:25,
 		  height:40,
-		  alignItems:align.center,
+		  alignItems:align.cente
 		  justifyContent:align.center
     },
     buttonBackgroundLogin:{
-      marginTop:75,
+      marginTop:60,
 		  backgroundColor:colors.themeColor,
       width:dimensions.fullWidth - 140 ,
 		  borderRadius:25,

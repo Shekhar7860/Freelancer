@@ -24,7 +24,10 @@ export default class SignuUp extends Component {
     }
     service = new Service();
     constants = new Constants();
-    console.log(this.props.navigation.state.params.type)
+	 // if(this.props.navigation)
+	// {
+   //  console.log(this.props.navigation.state.params.type)
+	// }
   }
   
  
@@ -96,7 +99,7 @@ export default class SignuUp extends Component {
               </View>
           </View>
           <View style={styles.lowerContainer}>
-            <View style={styles.centerAlign}>
+            <View style={styles.centerAlignSignUp}>
                   <View style={styles.cardContainerSignUp}>
                       <Text style={styles.signUpText}>Sign Up</Text>
                       <View style={styles.signUpInputsSpace}>
@@ -119,12 +122,13 @@ export default class SignuUp extends Component {
                       <TextInput style={styles.textInputWidth} placeholder="Confirm Password" secureTextEntry={true}  value={this.state.confirmPassword} onChangeText={(text)=>this.setState({ confirmPassword:text})}></TextInput>
                       </View>
                       </View>
-                      </View>
-                      <View style={styles.loginContainer} >
+					   <View style={styles.loginContainer} >
                         <TouchableOpacity style={styles.commonButtonBackground} onPress={() => this.signUp()}>
                         <Text style={styles.accountButtonText}>Sign Up</Text>
                         </TouchableOpacity>
                       </View>
+                      </View>
+                     
                   </View>
                  
             </View>
