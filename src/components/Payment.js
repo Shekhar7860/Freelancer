@@ -2,10 +2,8 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
-import Tabs from './Tabs';
 
-
-export default class Home extends Component {
+export default class Payment extends Component {
  constructor(props){
      super(props);
      service = new Service();
@@ -21,9 +19,6 @@ export default class Home extends Component {
  openDrawer = () => {
    this.props.navigation.openDrawer()}
 
-   goToNotification = () => {
-    this.props.navigation.navigate('Notifications')}
-
   searchPage = () =>{
     alert("searching Page")   
         }
@@ -36,23 +31,15 @@ export default class Home extends Component {
       source={constants.loginbg}
       style={styles.container}>
     
-    <View style={styles.tabsToolbar} >
+    <View style={styles.toolbar} >
         <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
         </TouchableOpacity>
-         <Text style={styles.toolbarTitle}>Freelancer</Text>
-         <TouchableOpacity onPress={() => this.goToNotification()}>
-         <Image source={constants.notificationIcon} style={styles.searchIcon} />
-        </TouchableOpacity>
+         <Text style={styles.toolbarTitle}>Payment</Text>
          <TouchableOpacity onPress={() => this.searchPage()}>
-         <Image source={constants.searchicon} style={styles.searchIcon} />
+        <Image source={constants.searchicon} style={styles.searchIcon} />
         </TouchableOpacity>
-       
      </View>
-    
-     <Tabs style={styles.tabsPosition}/>
-     
-     
      <View style={styles.homeContent}>
          <View style={styles.messageBox}>
         

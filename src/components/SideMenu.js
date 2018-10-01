@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ScrollView, SafeAreaView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
+import {ScrollView, SafeAreaView, Text, View, TouchableHighlight, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
 import MyView from './MyView';
@@ -16,6 +16,7 @@ class SideMenu extends Component {
        name:"",
        logOut: true,
        items : false,
+       icon : constants.downIcon,
        names: [
         {
            id: 0,
@@ -73,10 +74,39 @@ logOut = () =>{
 exit = () => {
   this.props.navigation.navigate('Login')
 }
+
 alertItemName = (item) => {
-  alert("going to" + "" + item.name)
+
+  switch(item.name) {
+    case 'My Payment':
+     this.props.navigation.navigate("Payment");
+     break;
+     case 'My Projects':
+     this.props.navigation.navigate("Projects");
+     break;
+    default:
+    this.props.navigation.navigate(item.name);
+  }
+
+  this.props.navigation.closeDrawer();
+  
+  
 }
 
+goToSettingsPage = () => {
+  this.props.navigation.closeDrawer();
+  this.props.navigation.navigate("Settings");
+}
+
+goToAboutPage = () => {
+  this.props.navigation.closeDrawer();
+  this.props.navigation.navigate("About");
+}
+
+goToFeedbackPage = () => {
+  this.props.navigation.closeDrawer();
+  this.props.navigation.navigate("Feedback");
+}
 componentDidMount() {
 
   
@@ -84,9 +114,20 @@ componentDidMount() {
 
  toggleItems = () =>
  {
- 
-  this.setState ({ logout: false});
+  
+  if(this.state.logOut)
+  
+  {
+  this.setState ({ logOut: false});
   this.setState ({ items: true});
+  this.setState ({ icon: constants.upIcon});
+  }
+  else
+  {
+    this.setState ({ icon: constants.downIcon});
+    this.setState ({ logOut: true});
+    this.setState ({ items: false}); 
+  }
  
  }
  
@@ -148,7 +189,7 @@ componentDidMount() {
                   <View style={styles.blank}>
                   </View>
                   <TouchableOpacity style={styles.arrowView} onPress = {() => this.toggleItems()}>
-                  <Image source={constants.downIcon} style={styles.shareIcon}/>
+                  <Image source={this.state.icon} style={styles.shareIcon}/>
                   </TouchableOpacity>
              </View>
              {ProfileName}
@@ -174,92 +215,54 @@ componentDidMount() {
                   </TouchableOpacity>
                ))
             }
+        <View
+        style={styles.line}
+        />
+        <TouchableOpacity  style={styles.rowAlignSideMenu2} onPress = {() => this.goToSettingsPage()}>
+            <View style={styles.listIconsWidth} >
+               <Image source={constants.settingsIcon} style={styles.listIcon}/>
+            </View>
+            <View style={styles.listItemsBlank}></View>
+              <View style={styles.listTextWidth}>
+              <Text style={styles.listTextFontSize}>Settings</Text>
+              </View>
+          </TouchableOpacity>
+          <TouchableOpacity  style={styles.rowAlignSideMenu2} onPress = {() => this.goToAboutPage()}>
+            <View style={styles.listIconsWidth} >
+               <Image source={constants.aboutIcon} style={styles.listIcon}/>
+            </View>
+            <View style={styles.listItemsBlank}></View>
+              <View style={styles.listTextWidth}>
+              <Text style={styles.listTextFontSize}>About</Text>
+              </View>
+          </TouchableOpacity>
+          <TouchableOpacity  style={styles.rowAlignSideMenu2} onPress = {() => this.goToFeedbackPage()}>
+            <View style={styles.listIconsWidth} >
+               <Image source={constants.feedbackIcon} style={styles.listIcon}/>
+            </View>
+            <View style={styles.listItemsBlank}></View>
+              <View style={styles.listTextWidth}>
+              <Text style={styles.listTextFontSize}>Feedback</Text>
+              </View>
+          </TouchableOpacity>
          </MyView>
           
-
-         <MyView hide={this.state.logOut}>
-         <TouchableOpacity style={styles.listIconsWidth}>
-                          <Image source={constants.logouticon} style={styles.listIcon}/>
+         <TouchableOpacity onPress={() => this.logOut()}>
+         <MyView hide={this.state.logOut} style={styles.rowAlignSideMenu2} >
+         <TouchableOpacity style={styles.listIconsWidth} >
+               <Image source={constants.logoutIcon} style={styles.listIcon}/>
           </TouchableOpacity>
            <View style={styles.listItemsBlank}></View>
           <View style={styles.listTextWidth}>
-              <Text style={styles.listTextFontSize}>LogOut</Text>
+              <Text style={styles.listTextFontSize}>Log Out</Text>
           </View>
           </MyView>
+          </TouchableOpacity>
           </View>
        
 
         <View style={styles.sideMenu}>
-          {/* {userImage}
-          {userName}
-          <TouchableOpacity onPress = {() => this.takePicture()}>
-                  <Image source={constants.cameraIcon} style={styles.cameraIcon}/>
-          </TouchableOpacity>
-            <View style={[styles.iconsAlign, styles.topPadding]}>
-                <TouchableOpacity style={styles.viewWidth} >
-                  <Image source={constants.shareIcon} style={styles.shareIcon}/>
-                </TouchableOpacity>
-                <View style={styles.viewWidthEmpty}></View>
-                <TouchableOpacity style={styles.viewWidth}>
-                  <Image source={constants.starIcon} style={styles.shareIcon}/>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.iconsAlign}>
-                <View style={styles.viewWidth}>
-                  <Text style={[styles.white, styles.rightAlign]}>Share</Text>
-                </View>
-                <View style={styles.viewWidthEmpty}></View>
-                <View style={styles.viewWidth}>
-                <Text style={styles.white}>Reviews</Text>
-                </View>
-            </View>
-            <View style={styles.topMargin}> 
-            {
-               this.state.names.map((item, index) => (
-                  <TouchableOpacity
-                     key = {item.id}
-                     onPress = {() => this.alertItemName(item)}>
-                     
-                     <View style={styles.list}>
-                       <TouchableOpacity style={styles.listIconsWidth}>
-                          <Image source={item.icon} style={styles.shareIcon}/>
-                        </TouchableOpacity>
-                        <View style={styles.listItemsBlank}></View>
-                        <View style={styles.listTextWidth}>
-                           <Text style={styles.listTextFontSize}>{item.name}</Text>
-                        </View>
-                     </View>
-                  </TouchableOpacity>
-               ))
-            }
-            <View style={styles.list}>
-                       <TouchableOpacity style={styles.listIconsWidth2}>
-                          <Image source={constants.notificationIcon} style={styles.shareIcon}/>
-                        </TouchableOpacity>
-                        <View style={styles.listItemsBlank}></View>
-                        <View style={styles.listTextWidth2}>
-                           <Text style={styles.listTextFontSize}>Notifications</Text>
-                        </View>
-                        <TouchableOpacity style={styles.listToggleIconsWidth2}>
-                        <Switch style={styles.switch}
-                        onValueChange={isSwitchOn => this.setState({isSwitchOn})}
-                        value={this.state.isSwitchOn} 
-                         />
-                        </TouchableOpacity>
-            </View>
-         </View>
-          
-              <TouchableOpacity  style={styles.footer} onPress={() => this.logOut()}>
-                   <View style={styles.list}>
-                       <TouchableOpacity style={styles.listIconsWidth2}>
-                          <Image source={constants.logoutIcon} style={styles.shareIcon}/>
-                        </TouchableOpacity>
-                        <View style={styles.listItemsBlank}></View>
-                        <View style={styles.listTextWidth}>
-                           <Text style={styles.listTextFontSize}>LOGOUT</Text>
-                        </View>
-                     </View>
-              </TouchableOpacity > */}
+        
         </View>
    </SafeAreaView>
      

@@ -10,8 +10,9 @@ export default class Welcome extends Component {
 
   // going to next screen
   goToLogin = () =>{
-   this.props.navigation.navigate('Home')
+   this.props.navigation.navigate('Login')
   }
+  
   goToSelect = () =>{
        this.props.navigation.navigate('Select')
       }

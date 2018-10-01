@@ -20,8 +20,24 @@ import ForgotPassword from './components/ForgotPassword';
 import MobileSignin from './components/MobileSignIn';
 import Otp from './components/Otp';
 import Profile from './components/Profile';
+import Messages from './components/Messages';
+import Payment from './components/Payment';
+import Projects from './components/Projects';
+import Account from './components/Account';
+import Settings from './components/Settings';
+import About from './components/About';
+import Feedback from './components/Feedback';
+import Notifications from './components/Notifications';
 export const Menu = DrawerNavigator({
-  HomePage: { screen: Home}
+  HomePage: { screen: Home},
+  Messages: { screen: Messages},
+  Payment: { screen: Payment},
+  Projects: { screen: Projects},
+  Account: { screen: Account},
+  Settings: { screen: Settings},
+  About: { screen: About},
+  Feedback: { screen: Feedback},
+  Notifications: { screen: Notifications}
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300

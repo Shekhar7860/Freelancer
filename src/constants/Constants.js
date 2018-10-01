@@ -16,7 +16,7 @@ export default class Constants  {
   searchicon = require('../images/search.png');
   cardimage = require('../images/home_img.png');
   defaultImage = require('../images/profile.png');
-  logoutIcon =  require('../images/logout.png');
+  logoutIcon =  require('../images/logout2.png');
   shareIcon =  require('../images/share.png');
   starIcon =  require('../images/star.png');
   homeIcon =  require('../images/home.png');
@@ -33,5 +33,9 @@ export default class Constants  {
   paymentIcon=  require('../images/payment.png');
   searchFreelancerIcon=  require('../images/search2.png');
   projectsIcon=  require('../images/projects.png');
-  accountIcon=  require('../images/account.png');
+  accountIcon=  require('../images/account2.png');
+  aboutIcon=  require('../images/about.png');
+  settingsIcon =  require('../images/settings2.png');
+  feedbackIcon =  require('../images/feedback.png');
+  notificationIcon = require('../images/notifications2.png');
 }

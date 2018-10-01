@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  View,
+  View, TouchableOpacity
 } from 'react-native';
 
 const MyView = (props) => {

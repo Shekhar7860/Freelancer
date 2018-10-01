@@ -64,6 +64,14 @@ export default styles = StyleSheet.create({
     height:50
      //Step 1
 },
+tabsToolbar:{
+  paddingTop:10,
+  paddingBottom:padding.sm,
+  flexDirection:'row',
+  backgroundColor:colors.themeColor,
+  height:50
+   //Step 1
+},
 toolbarButton:{
     width: 30,            //Step 2
     color:colors.white,
@@ -124,10 +132,10 @@ toolbarTitle:{
   },
   centerAlignSignUp :{
     alignItems:align.center,
-    marginTop:10,
+    marginTop:0,
     position:'absolute',
     width:'100%',
-    bottom: (Platform.OS === 'ios') ? 220 : 200
+    top: -40
    },
   loginText:{
     color:colors.red,
@@ -711,6 +719,20 @@ cardContainerSignUp:{
       },
       boxContainer :{
         width:'60%'
+      },
+      rowAlignSideMenu2:{
+        flexDirection:'row',
+        paddingTop:padding.md
+      },
+      line :{
+         borderBottomColor: colors.themeColor,
+          borderBottomWidth: 1,
+          marginTop:10
+      },
+      tabsPosition :{
+       bottom:0,
+       position:'absolute',
+       backgroundColor:'red'
       }
 
 })
