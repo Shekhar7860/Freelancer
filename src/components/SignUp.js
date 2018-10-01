@@ -24,10 +24,10 @@ export default class SignuUp extends Component {
     }
     service = new Service();
     constants = new Constants();
-	 // if(this.props.navigation)
-	// {
-   //  console.log(this.props.navigation.state.params.type)
-	// }
+	  if(this.props.navigation.state.params)
+	  {
+     console.log(this.props.navigation.state.params.type)
+	  }
   }
   
  
@@ -81,8 +81,8 @@ export default class SignuUp extends Component {
     this.setState({ mobileLength:Value})
    }
   
-  goToSelect = () =>{
-    this.props.navigation.navigate('Select')
+  goBack = () =>{
+    this.props.navigation.pop()
    }
   render() {
     return (
@@ -90,7 +90,7 @@ export default class SignuUp extends Component {
       <SafeAreaView style={styles.mainContainer}>
           <View style={styles.upperContainer}>
             <View style={styles.imgContainer}>
-              <TouchableOpacity onPress={() => this.goToSelect()}>
+              <TouchableOpacity onPress={() => this.goBack() }>
               <Image source={constants.backicon} style={styles.icon}/>
               </TouchableOpacity>
               </View>
@@ -122,14 +122,15 @@ export default class SignuUp extends Component {
                       <TextInput style={styles.textInputWidth} placeholder="Confirm Password" secureTextEntry={true}  value={this.state.confirmPassword} onChangeText={(text)=>this.setState({ confirmPassword:text})}></TextInput>
                       </View>
                       </View>
-					   <View style={styles.loginContainer} >
+					           
+                      </View>
+                      <View style={styles.loginContainer} >
                         <TouchableOpacity style={styles.commonButtonBackground} onPress={() => this.signUp()}>
                         <Text style={styles.accountButtonText}>Sign Up</Text>
                         </TouchableOpacity>
                       </View>
-                      </View>
-                     
                   </View>
+                  
                  
             </View>
             <CustomToast ref = "defaultToastBottom"/>

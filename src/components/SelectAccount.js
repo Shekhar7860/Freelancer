@@ -18,7 +18,7 @@ export default class SelectAccount extends Component {
    this.props.navigation.navigate('Login')
   }
   goToSignUp = (userType) =>{
-  this.props.navigation.navigate('SignUp', { type: userType })
+  this.props.navigation.navigate('Login', { type: userType })
       }
  goToWelcome = () => {
 	this.props.navigation.navigate('Welcome')

@@ -76,8 +76,8 @@ import Loader from './Loader';
          </View>
       </View>
       <View style={styles.lowerContainer}>
-      <View style={styles.centerAlign}>
-         <View style={styles.cardContainerSignUp}>
+      <View style={styles.centerAlignSignUp}>
+         <View style={styles.cardContainerSignIn}>
             <Text style={styles.signUpText}>Reset Password</Text>
             <Text style={styles.forgotTextHeadline}>We just need your registed email address/mobile number to send you password reset</Text>   
              <View style={styles.forgotInputsSpace}>

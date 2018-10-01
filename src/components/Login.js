@@ -31,8 +31,8 @@ export default class Login extends Component {
  
 
    
-      goToSignUp = () =>{
-       this.props.navigation.navigate('SignUp')
+      goBack = () =>{
+       this.props.navigation.pop()
       }
       
       goToForgot = () =>{
@@ -121,7 +121,7 @@ export default class Login extends Component {
       <SafeAreaView style={styles.mainContainer}>
       <View style={styles.upperContainer}>
         <View style={styles.imgContainer}>
-         <TouchableOpacity onPress={() => this.goToSignUp()}>
+         <TouchableOpacity onPress={() => this.goBack()}>
          <Image source={constants.backicon} style={styles.icon}/>
          </TouchableOpacity>
          </View>
@@ -131,7 +131,7 @@ export default class Login extends Component {
       </View>
       <View style={styles.lowerContainer}>
       <View style={styles.centerAlign}>
-         <View style={styles.cardContainerSignUp}>
+         <View style={styles.cardContainerSignIn}>
                 <Text style={styles.signUpText}>Sign In</Text>   
                 <View style={styles.loginInputsSpace}>
                     <View style={styles.topSpace}>

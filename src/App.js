@@ -18,7 +18,8 @@ import Welcome from './components/Welcome';
 import SelectAccount from './components/SelectAccount';
 import ForgotPassword from './components/ForgotPassword';
 import MobileSignin from './components/MobileSignIn';
-
+import Otp from './components/Otp';
+import Profile from './components/Profile';
 export const Menu = DrawerNavigator({
   HomePage: { screen: Home}
 }, {
@@ -31,10 +32,12 @@ const AppNavigator = StackNavigator(
   {
     Welcome: { screen: Welcome},
     Select: { screen: SelectAccount },
-    Login: { screen: Login },
+    Login: { screen: MobileSignin },
     SignUp: { screen: SignUp},
     Forgot: { screen: ForgotPassword },
-    Home: { screen: Menu }
+    Home: { screen: Menu },
+    Otp : { screen: Otp},
+    Profile : { screen: Profile}
    
   },
   { headerMode: 'none' }

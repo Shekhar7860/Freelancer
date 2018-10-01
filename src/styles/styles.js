@@ -83,7 +83,8 @@ toolbarTitle:{
     textAlign:align.center,
     fontWeight:'bold',
     flex:1,
-    marginTop: (Platform.OS === 'ios') ? 5 : 0               //Step 3
+    marginTop: (Platform.OS === 'ios') ? 5 : 0,
+    fontSize:20               //Step 3
  },
   messageBoxBodyText:{
       color:colors.white,
@@ -119,14 +120,14 @@ toolbarTitle:{
    marginTop:10,
    position:'absolute',
    width:'100%',
-   bottom: (Platform.OS === 'ios') ? 220 : 170
+   bottom: (Platform.OS === 'ios') ? 185 : 160
   },
   centerAlignSignUp :{
     alignItems:align.center,
     marginTop:10,
     position:'absolute',
     width:'100%',
-    bottom: (Platform.OS === 'ios') ? 185 : 190
+    bottom: (Platform.OS === 'ios') ? 220 : 200
    },
   loginText:{
     color:colors.red,
@@ -209,7 +210,7 @@ rowAlign:{
 loginContainer:{
   alignItems:align.center
 },
-loginContainerForgot:{
+loginContainerSignIn:{
   alignItems:align.center,
   marginTop:10
 },
@@ -266,6 +267,15 @@ bottomText:{
   paddingTop:padding.sm
 },
 cardContainerSignUp:{
+  width:'80%',
+  padding:padding.sm,
+  borderColor: colors.black,
+  borderWidth: 1,
+  backgroundColor:colors.white,
+  borderRadius:20,
+  height:290
+ },
+ cardContainerSignIn:{
   width:'80%',
   padding:padding.sm,
   borderColor: colors.black,
@@ -519,7 +529,16 @@ cardContainerSignUp:{
 		  height:40,
 		  alignItems:align.center,
 		  justifyContent:align.center
-	  },
+    },
+    otpButton:{
+		  marginTop:50,
+		  backgroundColor:colors.themeColor,
+		  width:"65%",
+		  borderRadius:25,
+		  height:40,
+		  alignItems:align.center,
+		  justifyContent:align.center
+    },
 	  lookingButtonBackground:{
 		  marginTop:35,
 		  backgroundColor:colors.themeColor,
@@ -616,16 +635,25 @@ cardContainerSignUp:{
       marginLeft: (Platform.OS === 'ios') ? 5 : 0
     },
     commonButtonBackground:{
-      marginTop:25,
+      marginTop: (Platform.OS === 'ios') ? 65 : 40,
 		  backgroundColor:colors.themeColor,
       width:dimensions.fullWidth - 140 ,
 		  borderRadius:25,
 		  height:40,
-		  alignItems:align.cente
+		  alignItems:align.center,
 		  justifyContent:align.center
     },
     buttonBackgroundLogin:{
-      marginTop:60,
+      marginTop: (Platform.OS === 'ios') ? 75 : 57,
+		  backgroundColor:colors.themeColor,
+      width:dimensions.fullWidth - 140 ,
+		  borderRadius:25,
+		  height:40,
+		  alignItems:align.center,
+		  justifyContent:align.center
+    },
+    mobilebuttonBackground:{
+      marginTop: (Platform.OS === 'ios') ? 75 : 65,
 		  backgroundColor:colors.themeColor,
       width:dimensions.fullWidth - 140 ,
 		  borderRadius:25,
@@ -648,7 +676,41 @@ cardContainerSignUp:{
     welcomeLoginText :{
       color:colors.white,
       paddingTop:10
-    }
+    },
+    input :{
+      height: 50,
+      backgroundColor: '#EBEBF1',
+      color: 'black',
+      width: 50,
+      marginLeft: 5,
+      marginRight: 5,
+      marginTop:10
       
+      },
+      toastCenter:{
+        flex:1,
+        alignItems:align.center,
+        justifyContent:align.center
+      },
+      profileContainer:{
+        alignItems:align.center
+      },
+      containerBorder:{
+        borderBottomWidth: 0.5,
+        marginTop:20,
+        borderBottomColor:colors.themeColor
+      },
+      textItemsContainer:{
+        flexDirection :'row',
+        width:'90%',
+        bottom:5
+        
+      },
+      nameContainer :{
+        width:'30%'
+      },
+      boxContainer :{
+        width:'60%'
+      }
 
 })

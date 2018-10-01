@@ -35,14 +35,14 @@ export default class Home extends Component {
         <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
         </TouchableOpacity>
-         <Text style={styles.toolbarTitle}>Home</Text>
+         <Text style={styles.toolbarTitle}>Freelancer</Text>
          <TouchableOpacity onPress={() => this.searchPage()}>
         <Image source={constants.searchicon} style={styles.searchIcon} />
         </TouchableOpacity>
      </View>
      <View style={styles.homeContent}>
          <View style={styles.messageBox}>
-         <Image source={constants.cardimage} style={styles.cardImage}/>
+        
          </View>
      </View>
  </SafeAreaView>

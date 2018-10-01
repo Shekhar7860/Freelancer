@@ -61,6 +61,49 @@ login = (mobile, password) =>
    });
 }
 
+loginOtp = (mobile) => 
+{
+  var data = {
+    mobile: mobile
+   }
+   console.log(data);
+ return  fetch(constants.apiUrl + '/user/send-otp',
+    {
+      method: "POST",
+      headers: {
+       "Accept": "application/json",
+       "Content-Type": "application/json"
+      },
+     body: JSON.stringify(data)
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+verifyOtp = (mobile, otp) => 
+{
+  var data = {
+    mobile: mobile,
+    otp   : otp
+   }
+   console.log(data);
+ return  fetch(constants.apiUrl + '/user/verifiedOTP',
+    {
+      method: "POST",
+      headers: {
+       "Accept": "application/json",
+       "Content-Type": "application/json"
+      },
+     body: JSON.stringify(data)
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
  
   
   

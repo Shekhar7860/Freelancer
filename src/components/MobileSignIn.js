@@ -30,23 +30,32 @@ import Loader from './Loader';
     else if (this.state.mobileLength != 10) {
       this.refs.defaultToastBottom.ShowToastFunction('Please enter Valid Mobile Number');
     } 
-    
-   
+
    else {
          this.setState ({ loading: true});
           setTimeout(() => 
           {this.setState({loading: false})
-          this.refs.defaultToastBottom.ShowToastFunction('Email Sent Successfully');
-          this.openLogin();
+          service.loginOtp(this.state.mobile).then((res) => {
+            if(res.status_code)
+            {
+              this.refs.defaultToastBottom.ShowToastFunction(res.message);
+              this.openLogin(this.state.mobile);
+            }
+            else
+            {
+              this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
+            }
+          })
+
            }, 3000)
           }
    
     }
 
-    openLogin()
+    openLogin(mobile)
     {
       setTimeout(() => {
-      this.props.navigation.navigate('Login')
+      this.props.navigation.navigate('Otp',  { mobile: mobile })
       }, 1000)
     }
 
@@ -55,8 +64,9 @@ import Loader from './Loader';
       this.setState({ mobile:ValueHolder})
       this.setState({ mobileLength:Value})
      }
-  goToLogin = () => {
-    this.props.navigation.navigate('Login')
+
+  goBack = () => {
+    this.props.navigation.pop()
    }
 
  
@@ -67,7 +77,7 @@ import Loader from './Loader';
       <SafeAreaView style={styles.mainContainer}>
       <View style={styles.upperContainer}>
         <View style={styles.imgContainer}>
-         <TouchableOpacity onPress={() => this.goToLogin()}>
+         <TouchableOpacity onPress={() => this.goBack()}>
          <Image source={constants.backicon} style={styles.icon}/>
          </TouchableOpacity>
          </View>
@@ -76,8 +86,8 @@ import Loader from './Loader';
          </View>
       </View>
       <View style={styles.lowerContainer}>
-      <View style={styles.centerAlign}>
-         <View style={styles.cardContainerSignUp}>
+      <View style={styles.centerAlignSignUp}>
+         <View style={styles.cardContainerSignIn}>
             <Text style={styles.signUpText}>Sign In</Text>
             <Text style={styles.forgotTextHeadline}></Text>   
              <View style={styles.forgotInputsSpace}>
@@ -89,8 +99,8 @@ import Loader from './Loader';
                 </View>
                 </View>
             </View>
-            <View style={styles.loginContainerForgot} >
-                        <TouchableOpacity style={styles.buttonBackgroundLogin} onPress={() => this.submit()}>
+            <View style={styles.loginContainerSignIn} >
+                        <TouchableOpacity style={styles.mobilebuttonBackground} onPress={() => this.submit()}>
                         <Text style={styles.accountButtonText}>Sign In</Text>
                         </TouchableOpacity>
                 </View>
@@ -106,6 +116,7 @@ import Loader from './Loader';
         <Loader
           loading={this.state.loading} />
      </SafeAreaView>
+     
      
     );
 }

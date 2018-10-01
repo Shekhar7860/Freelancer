@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {ScrollView, SafeAreaView, Text, View, ImageBackground, Switch, Image, TouchableOpacity ,Alert} from 'react-native';
 import Service from '../services/Service';
 import Constants from '../constants/Constants';
-
+import MyView from './MyView';
 
 class SideMenu extends Component {
   constructor(props){
@@ -14,6 +14,8 @@ class SideMenu extends Component {
        userFbData: { picture_large:{ data:{}}},
        userGoogleData:{},
        name:"",
+       logOut: true,
+       items : false,
        names: [
         {
            id: 0,
@@ -79,6 +81,14 @@ componentDidMount() {
 
   
  } 
+
+ toggleItems = () =>
+ {
+ 
+  this.setState ({ logout: false});
+  this.setState ({ items: true});
+ 
+ }
  
 
   render () {
@@ -137,15 +147,15 @@ componentDidMount() {
                   </View>
                   <View style={styles.blank}>
                   </View>
-                  <View style={styles.arrowView}>
+                  <TouchableOpacity style={styles.arrowView} onPress = {() => this.toggleItems()}>
                   <Image source={constants.downIcon} style={styles.shareIcon}/>
-                  </View>
+                  </TouchableOpacity>
              </View>
              {ProfileName}
              </View>
           </View>
           <View style={styles.lowerContainerSideMenu}>
-          <View style={styles.topMargin}> 
+          <MyView style={styles.topMargin} hide={this.state.items}> 
             {
                this.state.names.map((item, index) => (
                   <TouchableOpacity
@@ -164,7 +174,18 @@ componentDidMount() {
                   </TouchableOpacity>
                ))
             }
-         </View>
+         </MyView>
+          
+
+         <MyView hide={this.state.logOut}>
+         <TouchableOpacity style={styles.listIconsWidth}>
+                          <Image source={constants.logouticon} style={styles.listIcon}/>
+          </TouchableOpacity>
+           <View style={styles.listItemsBlank}></View>
+          <View style={styles.listTextWidth}>
+              <Text style={styles.listTextFontSize}>LogOut</Text>
+          </View>
+          </MyView>
           </View>
        
 
