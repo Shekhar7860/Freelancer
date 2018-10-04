@@ -4,23 +4,45 @@ import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 
 export default class SelectAccount extends Component {
-  
   constructor(props){
     super(props);
     constants = new Constants();
   }
+
  componentDidMount() {
-  //  this.goToLoginScreen()    
+  if(this.props.navigation.state.params)
+  {
+   console.log(this.props.navigation.state.params.mobile)
+  }      
   }
 
   // going to next screen
   goToLogin = () =>{
    this.props.navigation.navigate('Login')
   }
-  goToSignUp = (userType) =>{
-  this.props.navigation.navigate('Login', { type: userType })
+
+  goToSignUp = (userType) =>
+  {
+     if(this.props.navigation.state.params)
+      {
+        console.log("params" + this.props.navigation.state.params)
+        var userData = {
+          type: userType,
+          mobile: this.props.navigation.state.params.mobile
+        }
+      this.props.navigation.navigate('Otp', { type: userData })
+      } 
+      else   
+      {
+        var userData = {
+          type: userType
+        }
+      this.props.navigation.navigate('Login', { type: userData })
       }
- goToWelcome = () => {
+  }
+
+ goToWelcome = () => 
+ {
 	this.props.navigation.navigate('Welcome')
  }
   
@@ -34,16 +56,15 @@ export default class SelectAccount extends Component {
       </View>
 	     <View style={styles.accountHeadline}>
 	       <Text style={styles.accountHeadlineText}>Select Account Type</Text>
-		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp('client')}>
+		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp(0)}>
 		     <Text style={styles.accountButtonText}>I Want To Hire Freelancers</Text>
 		   </TouchableOpacity>
-		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp('freelancer')}>
+		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp(1)}>
 		     <Text style={styles.accountButtonText}>I Am Looking To Work </Text>
 		   </TouchableOpacity>
 		    <Text style={styles.selectAccountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>
 	     </View>
-	   
-       </SafeAreaView>
+   </SafeAreaView>
 	   
     );
   }

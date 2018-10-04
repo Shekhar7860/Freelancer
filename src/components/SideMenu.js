@@ -17,6 +17,7 @@ class SideMenu extends Component {
        logOut: true,
        items : false,
        icon : constants.downIcon,
+       userResponse: {},
        names: [
         {
            id: 0,
@@ -71,7 +72,51 @@ logOut = () =>{
   
 }
 
+componentDidMount ()   {
+  service.getUserData('user').then((keyValue) => {
+    console.log("local", keyValue);
+    var parsedData = JSON.parse(keyValue);
+    console.log("sidemenujson", parsedData);
+    if(parsedData.usertype == 1)
+    {
+      this.setState ({
+         names: [
+          {
+             id: 0,
+             name: 'Messages',
+             icon:constants.messagesIcon
+          },
+          {
+             id: 1,
+             name: 'My balance',
+             icon:constants.balanceIcon
+          },
+          {
+             id: 2,
+             name: 'Find Works',
+             icon:constants.searchFreelancerIcon
+          },
+          {
+             id: 3,
+             name: 'My Jobs',
+             icon:constants.projectsIcon,
+          },
+          {
+            id: 4,
+            name: 'Account',
+            icon:constants.accountIcon,
+         }
+       ]  
+      });
+    }
+    this.setState({ userResponse: parsedData});
+ }, (error) => {
+    console.log(error) //Display error
+  });
+ }
+
 exit = () => {
+  service.clearLocalStorage();
   this.props.navigation.navigate('Login')
 }
 
@@ -87,10 +132,7 @@ alertItemName = (item) => {
     default:
     this.props.navigation.navigate(item.name);
   }
-
   this.props.navigation.closeDrawer();
-  
-  
 }
 
 goToSettingsPage = () => {
@@ -107,10 +149,7 @@ goToFeedbackPage = () => {
   this.props.navigation.closeDrawer();
   this.props.navigation.navigate("Feedback");
 }
-componentDidMount() {
 
-  
- } 
 
  toggleItems = () =>
  {
@@ -140,12 +179,20 @@ componentDidMount() {
    const GoogleImage = <Image source={{uri: this.state.userGoogleData.photo }} style={styles.profilePic} />;
    const fbName = <Text style={styles.userName}>{this.state.userFbData.name}</Text>
    const GoogleName = <Text style={styles.userName}>{this.state.userGoogleData.name}</Text>
-   const DefaultName = <Text style={styles.defaultUserName}>Ankit</Text>
+   const DefaultName = <Text style={styles.defaultUserName}>{this.state.userResponse.username}</Text>
    const ProfileName = <Text style={styles.defaultUserName}>Client</Text>
+   const ProfileName2 = <Text style={styles.defaultUserName}>Freelancer</Text>
 
       
-     var userImage;
-     var userName;
+     var profile;
+     if (this.state.userResponse.usertype == 0) 
+      {
+         profile = ProfileName
+      } 
+      else 
+      {
+        profile = ProfileName2
+      }
         if (this.state.name == "fb") {
               if(fbImage.props.source.uri !== null){
                 userImage =  fbImage
@@ -192,7 +239,7 @@ componentDidMount() {
                   <Image source={this.state.icon} style={styles.shareIcon}/>
                   </TouchableOpacity>
              </View>
-             {ProfileName}
+             {profile}
              </View>
           </View>
           <View style={styles.lowerContainerSideMenu}>
@@ -259,10 +306,7 @@ componentDidMount() {
           </MyView>
           </TouchableOpacity>
           </View>
-       
-
         <View style={styles.sideMenu}>
-        
         </View>
    </SafeAreaView>
      

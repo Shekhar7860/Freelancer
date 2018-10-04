@@ -51,13 +51,6 @@ export default class Home extends Component {
      </View>
     
      <Tabs style={styles.tabsPosition}/>
-     
-     
-     <View style={styles.homeContent}>
-         <View style={styles.messageBox}>
-        
-         </View>
-     </View>
  </SafeAreaView>
       
      

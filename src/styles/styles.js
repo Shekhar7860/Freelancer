@@ -6,7 +6,6 @@ export default styles = StyleSheet.create({
   container: {
     flex: 1,
     height:'100%'
-    
   },
   header: {
     fontSize: fonts.lg,
@@ -94,6 +93,15 @@ toolbarTitle:{
     marginTop: (Platform.OS === 'ios') ? 5 : 0,
     fontSize:20               //Step 3
  },
+ updateText:{
+  color:colors.white,
+  textAlign:align.center,
+  fontWeight:'bold',
+  flex:1,
+  marginTop: (Platform.OS === 'ios') ? 5 : 0,
+  fontSize:18,
+  marginRight:10           //Step 3
+},
   messageBoxBodyText:{
       color:colors.white,
       fontSize:16
@@ -220,7 +228,7 @@ loginContainer:{
 },
 loginContainerSignIn:{
   alignItems:align.center,
-  marginTop:10
+  marginTop: (Platform.OS === 'ios') ? 10 : 20
 },
 buttonWidth:{
   width:300,
@@ -343,6 +351,10 @@ cardContainerSignUp:{
       marginTop:30,
       width:80,
      height:80,
+    },
+    freelancerprofilePic:{
+      width:70,
+     height:70,
     },
     userName:{
       paddingTop:padding.sm,
@@ -673,10 +685,10 @@ cardContainerSignUp:{
       flexDirection:'row'
     },
     name:{
-      width:'25%'
+      width:'35%'
     },
     blank:{
-      width:'55%'
+      width:'45%'
     },
     arrowView:{
       width:'20%'
@@ -712,7 +724,6 @@ cardContainerSignUp:{
         flexDirection :'row',
         width:'90%',
         bottom:5
-        
       },
       nameContainer :{
         width:'30%'
@@ -733,6 +744,89 @@ cardContainerSignUp:{
        bottom:0,
        position:'absolute',
        backgroundColor:'red'
+      },
+      listCard:{
+        width:'90%',
+        backgroundColor:colors.white
+      },
+      listCardFreelancer:{
+        width:'100%',
+        backgroundColor:colors.white
+      },
+      spaceFromTop:{
+        alignItems:'center',
+         marginTop:10
+      },
+      textColor:{
+        color:'green',
+        paddingTop:10,
+        fontSize:20,
+         flexWrap: 'wrap'
+      },
+      textInRow:{
+        flexDirection:'row'
+      },
+      textWrap:{
+        flex:1,
+        margin:10,
+        fontSize:18,
+       flexWrap: 'wrap',
+       color:'#27ae60',
+       fontWeight: 'bold'
+      },
+      priceText:{
+        marginLeft:10,
+        marginTop:5,
+        fontSize:16,
+       color:'black',
+       fontWeight: 'bold'
+      },
+     date:{
+        marginLeft:10,
+        marginTop:5,
+        fontSize:16,
+       color:'#95a5a6',
+       fontWeight: 'bold'
+      },
+      email:{
+        marginLeft:10,
+        marginTop:5,
+        fontSize:14,
+       color:'#95a5a6',
+       fontWeight: 'bold'
+      },
+      Listcontainer: {
+        flex: 1
+      },
+      contPadding :{
+        padding:5
+      },
+      skillWidth:{
+        width:"50%"
+      },
+      budgetWidth:{
+        width:"30%"
+      },
+      leftSpace:{
+        width:"20%"
+      },
+      priceText:{
+        marginLeft:10,
+        marginTop:5,
+        fontSize:16,
+       color:'#95a5a6',
+       fontWeight: 'bold'
+      },
+      paddingAbove:{
+        marginTop:10
+      },
+      textInRow2:{
+        flexDirection:'row',
+        marginLeft:10
+      },
+      skillText:{
+        fontSize:16,
+        color:colors.themecolor,
       }
 
 })

@@ -28,6 +28,7 @@ import Settings from './components/Settings';
 import About from './components/About';
 import Feedback from './components/Feedback';
 import Notifications from './components/Notifications';
+import FindFreelancer from './components/FindFreelancer';
 export const Menu = DrawerNavigator({
   HomePage: { screen: Home},
   Messages: { screen: Messages},
@@ -37,7 +38,8 @@ export const Menu = DrawerNavigator({
   Settings: { screen: Settings},
   About: { screen: About},
   Feedback: { screen: Feedback},
-  Notifications: { screen: Notifications}
+  Notifications: { screen: Notifications},
+  FindFreelancer : {screen : FindFreelancer}
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300

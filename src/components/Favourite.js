@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, SafeAreaView,FlatList, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
 
@@ -9,15 +9,34 @@ export default class FAVOURITE extends Component {
      service = new Service();
      constants = new Constants();
      this.state = {
-        userData: { picture_large:{ data:{}}},
-      };
+      userResponse: {},
+      feeds : {user:{ Job: [] }},
+      heartIcon : constants.heartIcon,
+    };
    
  }
- componentDidMount() {
-
+ componentDidMount ()   {
+  service.getUserData('user').then((keyValue) => {
+    console.log("local", keyValue);
+    var parsedData = JSON.parse(keyValue);
+    console.log("json", parsedData);
+    this.setState({ userResponse: parsedData});
+     this.getFeedRes();
+ }, (error) => {
+    console.log(error) //Display error
+  });
  }
  openDrawer = () => {
    this.props.navigation.openDrawer()}
+
+   getFeedRes = () => {
+    service.getFeedList(this.state.userResponse.api_token).then((res) => {
+      console.log("checkres", res);
+      newres = JSON.stringify(res);
+      json = JSON.parse(newres);
+      this.setState({ feeds: json});
+    })
+   }
 
   searchPage = () =>{
     alert("searching Page")   
@@ -27,12 +46,63 @@ export default class FAVOURITE extends Component {
    
     return (
         
-     <SafeAreaView
-      source={constants.loginbg}
-      style={styles.container}>
-    
-   <Text>FAVOURITE </Text>
- </SafeAreaView>
+      <SafeAreaView style={styles.Listcontainer}
+      >
+       <FlatList
+         data={this.state.feeds.user.Job}
+         renderItem={({ item }) => (
+            <View  style={styles.spaceFromTop}>
+               <View style={styles.listCard}>
+               <View style={styles.textInRow}> 
+               <Text style={styles.textWrap}> {item.title} 
+               </Text>
+               </View>
+               <View style={styles.textInRow}> 
+                 <View >
+                     <Text style={styles.priceText}>Fixed Price</Text>
+                   </View>
+                   <View style={styles.contPadding}>
+                      <Text >-</Text>
+                   </View>
+                   <View >
+                      <Text style={styles.date}>{item.start_date} </Text>
+                   </View>
+               </View>
+               <View style={styles.paddingAbove}>
+                   <View style={styles.textInRow2}> 
+                     <View style={styles.skillWidth}>
+                         <Text style={styles.skillText}>Skill Level</Text>
+                       </View>
+                       <View style={styles.budgetWidth}>
+                         <Text style={styles.skillText}>{item.budget}</Text>
+                       </View>
+                       <View style={styles.leftSpace}>
+                         <Text style={styles.date}></Text>
+                       </View>
+                   </View>
+               </View>
+               <View style={styles.paddingAbove}>
+                   <View style={styles.textInRow2}> 
+                     <View style={styles.skillWidth}>
+                         <Text style={styles.skillText}>Expert</Text>
+                       </View>
+                       <View style={styles.budgetWidth}>
+                         <Text style={styles.skillText}>1000</Text>
+                       </View>
+                       <View style={styles.leftSpace}>
+                         <TouchableOpacity onPress={() => this.addToFavourites()}>
+                         <Image source={this.state.heartIcon} style={styles.icon}/>
+                         </TouchableOpacity>
+                       </View>
+                   </View>
+               </View>
+               </View>
+               
+           </View>
+         )}
+       />
+  </SafeAreaView>
+       
       
      
     );

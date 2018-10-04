@@ -340,6 +340,12 @@
 		00E356EE1AD99517003FC87E /* freelancetestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = freelancetestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* freelancetestTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = freelancetestTests.m; sourceTree = "<group>"; };
+		04305C9B2165CAED0039300F /* ProximaNovaRegular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = ProximaNovaRegular.ttf; path = ../assets/fonts/ProximaNovaRegular.ttf; sourceTree = "<group>"; };
+		04305CC22165CAED0039300F /* GreatVibes-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "GreatVibes-Regular.otf"; path = "../assets/fonts/GreatVibes-Regular.otf"; sourceTree = "<group>"; };
+		04305CC32165CAED0039300F /* vincHand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = vincHand.ttf; path = ../assets/fonts/vincHand.ttf; sourceTree = "<group>"; };
+		04305CC42165CAED0039300F /* FontsFree-Net-Proxima-Nova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "FontsFree-Net-Proxima-Nova-Bold.otf"; path = "../assets/fonts/FontsFree-Net-Proxima-Nova-Bold.otf"; sourceTree = "<group>"; };
+		04305CC52165CAED0039300F /* GothamMedium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = GothamMedium.ttf; path = ../assets/fonts/GothamMedium.ttf; sourceTree = "<group>"; };
+		04305CC62165CAEE0039300F /* blackjack.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = blackjack.otf; path = ../assets/fonts/blackjack.otf; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* freelancetest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = freelancetest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -520,6 +526,12 @@
 		13B07FAE1A68108700A75B9A /* freelancetest */ = {
 			isa = PBXGroup;
 			children = (
+				04305CC62165CAEE0039300F /* blackjack.otf */,
+				04305CC42165CAED0039300F /* FontsFree-Net-Proxima-Nova-Bold.otf */,
+				04305CC52165CAED0039300F /* GothamMedium.ttf */,
+				04305CC22165CAED0039300F /* GreatVibes-Regular.otf */,
+				04305C9B2165CAED0039300F /* ProximaNovaRegular.ttf */,
+				04305CC32165CAED0039300F /* vincHand.ttf */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,

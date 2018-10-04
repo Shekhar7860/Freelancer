@@ -16,30 +16,58 @@ import Loader from './Loader';
       emailError:'',
       emailFormatError:'',
       mobileLength:'',
-      loading:false
+      loading:false,
+      type:''
     }
   }
 
+  componentDidMount = () => {
+    if(this.props.navigation.state.params)
+    {
+     console.log(this.props.navigation.state.params.type.type)
+     this.setState({type: this.props.navigation.state.params.type.type})
+    }   
+  }
  
   submit = () => 
   {
-    if(this.state.mobile.trim() === "")
-    {
-      this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile');
-    }
-    else if (this.state.mobileLength != 10) {
-      this.refs.defaultToastBottom.ShowToastFunction('Please enter Valid Mobile Number');
-    } 
-
-   else {
-         this.setState ({ loading: true});
+      if(this.state.mobile.trim() === "")
+      {
+        this.refs.defaultToastBottom.ShowToastFunction('Please Enter Mobile');
+      }
+      else if (this.state.mobileLength != 10) {
+        this.refs.defaultToastBottom.ShowToastFunction('Please enter Valid Mobile Number');
+      } 
+      else
+      {
+          this.setState ({ loading: true});
           setTimeout(() => 
           {this.setState({loading: false})
-          service.loginOtp(this.state.mobile).then((res) => {
-            if(res.status_code)
+          service.loginOtp(this.state.mobile, this.state.type).then((res) => {
+            console.log(res);
+            if(res)
             {
-              this.refs.defaultToastBottom.ShowToastFunction(res.message);
-              this.openLogin(this.state.mobile);
+                if (res.status_code == 200)
+                {
+                this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
+                var personData = {
+                  type:this.state.type,
+                  mobile:this.state.mobile
+                }
+                this.openLogin(personData);
+                }
+                else
+                {
+                  this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
+                  if(this.state.type)
+                  {
+                    this.props.navigation.navigate('Otp',  { mobile: this.state.mobile })
+                  }
+                  else
+                  {
+                  this.props.navigation.navigate('Select',  { mobile: this.state.mobile }) 
+                  }
+                }
             }
             else
             {
@@ -47,9 +75,8 @@ import Loader from './Loader';
             }
           })
 
-           }, 3000)
-          }
-   
+            }, 3000)
+        }
     }
 
     openLogin(mobile)
@@ -69,55 +96,45 @@ import Loader from './Loader';
     this.props.navigation.pop()
    }
 
- 
-   
   render() {
     return (
-     
       <SafeAreaView style={styles.mainContainer}>
-      <View style={styles.upperContainer}>
-        <View style={styles.imgContainer}>
-         <TouchableOpacity onPress={() => this.goBack()}>
-         <Image source={constants.backicon} style={styles.icon}/>
-         </TouchableOpacity>
-         </View>
-         <View style={styles.welcomeHeadlineSignUp}>
-         <Text style={styles.headlineText}>Freelancer</Text>
-         </View>
-      </View>
-      <View style={styles.lowerContainer}>
-      <View style={styles.centerAlignSignUp}>
-         <View style={styles.cardContainerSignIn}>
-            <Text style={styles.signUpText}>Sign In</Text>
-            <Text style={styles.forgotTextHeadline}></Text>   
-             <View style={styles.forgotInputsSpace}>
-                <View style={styles.topSpace}>
-                <View style={styles.rowAlign}>
-                <Image source={constants.phoneIcon} style={styles.inputIcon}/>
-                <TextInput  style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
-             this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
-                </View>
-                </View>
+            <View style={styles.upperContainer}>
+              <View style={styles.imgContainer}>
+              <TouchableOpacity onPress={() => this.goBack()}>
+              <Image source={constants.backicon} style={styles.icon}/>
+              </TouchableOpacity>
+              </View>
+              <View style={styles.welcomeHeadlineSignUp}>
+              <Text style={styles.headlineText}>Freelancer</Text>
+              </View>
             </View>
-            <View style={styles.loginContainerSignIn} >
-                        <TouchableOpacity style={styles.mobilebuttonBackground} onPress={() => this.submit()}>
-                        <Text style={styles.accountButtonText}>Sign In</Text>
-                        </TouchableOpacity>
-                </View>
-            </View>
-           
-            
-      
-       </View>
-     
-       <CustomToast ref = "defaultToastBottom"/>
-      </View>
-     
-        <Loader
-          loading={this.state.loading} />
+          <View style={styles.lowerContainer}>
+              <View style={styles.centerAlignSignUp}>
+                <View style={styles.cardContainerSignIn}>
+                    <Text style={styles.signUpText}>Sign In</Text>
+                    <Text style={styles.forgotTextHeadline}></Text>   
+                    <View style={styles.forgotInputsSpace}>
+                        <View style={styles.topSpace}>
+                        <View style={styles.rowAlign}>
+                        <Image source={constants.phoneIcon} style={styles.inputIcon}/>
+                        <TextInput  style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
+                    this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                        </View>
+                        </View>
+                    </View>
+                    <View style={styles.loginContainerSignIn} >
+                                <TouchableOpacity style={styles.mobilebuttonBackground} onPress={() => this.submit()}>
+                                <Text style={styles.accountButtonText}>Sign In</Text>
+                                </TouchableOpacity>
+                    </View>
+                    </View>
+              </View>
+            <CustomToast ref = "defaultToastBottom"/>
+          </View>
+            <Loader
+              loading={this.state.loading} />
      </SafeAreaView>
-     
-     
     );
 }
 }

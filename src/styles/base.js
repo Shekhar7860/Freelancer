@@ -29,7 +29,6 @@ export const fonts = {
   lg: 28,
   primary: 'Cochin'
   
-  
 }
 export const align = {
  center:'center',

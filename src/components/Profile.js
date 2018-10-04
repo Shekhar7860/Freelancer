@@ -2,16 +2,29 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, SafeAreaView,Image, TextInput, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
 import styles from '../styles/styles';
 import Constants from '../constants/Constants';
+import Service from '../services/Service';
 
 export default class Profile extends Component {
   
   constructor(props){
     super(props);
+    service = new Service();
     constants = new Constants();
+    this.state = { 
+      userResponse: {},
+     }
   }
- componentDidMount() {
-  //  this.goToLoginScreen()    
-  }
+
+  componentDidMount ()   {
+    service.getUserData('user').then((keyValue) => {
+      console.log("local", keyValue);
+      var parsedData = JSON.parse(keyValue);
+      console.log("json", parsedData);
+      this.setState({ userResponse: parsedData});
+   }, (error) => {
+      console.log(error) //Display error
+    });
+   }
 
   // going to next screen
   goToLogin = () =>{
@@ -20,22 +33,27 @@ export default class Profile extends Component {
   goToSignUp = (userType) =>{
   this.props.navigation.navigate('SignUp', { type: userType })
       }
- goToWelcome = () => {
-	this.props.navigation.navigate('Welcome')
+ goToHome = () => {
+	this.props.navigation.navigate('HomePage')
  }
-  
+ goToUpdateProfile = () =>
+ {
+  this.props.navigation.navigate('UpdateProfile')
+ }
+
+
   render() {
     const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic}/>
     // const fbImage = <Image source={{uri: this.state.userFbData.picture_large.data.url}} style={styles.profilePic} />;
     return (
   <SafeAreaView>
 	    <View style={styles.toolbar}>
-			<Text style={styles.backButton} onPress={() => this.goToWelcome()}>
+			<Text style={styles.backButton} onPress={() => this.goToHome()}>
 			<Image source={constants.backicon} style={styles.icon}/>
 			</Text>
          <Text style={styles.toolbarTitle}>Profile</Text>
-         <TouchableOpacity onPress={() => this.searchPage()}>
-        <Image source={constants.searchicon} style={styles.searchIcon} />
+         <TouchableOpacity onPress={() => this.goToUpdateProfile()}>
+        <Image source={constants.editIcon} style={styles.searchIcon} />
         </TouchableOpacity>
       </View>
       <View style={styles.profileContainer}>

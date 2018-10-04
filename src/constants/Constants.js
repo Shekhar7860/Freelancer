@@ -38,4 +38,7 @@ export default class Constants  {
   settingsIcon =  require('../images/settings2.png');
   feedbackIcon =  require('../images/feedback.png');
   notificationIcon = require('../images/notifications2.png');
+  balanceIcon=  require('../images/balance.png');
+  heartIcon=  require('../images/heart.png');
+  heartIconfilled=  require('../images/heartfilled.png');
 }

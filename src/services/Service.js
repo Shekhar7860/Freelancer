@@ -6,8 +6,14 @@ import Constants from '../constants/Constants';
 export default class Service {
   
   constructor(){
+    this.state = { 
+      user :''
+    }
     constants = new Constants();
+    
   }
+
+  
 
 
 saveUserData = async (key, value) => {
@@ -28,6 +34,12 @@ getUserData = async (key) => {
   return data;
 }
 
+clearLocalStorage = async () => {
+  try {
+  await AsyncStorage.clear();
+  } catch (error) {
+  }
+  }
 
 validateEmail = (email) => {
   // console.log(email);
@@ -61,10 +73,11 @@ login = (mobile, password) =>
    });
 }
 
-loginOtp = (mobile) => 
+loginOtp = (mobile, type) => 
 {
   var data = {
-    mobile: mobile
+    mobile: mobile,
+    usertype: type
    }
    console.log(data);
  return  fetch(constants.apiUrl + '/user/send-otp',
@@ -82,13 +95,15 @@ loginOtp = (mobile) =>
    });
 }
 
-verifyOtp = (mobile, otp) => 
+verifyOtp = (mobile, otp, type) => 
 {
+  console.log("usertype" + type)
   var data = {
     mobile: mobile,
-    otp   : otp
+    otp   : otp,
+    usertype : type
    }
-   console.log(data);
+  
  return  fetch(constants.apiUrl + '/user/verifiedOTP',
     {
       method: "POST",
@@ -102,6 +117,67 @@ verifyOtp = (mobile, otp) =>
    .catch((error) => {
      console.error(error);
    });
+}
+
+getFeedList = (token) => 
+{
+ return  fetch(constants.apiUrl + `/user/recommneded/active-jobs?&api_token=${token}`,
+    {
+      method: "GET"
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+findFreelancer = (token) => 
+{
+ return  fetch(constants.apiUrl + `/find-freelancer?&api_token=${token}`,
+    {
+      method: "GET"
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+getFavJobList = (token) => 
+{
+ return  fetch(constants.apiUrl + `/user/favourites/jobs/lists?&api_token=${token}`,
+    {
+      method: "GET"
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+profile_update = (api_token,username,email,about_me) => 
+{
+var data = {
+api_token: api_token,
+user_name: username,
+email:email,
+about_me:about_me,
+
+}
+console.log(username)
+return fetch(constants.apiUrl + '/user/update/profile',
+{
+method: "POST",
+headers: {
+"Accept": "application/json",
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}).then((response) => 
+response.json())
+.catch((error) => {
+console.error(error);
+});
 }
 
  
