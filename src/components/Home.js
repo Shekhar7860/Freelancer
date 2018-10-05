@@ -3,7 +3,8 @@ import {Platform, StyleSheet, SafeAreaView, Text, View, Image, ImageBackground, 
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
 import Tabs from './Tabs';
-
+import Details from './Details';
+import Loader from './Loader';
 
 export default class Home extends Component {
  constructor(props){
@@ -11,12 +12,12 @@ export default class Home extends Component {
      service = new Service();
      constants = new Constants();
      this.state = {
-        userData: { picture_large:{ data:{}}},
+        loading:false
       };
    
  }
  componentDidMount() {
-
+  
  }
  openDrawer = () => {
    this.props.navigation.openDrawer()}
@@ -35,22 +36,9 @@ export default class Home extends Component {
      <SafeAreaView
       source={constants.loginbg}
       style={styles.container}>
-    
-    <View style={styles.tabsToolbar} >
-        <TouchableOpacity onPress={() => this.openDrawer()}>
-        <Image source={constants.menuicon} style={styles.hamburgerIcon} />
-        </TouchableOpacity>
-         <Text style={styles.toolbarTitle}>Freelancer</Text>
-         <TouchableOpacity onPress={() => this.goToNotification()}>
-         <Image source={constants.notificationIcon} style={styles.searchIcon} />
-        </TouchableOpacity>
-         <TouchableOpacity onPress={() => this.searchPage()}>
-         <Image source={constants.searchicon} style={styles.searchIcon} />
-        </TouchableOpacity>
-       
-     </View>
-    
      <Tabs style={styles.tabsPosition}/>
+     <Loader
+              loading={this.state.loading} />
  </SafeAreaView>
       
      

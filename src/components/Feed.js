@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet, SafeAreaView, FlatList, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
+import MyView from './MyView';
+import Tabs from './Tabs';
+import Loader from './Loader';
 const soundImg = require('../images/heart.png');
 const muteImg = require('../images/heartfilled.png');
 export default class FEED extends Component {
@@ -13,24 +16,41 @@ export default class FEED extends Component {
         userResponse: {},
         feeds : {user:{ Job: [] }},
         heartIcon : constants.heartIcon,
-        showSoundImg: true
+        showSoundImg: true,
+        isFav : true,
+        loading:false
       };
    
  }
  
- pressIcon = (val) => {
-   console.log(val)
+ pressIcon = (val, index) => {
+   console.log(index)
+   console.log(val);
+   console.log(this.state.isFav)
  }
+
+ 
+
+ openDetails = (val) => {
+   console.log(this.props);
+  this.props.navigation.navigate('Detail',  { details: val }) 
+}
+
  componentDidMount ()   {
-  service.getUserData('user').then((keyValue) => {
-    console.log("local", keyValue);
-    var parsedData = JSON.parse(keyValue);
-    console.log("json", parsedData);
-    this.setState({ userResponse: parsedData});
-     this.getFeedRes();
- }, (error) => {
-    console.log(error) //Display error
-  });
+  this.setState ({ loading: true});
+  setTimeout(() => {
+    this.setState ({ loading: false});
+    service.getUserData('user').then((keyValue) => {
+      console.log("local", keyValue);
+      var parsedData = JSON.parse(keyValue);
+      console.log("json", parsedData);
+      this.setState({ userResponse: parsedData});
+       this.getFeedRes();
+   }, (error) => {
+      console.log(error) //Display error
+    });
+    }, 2000)
+ 
  }
 
  addToFavourites = () => {
@@ -69,60 +89,80 @@ export default class FEED extends Component {
       
      <SafeAreaView style={styles.Listcontainer}
      >
+        <View style={styles.tabsToolbar} >
+        <TouchableOpacity onPress={() => this.openDrawer()}>
+        <Image source={constants.menuicon} style={styles.hamburgerIcon} />
+        </TouchableOpacity>
+         <Text style={styles.toolbarTitle}>Freelancer</Text>
+         <TouchableOpacity onPress={() => this.goToNotification()}>
+         <Image source={constants.notificationIcon} style={styles.searchIcon} />
+        </TouchableOpacity>
+         <TouchableOpacity onPress={() => this.searchPage()}>
+         <Image source={constants.searchicon} style={styles.searchIcon} />
+        </TouchableOpacity>
+       
+       </View>
       <FlatList
         data={this.state.feeds.user.Job}
-        keyExtractor={ (item) => item.id.toString() }
-        renderItem={({ item }) => (
+        keyExtractor={(item, index) => index}
+        style={{marginTop :60, height:460}}
+        renderItem={({ item, index }) => (
            <View  style={styles.spaceFromTop}>
-              <View style={styles.listCard}>
-              <View style={styles.textInRow}> 
-              <Text style={styles.textWrap}> {item.title} 
-              </Text>
-              </View>
-              <View style={styles.textInRow}> 
-                <View >
-                    <Text style={styles.priceText}>Fixed Price</Text>
+              <TouchableOpacity style={styles.listCard} onPress={() => this.openDetails(item)}>
+                  <View style={styles.textInRow}> 
+                  <Text style={styles.textWrap}> {item.title} 
+                  </Text>
                   </View>
-                  <View style={styles.contPadding}>
-                     <Text >-</Text>
-                  </View>
-                  <View >
-                     <Text style={styles.date}>{item.start_date} </Text>
-                  </View>
-              </View>
-              <View style={styles.paddingAbove}>
-                  <View style={styles.textInRow2}> 
-                    <View style={styles.skillWidth}>
-                        <Text style={styles.skillText}>Skill Level</Text>
+                  <View style={styles.textInRow}> 
+                    <View >
+                        <Text style={styles.priceText}>Fixed Price</Text>
                       </View>
-                      <View style={styles.budgetWidth}>
-                        <Text style={styles.skillText}>{item.budget}</Text>
+                      <View style={styles.contPadding}>
+                        <Text >-</Text>
                       </View>
-                      <View style={styles.leftSpace}>
-                        <Text style={styles.date}></Text>
+                      <View >
+                        <Text style={styles.date}>{item.start_date} </Text>
                       </View>
                   </View>
-              </View>
-              <View style={styles.paddingAbove}>
-                  <View style={styles.textInRow2}> 
-                    <View style={styles.skillWidth}>
-                        <Text style={styles.skillText}>Expert</Text>
-                      </View>
-                      <View style={styles.budgetWidth}>
-                        <Text style={styles.skillText}>1000</Text>
-                      </View>
-                      <View style={styles.leftSpace}>
-                        <TouchableOpacity   onPress={() => this.pressIcon(item)}>
-                        <Image source={ imgSource } style={styles.icon}/>
-                        </TouchableOpacity>
+                  <View style={styles.paddingAbove}>
+                      <View style={styles.textInRow2}> 
+                        <View style={styles.skillWidth}>
+                            <Text style={styles.skillText}>Skill Level</Text>
+                          </View>
+                          <View style={styles.budgetWidth}>
+                            <Text style={styles.skillText}>{item.budget}</Text>
+                          </View>
+                          <View style={styles.leftSpace}>
+                            <Text style={styles.date}></Text>
+                          </View>
                       </View>
                   </View>
-              </View>
-              </View>
-              
+                  <View style={styles.paddingAbove}>
+                      <View style={styles.textInRow2}> 
+                        <View style={styles.skillWidth}>
+                            <Text style={styles.skillText}>Expert</Text>
+                          </View>
+                          <View style={styles.budgetWidth}>
+                            <Text style={styles.skillText}>1000</Text>
+                          </View>
+                          <View style={styles.leftSpace}>
+                            <TouchableOpacity   onPress={() => this.pressIcon(item, index)}>
+                              <MyView style={styles.topMargin} hide={this.state.isFav }> 
+                                    <Image source={ constants.heartIconfilled } style={styles.icon}/>
+                            </MyView>
+                                <MyView style={styles.topMargin} hide={!this.state.isFav }> 
+                                    <Image source={ constants.heartIcon } style={styles.icon}/>
+                              </MyView>
+                            </TouchableOpacity>
+                          </View>
+                      </View>
+                  </View>
+                  </TouchableOpacity>
           </View>
         )}
       />
+      <Loader
+              loading={this.state.loading} />
  </SafeAreaView>
       
      

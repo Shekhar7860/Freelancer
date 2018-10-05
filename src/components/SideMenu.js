@@ -239,7 +239,7 @@ goToFeedbackPage = () => {
                   <Image source={this.state.icon} style={styles.shareIcon}/>
                   </TouchableOpacity>
              </View>
-             {profile}
+             <Text style={styles.centerText}>{profile}</Text>
              </View>
           </View>
           <View style={styles.lowerContainerSideMenu}>

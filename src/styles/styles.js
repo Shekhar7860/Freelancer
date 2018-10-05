@@ -228,7 +228,7 @@ loginContainer:{
 },
 loginContainerSignIn:{
   alignItems:align.center,
-  marginTop: (Platform.OS === 'ios') ? 10 : 20
+  marginTop: (Platform.OS === 'ios') ? 12 : 27
 },
 buttonWidth:{
   width:300,
@@ -523,12 +523,12 @@ cardContainerSignUp:{
 		  paddingTop:100
 	  },
 	  headlineText:{
-		  fontSize:40,
+		  fontSize:50,
       color:colors.white,
       fontFamily: "blackjack"
 	  },
 	  accountHeadlineText:{
-		  fontSize:20,
+		  fontSize:50,
       color:colors.themeColor,
       fontFamily: fonts.themeFontBold
 	  },
@@ -608,7 +608,7 @@ cardContainerSignUp:{
 		  
     }, 
     sideMenuAlign:{
-      marginLeft:'10%'
+      alignItems:align.center
     },  
 	  lowerContainer:{
       height:'70%',
@@ -741,8 +741,6 @@ cardContainerSignUp:{
           marginTop:10
       },
       tabsPosition :{
-       bottom:0,
-       position:'absolute',
        backgroundColor:'red'
       },
       listCard:{
@@ -810,6 +808,15 @@ cardContainerSignUp:{
       leftSpace:{
         width:"20%"
       },
+      skillWidth2:{
+        width:"45%"
+      },
+      budgetWidth2:{
+        width:"10%"
+      },
+      leftSpace2:{
+        width:"45%"
+      },
       priceText:{
         marginLeft:10,
         marginTop:5,
@@ -827,6 +834,26 @@ cardContainerSignUp:{
       skillText:{
         fontSize:16,
         color:colors.themecolor,
+      },
+      centerText :{
+        textAlign :'center'
+      },
+      contentMargin:{
+        margin: 10
+      },
+      detailsContainer :{
+        margin:10
+      },
+      jobTitle :{
+        fontSize:20, 
+        color:'black'
+      },
+      textInRowJob:{
+        flexDirection:'row',
+        marginTop :10
+      },
+      space:{
+        paddingTop:15
       }
 
 })

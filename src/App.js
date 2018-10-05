@@ -29,6 +29,11 @@ import About from './components/About';
 import Feedback from './components/Feedback';
 import Notifications from './components/Notifications';
 import FindFreelancer from './components/FindFreelancer';
+import MobileSignin2 from './components/MobileSignIn2';
+import Details from './components/Details';
+import FreelancerDetails from './components/FreelancerDetails';
+import Tabs from './components/Tabs';
+import FEED from './components/Feed';
 export const Menu = DrawerNavigator({
   HomePage: { screen: Home},
   Messages: { screen: Messages},
@@ -39,7 +44,8 @@ export const Menu = DrawerNavigator({
   About: { screen: About},
   Feedback: { screen: Feedback},
   Notifications: { screen: Notifications},
-  FindFreelancer : {screen : FindFreelancer}
+  FindFreelancer: { screen: FindFreelancer},
+  FreelancerDetails : {screen : FreelancerDetails}
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300
@@ -51,11 +57,13 @@ const AppNavigator = StackNavigator(
     Welcome: { screen: Welcome},
     Select: { screen: SelectAccount },
     Login: { screen: MobileSignin },
+    Login2: { screen: MobileSignin2 },
     SignUp: { screen: SignUp},
     Forgot: { screen: ForgotPassword },
     Home: { screen: Menu },
     Otp : { screen: Otp},
-    Profile : { screen: Profile}
+    Profile : { screen: Profile},
+    Details : {screen : Details}
    
   },
   { headerMode: 'none' }

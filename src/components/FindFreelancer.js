@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Platform, StyleSheet,FlatList, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
+import Loader from './Loader';
 
 export default class FindFreelancer extends Component {
  constructor(props){
@@ -12,7 +13,7 @@ export default class FindFreelancer extends Component {
         userData: { picture_large:{ data:{}}},
         userResponse: {}, 
         freelancers : {},
-        failed: false
+        loading:false
       };
    
  }
@@ -20,6 +21,9 @@ export default class FindFreelancer extends Component {
   this.setState({ failed: true });
 }
  componentDidMount ()   {
+  this.setState ({ loading: true});
+  setTimeout(() => {
+    this.setState ({ loading: false});
     service.getUserData('user').then((keyValue) => {
       console.log("local", keyValue);
       var parsedData = JSON.parse(keyValue);
@@ -29,6 +33,9 @@ export default class FindFreelancer extends Component {
    }, (error) => {
       console.log(error) //Display error
     });
+
+    }, 2000)
+   
    }
 
  openDrawer = () => {
@@ -42,6 +49,11 @@ export default class FindFreelancer extends Component {
       this.setState({ freelancers: json});
     })
    }
+
+   openFreelancerDetails = (val) => {
+    console.log(this.props);
+   this.props.navigation.navigate('FreelancerDetails', { freelancerdetails: val }) 
+ }
 
   searchPage = () =>{
     alert("searching Page")   
@@ -73,7 +85,7 @@ export default class FindFreelancer extends Component {
         data={this.state.freelancers.freelancer}
         renderItem={({ item }) => (
            <View  style={styles.spaceFromTop}>
-              <View style={styles.listCardFreelancer}>
+              <TouchableOpacity style={styles.listCardFreelancer} onPress={() => this.openFreelancerDetails(item)}>
               <View style={styles.textInRow}> 
                  <View >
                  <Image source={{ uri: item.image_path || defaultImg  }}    style={styles.freelancerprofilePic} />
@@ -85,11 +97,13 @@ export default class FindFreelancer extends Component {
                      <Text style={styles.email}>{item.email} </Text>
                   </View>
               </View>
-              </View>
+              </TouchableOpacity>
           </View>
          )}
          />
      </View>
+     <Loader
+              loading={this.state.loading} />
  </SafeAreaView>
       
      

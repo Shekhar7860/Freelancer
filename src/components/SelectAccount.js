@@ -12,7 +12,7 @@ export default class SelectAccount extends Component {
  componentDidMount() {
   if(this.props.navigation.state.params)
   {
-   console.log(this.props.navigation.state.params.mobile)
+   console.log(this.props.navigation.state.params)
   }      
   }
 
@@ -23,22 +23,12 @@ export default class SelectAccount extends Component {
 
   goToSignUp = (userType) =>
   {
-     if(this.props.navigation.state.params)
-      {
-        console.log("params" + this.props.navigation.state.params)
-        var userData = {
-          type: userType,
-          mobile: this.props.navigation.state.params.mobile
-        }
-      this.props.navigation.navigate('Otp', { type: userData })
-      } 
-      else   
-      {
-        var userData = {
-          type: userType
-        }
-      this.props.navigation.navigate('Login', { type: userData })
-      }
+    console.log(this.props.navigation.state.params)
+    if(this.props.navigation.state.params)
+   {
+    this.props.navigation.navigate('Login2', { type: userType})
+   }    
+      this.props.navigation.navigate('Login2', { type: userType}) 
   }
 
  goToWelcome = () => 
@@ -53,14 +43,15 @@ export default class SelectAccount extends Component {
 			<Text style={styles.backButton} onPress={() => this.goToWelcome()}>
 			<Image source={constants.backicon} style={styles.icon}/>
 			</Text>
+      <Text style={styles.toolbarTitle}>Select Account</Text>
       </View>
 	     <View style={styles.accountHeadline}>
 	       <Text style={styles.accountHeadlineText}>Select Account Type</Text>
 		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp(0)}>
-		     <Text style={styles.accountButtonText}>I Want To Hire Freelancers</Text>
+		     <Text style={styles.accountButtonText}>I want to hire freelancers</Text>
 		   </TouchableOpacity>
 		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp(1)}>
-		     <Text style={styles.accountButtonText}>I Am Looking To Work </Text>
+		     <Text style={styles.accountButtonText}>I am looking to work </Text>
 		   </TouchableOpacity>
 		    <Text style={styles.selectAccountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>
 	     </View>

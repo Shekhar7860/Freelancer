@@ -19,15 +19,16 @@ import Loader from './Loader';
       loading:false,
       type:''
     }
+    
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     if(this.props.navigation.state.params)
     {
-     console.log(this.props.navigation.state.params.type.type)
-     this.setState({type: this.props.navigation.state.params.type.type})
-    }   
-  }
+     console.log(this.props.navigation.state.params)
+    }      
+    }
+  
  
   submit = () => 
   {
@@ -42,49 +43,69 @@ import Loader from './Loader';
       {
           this.setState ({ loading: true});
           setTimeout(() => 
-          {this.setState({loading: false})
+          {
+            this.setState({loading: false})
           service.loginOtp(this.state.mobile, this.state.type).then((res) => {
             console.log(res);
-            if(res)
-            {
-                if (res.status_code == 200)
-                {
-                this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
-                var personData = {
-                  type:this.state.type,
-                  mobile:this.state.mobile
-                }
-                this.openLogin(personData);
-                }
-                else
-                {
-                  this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
-                  if(this.state.type)
-                  {
-                    this.props.navigation.navigate('Otp',  { mobile: this.state.mobile })
+         if (res) 
+         {
+
+              if (res.status_code == 200)
+              {
+              if (res.message == "Otp Send Successfully" )
+              {
+                    this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
+                    var personData = {
+                    type:"",
+                    mobile:this.state.mobile
                   }
-                  else
-                  {
-                  this.props.navigation.navigate('Select',  { mobile: this.state.mobile }) 
-                  }
-                }
+                  this.openLogin(personData);
+              }
+              else 
+              {
+              this.refs.defaultToastBottom.ShowToastFunction("Logged In Successfully");
+              
+              this.openHome(personData, res.usertype);
+              }
+            
             }
             else
             {
-              this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
+              this.props.navigation.navigate('Select',  { mobile: this.state.mobile }) 
             }
-          })
-
-            }, 3000)
         }
-    }
+      else
+      {
+        this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
+      }
+    })
 
-    openLogin(mobile)
-    {
-      setTimeout(() => {
-      this.props.navigation.navigate('Otp',  { mobile: mobile })
-      }, 1000)
+      }, 3000)
     }
+  
+}
+
+openLogin(mobile)
+{
+setTimeout(() => {
+this.props.navigation.navigate('Otp',  { mobile: mobile })
+}, 1000)
+}
+
+openHome(mobile, type)
+{
+setTimeout(() => {
+  if (type == "0")
+  {
+  this.props.navigation.navigate('Home',  { mobile: mobile })
+  }
+  else 
+  {
+    this.props.navigation.navigate('FindFreelancer',  { mobile: mobile })
+  }
+}, 1000)
+}
+
 
     GetValueFunction = (ValueHolder) =>{
       var Value = ValueHolder.length.toString() ;

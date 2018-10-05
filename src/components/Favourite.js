@@ -48,6 +48,19 @@ export default class FAVOURITE extends Component {
         
       <SafeAreaView style={styles.Listcontainer}
       >
+       <View style={styles.tabsToolbar} >
+        <TouchableOpacity onPress={() => this.openDrawer()}>
+        <Image source={constants.menuicon} style={styles.hamburgerIcon} />
+        </TouchableOpacity>
+         <Text style={styles.toolbarTitle}>Freelancer</Text>
+         <TouchableOpacity onPress={() => this.goToNotification()}>
+         <Image source={constants.notificationIcon} style={styles.searchIcon} />
+        </TouchableOpacity>
+         <TouchableOpacity onPress={() => this.searchPage()}>
+         <Image source={constants.searchicon} style={styles.searchIcon} />
+        </TouchableOpacity>
+       
+       </View>
        <FlatList
          data={this.state.feeds.user.Job}
          renderItem={({ item }) => (

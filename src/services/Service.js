@@ -95,15 +95,13 @@ loginOtp = (mobile, type) =>
    });
 }
 
-verifyOtp = (mobile, otp, type) => 
+verifyOtp = (mobile, otp) => 
 {
-  console.log("usertype" + type)
   var data = {
     mobile: mobile,
-    otp   : otp,
-    usertype : type
+    otp   : otp
    }
-  
+  console.log(data)
  return  fetch(constants.apiUrl + '/user/verifiedOTP',
     {
       method: "POST",

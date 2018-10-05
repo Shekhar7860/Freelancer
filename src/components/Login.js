@@ -76,11 +76,13 @@ export default class Login extends Component {
                       {
                       this.setState({loading: false})
                       service.login(this.state.mobile, this.state.password).then((res) => {
+                        console.log(res);
                         if(res.status_code)
                         {
                             if(res.status == "success")
                             {
                               this.refs.defaultToastBottom.ShowToastFunction('Login Successfully');
+                              service.saveUserData('user', res.user-details);
                               this.goToHome();
                             }
                             else
