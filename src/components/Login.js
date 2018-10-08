@@ -28,11 +28,7 @@ export default class Login extends Component {
     componentDidMount = () => {
       
     }
-   
   
- 
-
-   
       goBack = () =>{
        this.props.navigation.pop()
       }
@@ -82,7 +78,7 @@ export default class Login extends Component {
                             if(res.status == "success")
                             {
                               this.refs.defaultToastBottom.ShowToastFunction('Login Successfully');
-                              service.saveUserData('user', res.user-details);
+                              // service.saveUserData('user', res.user-details);
                               this.goToHome();
                             }
                             else

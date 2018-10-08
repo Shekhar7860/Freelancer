@@ -109,7 +109,7 @@ import Loader from './Loader';
                         <View style={styles.rowAlign}>
                         <Image source={constants.phoneIcon} style={styles.inputIcon}/>
                         <TextInput  style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
-                    this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                    this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10} returnKeyType='done'></TextInput>
                         </View>
                         </View>
                     </View>

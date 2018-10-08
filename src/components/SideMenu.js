@@ -21,26 +21,31 @@ class SideMenu extends Component {
        names: [
         {
            id: 0,
-           name: 'Messages',
-           icon:constants.messagesIcon
+           name: 'Home',
+           icon:constants.homeIcon
         },
         {
-           id: 1,
+          id: 1,
+          name: 'Messages',
+          icon:constants.messagesIcon
+       },
+        {
+           id: 2,
            name: 'My Payment',
            icon:constants.paymentIcon
         },
         {
-           id: 2,
+           id: 3,
            name: 'Find Freelancer',
            icon:constants.searchFreelancerIcon
         },
         {
-           id: 3,
+           id: 4,
            name: 'My Projects',
            icon:constants.projectsIcon,
         },
         {
-          id: 4,
+          id: 5,
           name: 'Account',
           icon:constants.accountIcon,
        }
@@ -57,7 +62,7 @@ takePicture = () => {
 logOut = () =>{
   Alert.alert(
     'Log Out',
-    'Are you Sure? You want to Log Out', [{
+    'Are you sure? you want to log out ?', [{
         text: 'Cancel',
         style: 'cancel'
     },
@@ -82,27 +87,32 @@ componentDidMount ()   {
       this.setState ({
          names: [
           {
-             id: 0,
+            id: 0,
+            name: 'FindFreelancer',
+            icon:constants.homeIcon
+         },
+          {
+             id: 1,
              name: 'Messages',
              icon:constants.messagesIcon
           },
           {
-             id: 1,
+             id: 2,
              name: 'My balance',
              icon:constants.balanceIcon
           },
           {
-             id: 2,
+             id: 3,
              name: 'Find Works',
              icon:constants.searchFreelancerIcon
           },
           {
-             id: 3,
+             id: 4,
              name: 'My Jobs',
              icon:constants.projectsIcon,
           },
           {
-            id: 4,
+            id: 5,
             name: 'Account',
             icon:constants.accountIcon,
          }
@@ -117,17 +127,24 @@ componentDidMount ()   {
 
 exit = () => {
   service.clearLocalStorage();
-  this.props.navigation.navigate('Login')
+  this.props.navigation.navigate('Welcome')
+}
+ 
+goToProfile = () => {
+  this.props.navigation.navigate('Profile')
 }
 
-alertItemName = (item) => {
 
+alertItemName = (item) => {
   switch(item.name) {
     case 'My Payment':
      this.props.navigation.navigate("Payment");
      break;
      case 'My Projects':
      this.props.navigation.navigate("Projects");
+     break;
+     case 'My Jobs':
+     this.props.navigation.navigate("Jobs");
      break;
     default:
     this.props.navigation.navigate(item.name);
@@ -153,9 +170,7 @@ goToFeedbackPage = () => {
 
  toggleItems = () =>
  {
-  
   if(this.state.logOut)
-  
   {
   this.setState ({ logOut: false});
   this.setState ({ items: true});
@@ -167,7 +182,6 @@ goToFeedbackPage = () => {
     this.setState ({ logOut: true});
     this.setState ({ items: false}); 
   }
- 
  }
  
 
@@ -185,7 +199,8 @@ goToFeedbackPage = () => {
 
       
      var profile;
-     if (this.state.userResponse.usertype == 0) 
+     console.log(this.state.userResponse.usertype)
+     if (this.state.userResponse.usertype == 1) 
       {
          profile = ProfileName
       } 
@@ -228,7 +243,9 @@ goToFeedbackPage = () => {
       style={styles.container}>
           <View style={styles.upperContainerSideMenu}>
             <View style={styles.sideMenuAlign}>
+            <TouchableOpacity style={styles.arrowView} onPress = {() => this.goToProfile()}>
           {NewImage}
+          </TouchableOpacity>
             <View style={styles.rowAlignSideMenu}>
                   <View style={styles.name}>
                   {DefaultName}

@@ -45,34 +45,39 @@ import Loader from './Loader';
           setTimeout(() => 
           {
             this.setState({loading: false})
-          service.loginOtp(this.state.mobile, this.state.type).then((res) => {
-            console.log(res);
-         if (res) 
+          service.loginOtp(this.state.mobile).then((res) => {
+         if (res != undefined) 
          {
-
+           console.log(res);
               if (res.status_code == 200)
               {
-              if (res.message == "Otp Send Successfully" )
+              if (res.message == "OTP has been sent successfully" )
               {
+                  if (res.usertype == "0" )
+               {
                     this.refs.defaultToastBottom.ShowToastFunction("Otp Send Successfully");
                     var personData = {
-                    type:"",
                     mobile:this.state.mobile
                   }
-                  this.openLogin(personData);
+                  this.selectAccount(personData);
+              }
+              else
+              {
+                var personData = {
+                  mobile:this.state.mobile,
+                  type : res.usertype
+                }
+                console.log(personData)
+                this.openOtp(personData);
+              }
               }
               else 
               {
-              this.refs.defaultToastBottom.ShowToastFunction("Logged In Successfully");
-              
-              this.openHome(personData, res.usertype);
+                this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
               }
             
             }
-            else
-            {
-              this.props.navigation.navigate('Select',  { mobile: this.state.mobile }) 
-            }
+          
         }
       else
       {
@@ -85,25 +90,18 @@ import Loader from './Loader';
   
 }
 
-openLogin(mobile)
+openOtp(mobile)
 {
 setTimeout(() => {
 this.props.navigation.navigate('Otp',  { mobile: mobile })
 }, 1000)
 }
 
-openHome(mobile, type)
+selectAccount(mobile)
 {
-setTimeout(() => {
-  if (type == "0")
-  {
-  this.props.navigation.navigate('Home',  { mobile: mobile })
-  }
-  else 
-  {
-    this.props.navigation.navigate('FindFreelancer',  { mobile: mobile })
-  }
-}, 1000)
+  setTimeout(() => {
+    this.props.navigation.navigate('Select',  { mobile: mobile })
+    }, 1000)
 }
 
 
@@ -140,7 +138,7 @@ setTimeout(() => {
                         <View style={styles.rowAlign}>
                         <Image source={constants.phoneIcon} style={styles.inputIcon}/>
                         <TextInput  style={styles.textInputWidth} placeholder="Mobile Number" value={this.state.mobile} onChangeText={(text)=>
-                    this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10}></TextInput>
+                         this.GetValueFunction(text)}  keyboardType='numeric' maxLength={10} returnKeyType='done'></TextInput>
                         </View>
                         </View>
                     </View>

@@ -33,9 +33,11 @@ export default class Profile extends Component {
   goToSignUp = (userType) =>{
   this.props.navigation.navigate('SignUp', { type: userType })
       }
- goToHome = () => {
-	this.props.navigation.navigate('HomePage')
- }
+
+     goBack = () =>{
+        this.props.navigation.pop()
+       }
+
  goToUpdateProfile = () =>
  {
   this.props.navigation.navigate('UpdateProfile')
@@ -48,7 +50,7 @@ export default class Profile extends Component {
     return (
   <SafeAreaView>
 	    <View style={styles.toolbar}>
-			<Text style={styles.backButton} onPress={() => this.goToHome()}>
+			<Text style={styles.backButton} onPress={() => this.goBack()}>
 			<Image source={constants.backicon} style={styles.icon}/>
 			</Text>
          <Text style={styles.toolbarTitle}>Profile</Text>

@@ -12,7 +12,7 @@ export default class SelectAccount extends Component {
  componentDidMount() {
   if(this.props.navigation.state.params)
   {
-   console.log(this.props.navigation.state.params)
+   console.log(this.props.navigation.state.params.mobile)
   }      
   }
 
@@ -25,10 +25,15 @@ export default class SelectAccount extends Component {
   {
     console.log(this.props.navigation.state.params)
     if(this.props.navigation.state.params)
+    console.log(this.props.navigation.state.params.mobile)
    {
-    this.props.navigation.navigate('Login2', { type: userType})
+     var userData = {
+      type: userType,
+      mobile: this.props.navigation.state.params.mobile.mobile
+     }
+     console.log(userData)
+    this.props.navigation.navigate('Otp', { type: userData})
    }    
-      this.props.navigation.navigate('Login2', { type: userType}) 
   }
 
  goToWelcome = () => 
@@ -47,10 +52,10 @@ export default class SelectAccount extends Component {
       </View>
 	     <View style={styles.accountHeadline}>
 	       <Text style={styles.accountHeadlineText}>Select Account Type</Text>
-		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp(0)}>
+		   <TouchableOpacity style={styles.hireButtonBackground} onPress={() => this.goToSignUp(1)}>
 		     <Text style={styles.accountButtonText}>I want to hire freelancers</Text>
 		   </TouchableOpacity>
-		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp(1)}>
+		    <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.goToSignUp(2)}>
 		     <Text style={styles.accountButtonText}>I am looking to work </Text>
 		   </TouchableOpacity>
 		    <Text style={styles.selectAccountText}>Already have an account? <Text onPress={() => this.goToLogin()}>Login</Text></Text>

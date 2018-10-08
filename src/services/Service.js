@@ -73,13 +73,11 @@ login = (mobile, password) =>
    });
 }
 
-loginOtp = (mobile, type) => 
+loginOtp = (mobile) => 
 {
   var data = {
-    mobile: mobile,
-    usertype: type
+    mobile: mobile
    }
-   console.log(data);
  return  fetch(constants.apiUrl + '/user/send-otp',
     {
       method: "POST",
@@ -95,11 +93,33 @@ loginOtp = (mobile, type) =>
    });
 }
 
-verifyOtp = (mobile, otp) => 
+resendOtp = (mobile) => 
+{
+  var data = {
+    mobile: mobile
+   }
+   console.log(data);
+ return  fetch(constants.apiUrl + '/user/resend-otp',
+    {
+      method: "POST",
+      headers: {
+       "Accept": "application/json",
+       "Content-Type": "application/json"
+      },
+     body: JSON.stringify(data)
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+verifyOtp = (mobile, otp, type) => 
 {
   var data = {
     mobile: mobile,
-    otp   : otp
+    otp   : otp,
+    usertype : type
    }
   console.log(data)
  return  fetch(constants.apiUrl + '/user/verifiedOTP',
@@ -141,8 +161,32 @@ findFreelancer = (token) =>
    });
 }
 
+addFav = (token,jobId,isFav) => 
+{
+  var data = {
+    api_token: token,
+    job_id : jobId,
+    is_favourite : true
+   }
+  console.log(data)
+ return  fetch(constants.apiUrl + '/favourites/jobs',
+    {
+      method: "POST",
+      headers: {
+       "Accept": "application/json",
+       "Content-Type": "application/json"
+      },
+     body: JSON.stringify(data)
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
 getFavJobList = (token) => 
 {
+  console.log(token)
  return  fetch(constants.apiUrl + `/user/favourites/jobs/lists?&api_token=${token}`,
     {
       method: "GET"

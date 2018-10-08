@@ -65,7 +65,7 @@ export default  Tabs = TabNavigator(
         left: 0,
         right: 0,
         width:'100%',
-        bottom: 550,
+        bottom: (Platform.OS === 'ios') ? 550 : 516,
         height: 100,
         position:'absolute',
         backgroundColor: colors.themeColor,

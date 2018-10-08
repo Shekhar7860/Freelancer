@@ -29,28 +29,13 @@ export default class FEED extends Component {
    console.log(this.state.isFav)
  }
 
- 
-
  openDetails = (val) => {
    console.log(this.props);
   this.props.navigation.navigate('Detail',  { details: val }) 
 }
 
  componentDidMount ()   {
-  this.setState ({ loading: true});
-  setTimeout(() => {
-    this.setState ({ loading: false});
-    service.getUserData('user').then((keyValue) => {
-      console.log("local", keyValue);
-      var parsedData = JSON.parse(keyValue);
-      console.log("json", parsedData);
-      this.setState({ userResponse: parsedData});
-       this.getFeedRes();
-   }, (error) => {
-      console.log(error) //Display error
-    });
-    }, 2000)
- 
+  
  }
 
  addToFavourites = () => {
@@ -76,7 +61,8 @@ export default class FEED extends Component {
 
  
  openDrawer = () => {
-   this.props.navigation.openDrawer()}
+  this.props.navigation.navigate('draweropen')
+  }
 
   searchPage = () =>{
     alert("searching Page")   
@@ -89,19 +75,6 @@ export default class FEED extends Component {
       
      <SafeAreaView style={styles.Listcontainer}
      >
-        <View style={styles.tabsToolbar} >
-        <TouchableOpacity onPress={() => this.openDrawer()}>
-        <Image source={constants.menuicon} style={styles.hamburgerIcon} />
-        </TouchableOpacity>
-         <Text style={styles.toolbarTitle}>Freelancer</Text>
-         <TouchableOpacity onPress={() => this.goToNotification()}>
-         <Image source={constants.notificationIcon} style={styles.searchIcon} />
-        </TouchableOpacity>
-         <TouchableOpacity onPress={() => this.searchPage()}>
-         <Image source={constants.searchicon} style={styles.searchIcon} />
-        </TouchableOpacity>
-       
-       </View>
       <FlatList
         data={this.state.feeds.user.Job}
         keyExtractor={(item, index) => index}

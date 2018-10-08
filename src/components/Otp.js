@@ -30,16 +30,16 @@ import CustomToast from './CustomToast';
    {
       if(this.props.navigation.state.params)
       {
-        console.log(this.props.navigation.state.params)
-        if (this.props.navigation.state.params.type)
+        if(this.props.navigation.state.params.type)
         {
-        this.setState ({ mobile: this.props.navigation.state.params.type.mobile});
-        this.setState ({ type: this.props.navigation.state.params.type.type});
+          console.log(this.props.navigation.state.params.type.mobile);
+          this.setState({ mobile: this.props.navigation.state.params.type.mobile})
+          this.setState({ type:this.props.navigation.state.params.type.type})
         }
-        else
+        else if (this.props.navigation.state.params.mobile)
         {
-          this.setState ({ mobile: this.props.navigation.state.params.mobile.mobile});
-          this.setState ({ type: this.props.navigation.state.params.mobile.type});
+          this.setState({ mobile: this.props.navigation.state.params.mobile.mobile})
+          this.setState({ type:this.props.navigation.state.params.mobile.type})
         }
       }
    }
@@ -61,15 +61,15 @@ import CustomToast from './CustomToast';
         var String_3 = this.state.first.concat(this.state.second);
         var String_4 = this.state.third.concat(value);
         var String_34 = String_3.concat(String_4);
-        console.log(this.state.type)
         service.verifyOtp(this.state.mobile, String_34, this.state.type).then((res) => {
             console.log(res);
-            if(res.status_code)
+            if(res.status_code == 200)
             {
               if(res.status == "success")
               {
               service.saveUserData('user', res.user);
-              this.goToHome(res);
+              this.refs.defaultToastBottom.ShowToastFunction("Login Successfully");
+                this.goToHome(res);
               }
               else
               {
@@ -79,7 +79,7 @@ import CustomToast from './CustomToast';
             }
             else
             {
-              this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
+             // this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
             }
           })
        }
@@ -91,8 +91,7 @@ import CustomToast from './CustomToast';
      }
 
    goToHome = (res) => {
-     console.log("userres", res);
-     if(res.user.usertype == 0 )
+     if(res.user.usertype == 1 )
      {
      this.props.navigation.navigate('FindFreelancer')
      }
@@ -108,10 +107,14 @@ import CustomToast from './CustomToast';
     setTimeout(() => 
     {
     this.setState({loading: false})
-    service.loginOtp(this.state.mobile, this.state.type).then((res) => {
+    service.resendOtp(this.state.mobile).then((res) => {
       console.log(res)
       if(res)
       {
+        this.firstTextInput.clear();
+        this.secondTextInput.clear();
+        this.thirdTextInput.clear();
+        this.fourthTextInput.clear();
         this.refs.defaultToastBottom.ShowToastFunction(res.message);
       }
       else
@@ -136,7 +139,7 @@ import CustomToast from './CustomToast';
             <View style = {{top:30,backgroundColor:colors.themeColor,width: dimensions.fullWidth,height:dimensions.fullHeight/2 - 80,alignItems:'center',}}><Text style = {{fontSize:25,fontWeight:'400' , top:15, color:colors.white}} >VERIFICATION CODE</Text>
             <Text style = {{fontSize:16,fontWeight:'200' , top:30, color:colors.white}}>Enter the four digit code sent to you at</Text>
             <Text style = {{fontSize:16,fontWeight:'200' , top:40, color:colors.white}}> + 91 - {this.state.mobile}</Text>
-            <KeyboardAvoidingView behavior = 'padding'
+            <View behavior = 'padding'
             >
                   <View style = {{top:50,backgroundColor:'',width:240,height:70,flexDirection:'row', marginTop:20}}>
                       <TextInput placeholder = ""
@@ -144,18 +147,19 @@ import CustomToast from './CustomToast';
                       onChangeText={first => {this.setState({first}), this.secondTextInput.focus()}}
                       placeholderTextColor = 'black'
                       autoCapitalize = 'none'
-                      returnKeyType = "next"
+                      returnKeyType = "done"
                       maxLength={1}
-                      keyboardType = 'number-pad'
+                      keyboardType='numeric'
                       autoFocus={true}
+                      ref={(input) => { this.firstTextInput = input; }}
                       style = {styles.input} />
                       <TextInput placeholder = ""
                       textAlign={'center'}
                       onChangeText={second => {this.setState({second}), this.thirdTextInput.focus()}}
                       placeholderTextColor = 'black'
                       autoCapitalize = 'none'
-                      returnKeyType = "next"
-                      keyboardType = 'number-pad'
+                      returnKeyType = "done"
+                      keyboardType='numeric'
                       maxLength={1}
                       ref={(input) => { this.secondTextInput = input; }}
                       style = {styles.input} />
@@ -165,8 +169,8 @@ import CustomToast from './CustomToast';
                       placeholderTextColor = 'black'
                       autoCapitalize = 'none'
                       maxLength={1}
-                      returnKeyType = "next"
-                      keyboardType = 'number-pad'
+                      returnKeyType = "done"
+                      keyboardType='numeric'
                       ref={(input) => { this.thirdTextInput = input; }}
                       style = {styles.input}/>
                       <TextInput placeholder = ""
@@ -175,13 +179,13 @@ import CustomToast from './CustomToast';
                           this.GetFourthValue(text)}
                       placeholderTextColor = 'black'
                       autoCapitalize = 'none'
-                      returnKeyType = "next"
-                      keyboardType = 'number-pad'
+                      returnKeyType = "done"
+                      keyboardType='numeric'
                       maxLength={1}
                       ref={(input) => { this.fourthTextInput = input; }}
                       style = {styles.input} />
                   </View>
-            </KeyboardAvoidingView>
+            </View>
            </View>
    </View>
     <TouchableOpacity style={styles.otpButton} onPress={() => this.resendOtp()}>

@@ -17,6 +17,10 @@ export default class FindFreelancer extends Component {
       };
    
  }
+
+ componentWillUnmount () {
+  this.setState ({ loading: false});
+ }
  _onError = () => {
   this.setState({ failed: true });
 }

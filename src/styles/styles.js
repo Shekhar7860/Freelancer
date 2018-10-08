@@ -67,6 +67,13 @@ tabsToolbar:{
   paddingTop:10,
   paddingBottom:padding.sm,
   flexDirection:'row',
+  backgroundColor:colors.themeColor
+
+   //Step 1
+},
+topView:{
+  paddingTop:10,
+  paddingBottom:padding.sm,
   backgroundColor:colors.themeColor,
   height:50
    //Step 1
@@ -228,7 +235,7 @@ loginContainer:{
 },
 loginContainerSignIn:{
   alignItems:align.center,
-  marginTop: (Platform.OS === 'ios') ? 12 : 27
+  marginTop: 12
 },
 buttonWidth:{
   width:300,
@@ -432,6 +439,10 @@ cardContainerSignUp:{
         width:25,
         height:25
       },
+      newsearchIcon:{
+        width:20,
+        height:20
+      },
       listIcon:{
         width:25,
         height:25,
@@ -528,7 +539,7 @@ cardContainerSignUp:{
       fontFamily: "blackjack"
 	  },
 	  accountHeadlineText:{
-		  fontSize:50,
+		  fontSize: (Platform.OS === 'ios') ? 50 : 25,
       color:colors.themeColor,
       fontFamily: fonts.themeFontBold
 	  },
@@ -578,7 +589,8 @@ cardContainerSignUp:{
 		  textAlign:align.center,
 		  fontSize:15,
       color:colors.white,
-      fontFamily: fonts.themeFont
+      fontFamily: fonts.themeFont,
+      
 	  },
 	   accountText:{
 		  textAlign:align.center,
@@ -673,7 +685,7 @@ cardContainerSignUp:{
 		  justifyContent:align.center
     },
     mobilebuttonBackground:{
-      marginTop: (Platform.OS === 'ios') ? 75 : 65,
+      marginTop: (Platform.OS === 'ios') ? 75 : 72,
 		  backgroundColor:colors.themeColor,
       width:dimensions.fullWidth - 140 ,
 		  borderRadius:25,
@@ -854,6 +866,53 @@ cardContainerSignUp:{
       },
       space:{
         paddingTop:15
+      },
+      space2:{
+       marginTop:10
+      },
+      Tab1 :{
+        width:'40%'
+      },
+      Tab2 :{
+        width:'30%'
+      },
+      Tab3 :{
+        width:'40%'
+      },
+      empty:{
+        width:'5%'
+      },
+      tabs:{
+        flexDirection:'row',
+         color :'white',
+        backgroundColor :colors.themeColor,
+        height:45
+      },
+      textWhite:{
+        color :'white',
+        textAlign :'left',
+        paddingTop:10
+      },
+      textFeed:{
+        color :'white',
+        textAlign :'center',
+        paddingTop:10
+      },
+      topInput:{
+        width:'100%'
+      },
+      searchContainer:{
+        marginLeft:20,
+        borderWidth: 1,
+        borderColor:'white'
+  
+      },
+      topSearchbar:{
+        flexDirection:'row'
       }
+
+      
+
+      
 
 })
