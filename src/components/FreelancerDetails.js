@@ -37,7 +37,6 @@ export default class FreelancerDetails extends Component {
 	    <View style={styles.toolbar}>
 			<Text style={styles.backButton} onPress={() => this.goBack()}>
 			<Image source={constants.backicon} style={styles.icon}/>
-           
 			</Text>
             <Text style={styles.toolbarTitle}>Freelancer Details</Text>
       </View>

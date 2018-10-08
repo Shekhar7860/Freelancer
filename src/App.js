@@ -35,6 +35,7 @@ import FreelancerDetails from './components/FreelancerDetails';
 import Tabs from './components/Tabs';
 import FEED from './components/Feed';
 import Jobs from './components/Jobs';
+import UpdateProfile from './components/UpdateProfile';
 import Service from './services/Service';
 export const Menu = DrawerNavigator({
   Home: { screen: Home},
@@ -48,6 +49,7 @@ export const Menu = DrawerNavigator({
   Notifications: { screen: Notifications},
   FindFreelancer: { screen: FindFreelancer},
   FreelancerDetails : {screen : FreelancerDetails},
+  UpdateProfile : {screen : UpdateProfile},
   Jobs : {screen : Jobs}
 }, {
   contentComponent: SideMenu,

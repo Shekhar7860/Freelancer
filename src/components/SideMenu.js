@@ -62,7 +62,7 @@ takePicture = () => {
 logOut = () =>{
   Alert.alert(
     'Log Out',
-    'Are you sure? you want to log out ?', [{
+    'Are you sure you want to logout?', [{
         text: 'Cancel',
         style: 'cancel'
     },

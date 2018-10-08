@@ -73,13 +73,13 @@ import CustomToast from './CustomToast';
               }
               else
               {
-                this.refs.defaultToastBottom.ShowToastFunction(res.message);
+                this.refs.defaultToastBottom.ShowToastFunction("Incorrect OTP! Please Try Again");
               }
              // this.openLogin(this.state.mobile);
             }
             else
             {
-             // this.refs.defaultToastBottom.ShowToastFunction("Network Error"); 
+              this.refs.defaultToastBottom.ShowToastFunction("Incorrect OTP! Please Try Again"); 
             }
           })
        }
@@ -189,7 +189,7 @@ import CustomToast from './CustomToast';
            </View>
    </View>
     <TouchableOpacity style={styles.otpButton} onPress={() => this.resendOtp()}>
-        <Text style={styles.accountButtonText}>Resend Otp</Text>
+        <Text style={styles.accountButtonText}>Resend OTP</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.lookingButtonBackground} onPress={() => this.gotoSignIn()}>
         <Text style={styles.accountButtonText}>Change Number </Text>

@@ -12,6 +12,7 @@ export default class Profile extends Component {
     constants = new Constants();
     this.state = { 
       userResponse: {},
+      userType : ""
      }
   }
 
@@ -20,6 +21,14 @@ export default class Profile extends Component {
       console.log("local", keyValue);
       var parsedData = JSON.parse(keyValue);
       console.log("json", parsedData);
+      if(parsedData.usertype == 1)
+      {
+      this.setState({ userType: "Client"});
+      }
+      else
+      {
+      this.setState({ userType: "Freelancer"}); 
+      }
       this.setState({ userResponse: parsedData});
    }, (error) => {
       console.log(error) //Display error
@@ -66,7 +75,7 @@ export default class Profile extends Component {
             <Text>UserName</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Name"></TextInput>
+            <Text>{this.state.userResponse.username}</Text>
             </View>
          </View>
          </View>
@@ -76,7 +85,7 @@ export default class Profile extends Component {
             <Text>Email</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Email"></TextInput>
+            <Text>{this.state.userResponse.email}</Text>
             </View>
          </View>
          </View>
@@ -86,7 +95,7 @@ export default class Profile extends Component {
             <Text>About Me</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "About me"></TextInput>
+            <Text>{this.state.userResponse.short_bio}</Text>
             </View>
          </View>
          </View>
@@ -96,7 +105,7 @@ export default class Profile extends Component {
             <Text>User Type</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = " User Type"></TextInput>
+            <Text>{this.state.userType}</Text>
             </View>
          </View>
          </View>

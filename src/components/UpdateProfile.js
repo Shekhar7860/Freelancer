@@ -16,7 +16,8 @@ export default class UpdateProfile extends Component {
         email:'',
         name:'',
         about:'',
-        loading: false
+        loading: false,
+        userType : ""
       }
   }
  
@@ -25,6 +26,14 @@ export default class UpdateProfile extends Component {
       console.log("local", keyValue);
       var parsedData = JSON.parse(keyValue);
       console.log("json", parsedData);
+      if(parsedData.usertype == 1)
+      {
+      this.setState({ userType: "Client"});
+      }
+      else
+      {
+      this.setState({ userType: "Freelancer"}); 
+      }
       this.setState({ userResponse: parsedData});
    }, (error) => {
       console.log(error) //Display error
@@ -69,6 +78,9 @@ export default class UpdateProfile extends Component {
     }, 1000)
  }
 
+ goBack = () =>{
+  this.props.navigation.navigate('Profile')
+ }
 
   render() {
     const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic}/>
@@ -76,10 +88,10 @@ export default class UpdateProfile extends Component {
     return (
   <SafeAreaView style={styles.container}>
 	    <View style={styles.toolbar}>
-			<Text style={styles.backButton} onPress={() => this.goToHome()}>
+			<Text style={styles.backButton} onPress={() => this.goBack()}>
 			<Image source={constants.backicon} style={styles.icon}/>
 			</Text>
-         <Text style={styles.toolbarTitle}>Profile</Text>
+         <Text style={styles.toolbarTitle}>Update Profile</Text>
          <TouchableOpacity onPress={() => this.updateProfile()}>
          <Text style={styles.updateText}>DONE</Text>
         </TouchableOpacity>
@@ -92,7 +104,7 @@ export default class UpdateProfile extends Component {
             <Text>UserName</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Name" onChangeText={(text)=>this.setState({ name:text})}></TextInput>
+            <TextInput  placeholder = "Name" onChangeText={(text)=>this.setState({ name:text})} value={this.state.userResponse.username}></TextInput>
             </View>
          </View>
          </View>
@@ -102,7 +114,7 @@ export default class UpdateProfile extends Component {
             <Text>Email</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Email" onChangeText={(text)=>this.setState({ email:text})}></TextInput>
+            <TextInput  placeholder = "Email" onChangeText={(text)=>this.setState({ email:text})} value={this.state.userResponse.email}></TextInput>
             </View>
          </View>
          </View>
@@ -112,7 +124,7 @@ export default class UpdateProfile extends Component {
             <Text>About Me</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = "About me" onChangeText={(text)=>this.setState({ about:text})}></TextInput>
+            <TextInput  placeholder = "About me" onChangeText={(text)=>this.setState({ about:text})}  value={this.state.userResponse.short_bio}></TextInput>
             </View>
          </View>
          </View>
@@ -122,7 +134,7 @@ export default class UpdateProfile extends Component {
             <Text>User Type</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = " User Type"></TextInput>
+            <TextInput  placeholder = " User Type" value={this.state.userType}></TextInput>
             </View>
          </View>
          </View>

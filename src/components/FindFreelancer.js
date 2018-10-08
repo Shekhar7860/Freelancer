@@ -84,9 +84,10 @@ export default class FindFreelancer extends Component {
         <Image source={constants.searchicon} style={styles.searchIcon} />
         </TouchableOpacity>
      </View>
-     <View style={styles.homeContent}>
+     <View style={styles.listCenter}>
      <FlatList
         data={this.state.freelancers.freelancer}
+        style={styles.listCardWidth}
         renderItem={({ item }) => (
            <View  style={styles.spaceFromTop}>
               <TouchableOpacity style={styles.listCardFreelancer} onPress={() => this.openFreelancerDetails(item)}>

@@ -94,7 +94,7 @@ backButton:{
 },
 toolbarTitle:{
     color:colors.white,
-    textAlign:align.center,
+    textAlign:'center',
     fontWeight:'bold',
     flex:1,
     marginTop: (Platform.OS === 'ios') ? 5 : 0,
@@ -344,7 +344,7 @@ cardContainerSignUp:{
      marginRight:25},
      homeContent:{
        alignItems:align.center,
-       width:'100%'
+       width: 100
      },
      cardImage:{
        width:'90%',
@@ -905,10 +905,15 @@ cardContainerSignUp:{
         marginLeft:20,
         borderWidth: 1,
         borderColor:'white'
-  
       },
       topSearchbar:{
         flexDirection:'row'
+      },
+      listCardWidth : {
+        width: '90%'
+      },
+      listCenter:{
+        alignItems:align.center
       }
 
       

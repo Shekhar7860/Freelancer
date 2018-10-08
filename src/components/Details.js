@@ -34,13 +34,15 @@ export default class Details extends Component {
   render() {
       console.log(this.state.details)
     return (
-  <SafeAreaView>
-	    <View style={styles.toolbar}>
-			<Text style={styles.backButton} onPress={() => this.goBack()}>
-			<Image source={constants.backicon} style={styles.icon}/>
-			</Text>
-            <Text style={styles.toolbarTitle}>Job Details</Text>
-      </View>
+  <SafeAreaView style={styles.container}>
+      <View style={styles.toolbar} >
+        <TouchableOpacity onPress={() => this.goBack()}>
+        <Image source={constants.backicon} style={styles.hamburgerIcon}/>
+        </TouchableOpacity>
+        <Text style={styles.toolbarTitle}>Job Details</Text>
+         <TouchableOpacity>
+        </TouchableOpacity>
+     </View>
 	     <View style={styles.detailsContainer}>
 	       <Text style={styles.jobTitle}>{this.state.details.title}</Text>
            <View style={styles.textInRowJob}>
