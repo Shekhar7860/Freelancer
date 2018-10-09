@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, SafeAreaView,Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
+import {Platform, StyleSheet, Text, View,ScrollView, SafeAreaView,Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
 import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 import Loader from './Loader';
+import HTMLView from 'react-native-htmlview';
 export default class Details extends Component {
   constructor(props){
     super(props);
@@ -25,8 +26,6 @@ export default class Details extends Component {
     
   }
 
- 
-
   goBack = () =>{
     this.props.navigation.pop()
    }
@@ -34,15 +33,15 @@ export default class Details extends Component {
   render() {
       console.log(this.state.details)
     return (
-  <SafeAreaView style={styles.container}>
-      <View style={styles.toolbar} >
-        <TouchableOpacity onPress={() => this.goBack()}>
-        <Image source={constants.backicon} style={styles.hamburgerIcon}/>
-        </TouchableOpacity>
-        <Text style={styles.toolbarTitle}>Job Details</Text>
-         <TouchableOpacity>
-        </TouchableOpacity>
-     </View>
+  <SafeAreaView>
+  <ScrollView>
+        <View style={styles.commontoolbar}>
+          <TouchableOpacity style={styles.commontoolbarButton} onPress={() => this.goBack()}>
+          <Image source={constants.backicon} style={styles.commonBackIcon}/>
+          </TouchableOpacity>
+          <Text style={styles.toolbarTitle}>Job Details</Text>
+          <Text style={styles.commontoolbarButton}></Text>
+        </View>
 	     <View style={styles.detailsContainer}>
 	       <Text style={styles.jobTitle}>{this.state.details.title}</Text>
            <View style={styles.textInRowJob}>
@@ -83,12 +82,13 @@ export default class Details extends Component {
                     </View>
                     <View style={styles.space}>
                     <Text style={styles.jobTitle}>Details</Text>
-                    <Text style={styles.jobTitle}>{this.state.details.description}</Text>
+                    <HTMLView value={this.state.details.description} style={styles.jobTitle}/>
                     </View>
             </View>
 	     </View>
          <Loader
-              loading={this.state.loading} />     
+              loading={this.state.loading} /> 
+     </ScrollView>    
    </SafeAreaView>
 	   
     );

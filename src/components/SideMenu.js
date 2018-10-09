@@ -36,16 +36,11 @@ class SideMenu extends Component {
         },
         {
            id: 3,
-           name: 'Find Freelancer',
-           icon:constants.searchFreelancerIcon
-        },
-        {
-           id: 4,
            name: 'My Projects',
            icon:constants.projectsIcon,
         },
         {
-          id: 5,
+          id: 4,
           name: 'Account',
           icon:constants.accountIcon,
        }
@@ -87,32 +82,27 @@ componentDidMount ()   {
       this.setState ({
          names: [
           {
-            id: 0,
-            name: 'FindFreelancer',
-            icon:constants.homeIcon
-         },
-          {
-             id: 1,
+             id: 0,
              name: 'Messages',
              icon:constants.messagesIcon
           },
           {
-             id: 2,
-             name: 'My balance',
+             id: 1,
+             name: 'My Balance',
              icon:constants.balanceIcon
           },
           {
-             id: 3,
+             id: 2,
              name: 'Find Works',
              icon:constants.searchFreelancerIcon
           },
           {
-             id: 4,
+             id: 3,
              name: 'My Jobs',
              icon:constants.projectsIcon,
           },
           {
-            id: 5,
+            id: 4,
             name: 'Account',
             icon:constants.accountIcon,
          }
@@ -126,7 +116,8 @@ componentDidMount ()   {
  }
 
 exit = () => {
-  service.clearLocalStorage();
+  //service.clearLocalStorage();
+  service.saveUserData('user', "");
   this.props.navigation.navigate('Welcome')
 }
  
@@ -145,6 +136,12 @@ alertItemName = (item) => {
      break;
      case 'My Jobs':
      this.props.navigation.navigate("Jobs");
+     break;
+     case 'Find Works':
+     this.props.navigation.navigate("FindFreelancer");
+     break;
+     case 'My Balance':
+     this.props.navigation.navigate("Balance");
      break;
     default:
     this.props.navigation.navigate(item.name);
@@ -196,48 +193,45 @@ goToFeedbackPage = () => {
    const DefaultName = <Text style={styles.defaultUserName}>{this.state.userResponse.username}</Text>
    const ProfileName = <Text style={styles.defaultUserName}>Client</Text>
    const ProfileName2 = <Text style={styles.defaultUserName}>Freelancer</Text>
-
-      
-     var profile;
-     console.log(this.state.userResponse.usertype)
-     if (this.state.userResponse.usertype == 1) 
-      {
-         profile = ProfileName
-      } 
-      else 
-      {
-        profile = ProfileName2
-      }
-        if (this.state.name == "fb") {
-              if(fbImage.props.source.uri !== null){
-                userImage =  fbImage
-              }
-              else
-              {
-                userImage = NewImage
-              }
-              userName = fbName
+   
+      var profile;
+      if (this.state.userResponse.usertype == 1) 
+        {
+          profile = ProfileName
         } 
-        else if(this.state.name == "google")
-         {
-         
-                if(GoogleImage.props.source.uri !== null){
-                  userImage = GoogleImage
+        else 
+        {
+          profile = ProfileName2
+        }
+          if (this.state.name == "fb") {
+                if(fbImage.props.source.uri !== null){
+                  userImage =  fbImage
                 }
                 else
                 {
                   userImage = NewImage
                 }
-                userName = GoogleName
-        }
-        else
-        {
-          userImage = NewImage
-        }
-      
+                userName = fbName
+          } 
+          else if(this.state.name == "google")
+          {
+          
+                  if(GoogleImage.props.source.uri !== null){
+                    userImage = GoogleImage
+                  }
+                  else
+                  {
+                    userImage = NewImage
+                  }
+                  userName = GoogleName
+          }
+          else
+          {
+            userImage = NewImage
+          }
+        
       
     return (
-     
       <SafeAreaView
       source={constants.loginbg}
       style={styles.container}>
@@ -248,15 +242,25 @@ goToFeedbackPage = () => {
           </TouchableOpacity>
             <View style={styles.rowAlignSideMenu}>
                   <View style={styles.name}>
-                  {DefaultName}
                   </View>
                   <View style={styles.blank}>
+                    <Text style={styles.textFontSideMenu}>{DefaultName}</Text>
                   </View>
                   <TouchableOpacity style={styles.arrowView} onPress = {() => this.toggleItems()}>
                   <Image source={this.state.icon} style={styles.shareIcon}/>
                   </TouchableOpacity>
              </View>
-             <Text style={styles.centerText}>{profile}</Text>
+             <View style={styles.space2}>
+             <View style={styles.rowAlignSideMenu}>
+                  <View style={styles.name}>
+                  </View>
+                  <View style={styles.blank}>
+                    <Text style={styles.textFontSideMenu}>{profile}</Text>
+                  </View>
+                  <TouchableOpacity style={styles.arrowView}>
+                  </TouchableOpacity>
+             </View>
+             </View>
              </View>
           </View>
           <View style={styles.lowerContainerSideMenu}>

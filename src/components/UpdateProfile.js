@@ -86,7 +86,7 @@ export default class UpdateProfile extends Component {
     const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic}/>
     // const fbImage = <Image source={{uri: this.state.userFbData.picture_large.data.url}} style={styles.profilePic} />;
     return (
-  <SafeAreaView style={styles.container}>
+  <SafeAreaView style={styles.MainContainer}>
 	    <View style={styles.toolbar}>
 			<Text style={styles.backButton} onPress={() => this.goBack()}>
 			<Image source={constants.backicon} style={styles.icon}/>
@@ -134,7 +134,7 @@ export default class UpdateProfile extends Component {
             <Text>User Type</Text>
             </View>
             <View style={styles.boxContainer}>
-            <TextInput  placeholder = " User Type" value={this.state.userType}></TextInput>
+            <TextInput  placeholder = " User Type" value={this.state.userType} editable={false}></TextInput>
             </View>
          </View>
          </View>

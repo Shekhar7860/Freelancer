@@ -9,7 +9,7 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, BackHandler, Alert} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
-import { StackNavigator, DrawerNavigator } from 'react-navigation';
+import { createStackNavigator, DrawerNavigator } from 'react-navigation';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
@@ -37,6 +37,9 @@ import FEED from './components/Feed';
 import Jobs from './components/Jobs';
 import UpdateProfile from './components/UpdateProfile';
 import Service from './services/Service';
+import Balance from './components/Balance';
+import PostProject from './components/PostProject';
+import JobDetails from './components/JobDetails';
 export const Menu = DrawerNavigator({
   Home: { screen: Home},
   Messages: { screen: Messages},
@@ -50,14 +53,17 @@ export const Menu = DrawerNavigator({
   FindFreelancer: { screen: FindFreelancer},
   FreelancerDetails : {screen : FreelancerDetails},
   UpdateProfile : {screen : UpdateProfile},
-  Jobs : {screen : Jobs}
+  Jobs : {screen : Jobs},
+  Balance : {screen : Balance},
+  PostProject :{screen :PostProject},
+  JobDetails :{screen : JobDetails},
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300
 });
 
 // routing 
-const AppNavigator = StackNavigator(
+const AppNavigator = createStackNavigator(
   {
     Welcome: { screen: Welcome},
     Select: { screen: SelectAccount },
@@ -69,7 +75,6 @@ const AppNavigator = StackNavigator(
     Otp : { screen: Otp},
     Profile : { screen: Profile},
     Details : {screen : Details}
-   
   },
   { headerMode: 'none' }
 );
@@ -83,6 +88,7 @@ export default class App extends Component {
       userResponse: {},
       firstScreen : Welcome
     };
+    console.reportErrorsAsExceptions = false;
   }
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
@@ -95,7 +101,7 @@ export default class App extends Component {
       {
         if(parsedData.usertype == 1 )
        {
-       this.props.navigation.navigate('FindFreelancer')
+       this.props.navigation.navigate('Jobs')
        }
        else
        {

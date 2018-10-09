@@ -93,7 +93,7 @@ import CustomToast from './CustomToast';
    goToHome = (res) => {
      if(res.user.usertype == 1 )
      {
-     this.props.navigation.navigate('FindFreelancer')
+     this.props.navigation.navigate('Jobs')
      }
      else
      {

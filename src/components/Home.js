@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, SafeAreaView,TextInput, FlatList,  Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, SafeAreaView, ScrollView,Alert, TouchableHighlight, TextInput, Modal, FlatList,  Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
 import Tabs from './Tabs';
@@ -24,8 +24,24 @@ export default class Home extends Component {
       isFav  : false,
       isCat : false,
       search : true,
-      itemFav : false
+      itemFav : false,
+     modalVisible: false
     };
+      
+    service.getUserData('count').then((keyValue) => {
+      console.log("local", keyValue);
+      var parsedData = JSON.parse(keyValue);
+      console.log("json", parsedData);
+      if(parsedData != 1)
+      {
+        Alert.alert(
+          'Please update profile'
+       )
+      }
+   }, (error) => {
+      console.log(error) //Display error
+    });
+ //   this.setState({modalVisible: true});
  }
 
  pressIcon = (val, index) => {
@@ -33,6 +49,8 @@ export default class Home extends Component {
    if(val.is_favourite === 0 ){
     this.setState({ itemFav : true});
    }
+
+   
   service.addFav(this.state.userResponse.api_token, val.jobid, this.state.itemFav).then((res) => {
     console.log("checkres", res);
     newres = JSON.stringify(res);
@@ -44,6 +62,11 @@ export default class Home extends Component {
     }
     //this.setState({ feeds: json});
   })
+  
+}
+
+setModalVisible(visible) {
+  this.setState({modalVisible: visible});
 }
 
 openDetails = (val) => {
@@ -65,9 +88,10 @@ componentDidMount ()   {
   }, (error) => {
      console.log(error) //Display error
    });
+   service.saveUserData('count', 1);
    }, 2000)
-
 }
+
 
 addToFavourites = () => {
 console.log("heartfilled" + constants.paymentIcon)
@@ -84,20 +108,30 @@ console.log("heartfilled" + constants.paymentIcon)
 getFeedRes = () => {
  service.getFeedList(this.state.userResponse.api_token).then((res) => {
    console.log("checkres", res);
+   if(res != undefined)
+    {
    newres = JSON.stringify(res);
    json = JSON.parse(newres);
    this.setState({ feeds: json});
+    }
  })
 }
 
 getActiveJobs = () => {
   service.getFavJobList(this.state.userResponse.api_token).then((res) => {
     console.log("listcheckres", res);
+    if(res != undefined)
+    {
     newres = JSON.stringify(res);
     json = JSON.parse(newres);
     this.setState({ favourites: json});
+    }
   })
  }
+
+ hideSearch = () =>{
+  this.setState({ search: true});
+}
 
 hideTab = () => {
   
@@ -113,13 +147,14 @@ hideTab = () => {
   }
   
 }
+
   openDrawer = () => {
    this.props.navigation.openDrawer()}
 
    goToNotification = () => {
     this.props.navigation.navigate('Notifications')}
 
-  searchPage = () =>{
+   searchPage = () =>{
     this.setState({ search: false});
         }
 
@@ -129,7 +164,7 @@ hideTab = () => {
     }
 
   render() {
-   console.log(this.state.favourites)
+  // console.log(this.state.favourites)
     return (
         
      <SafeAreaView
@@ -138,13 +173,13 @@ hideTab = () => {
       <View style={styles.topView}>
       <MyView  hide={this.state.search} style={styles.searchContainer}>
       <View style={styles.topSearchbar}>
-
           <Image source={constants.searchicon} style={styles.newsearchIcon} />
           <View style={styles.empty}>
           </View>
          <TextInput  style={styles.searchContainer} placeholder="Search job"  placeholderTextColor="white" style={styles.topInput}/>
+         <Text style={styles.closeButtton} onPress={() => this.hideSearch()}>X</Text>
       </View>
-       </MyView>
+      </MyView>
         <MyView style={styles.tabsToolbar} hide={!this.state.search}>
         <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
@@ -171,6 +206,7 @@ hideTab = () => {
             <View style={styles.empty}>
             </View>
        </View>
+       <ScrollView>
        <MyView hide={!this.state.isFeed}>
             <FlatList
               data={this.state.feeds.user.Job}
@@ -219,10 +255,10 @@ hideTab = () => {
                                 <View style={styles.leftSpace}>
                                   <TouchableOpacity   onPress={() => this.pressIcon(item, index)}>
                                     <MyView style={styles.topMargin} hide={!this.state.isFav }> 
-                                          <Image source={ constants.heartIconfilled } style={styles.icon}/>
+                                          <Image source={ constants.heartIconfilled } style={styles.iconHeart}/>
                                   </MyView>
                                       <MyView style={styles.topMargin} hide={this.state.isFav }> 
-                                          <Image source={ constants.heartIcon } style={styles.icon}/>
+                                          <Image source={ constants.heartIcon } style={styles.iconHeart}/>
                                     </MyView>
                                   </TouchableOpacity>
                                 </View>
@@ -233,6 +269,8 @@ hideTab = () => {
               )}
             />
             </MyView>
+            </ScrollView>
+            <ScrollView>
             <MyView hide={!this.state.isFav}>
             <FlatList
               data={this.state.favourites.Job}
@@ -286,9 +324,33 @@ hideTab = () => {
               )}
             />
             </MyView>
+            </ScrollView>
             <CustomToast ref = "defaultToastBottom"/> 
      <Loader
               loading={this.state.loading} />
+             
+               <Modal
+      transparent={true}
+      animationType={'none'}
+      visible={this.state.modalVisible}
+      onRequestClose={() => {console.log('close modal')}}>
+      <View style={styles.homemodalBackground}>
+        <View style={styles.homeModalStyle}>
+              <View style={styles.modalToolbar}>
+                  <TouchableOpacity style={styles.commontoolbarButton} >
+                  </TouchableOpacity>
+                  <Text style={styles.modalTitle}>Modal</Text>
+                  <TouchableOpacity  style={styles.commontoolbarButton} onPress={() => {
+                      this.setModalVisible(!this.state.modalVisible);
+                    }}>
+                    <Image source={constants.closeIcon} style={styles.commonBackIcon}/>
+                  </TouchableOpacity>
+              </View>
+              <Text>Hi</Text>
+              <Text>This is a basic Modal</Text>
+        </View>
+      </View>
+    </Modal>      
  </SafeAreaView>
       
      

@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet,FlatList, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
+import {Platform, StyleSheet, TextInput, FlatList, SafeAreaView, Text, View, Image, ImageBackground, Button, TouchableOpacity} from 'react-native';
 import Constants from '../constants/Constants';
 import Service from '../services/Service';
 import Loader from './Loader';
-
+import MyView from './MyView';
 export default class FindFreelancer extends Component {
  constructor(props){
      super(props);
@@ -13,7 +13,8 @@ export default class FindFreelancer extends Component {
         userData: { picture_large:{ data:{}}},
         userResponse: {}, 
         freelancers : {},
-        loading:false
+        loading:false,
+        search : true
       };
    
  }
@@ -59,9 +60,9 @@ export default class FindFreelancer extends Component {
    this.props.navigation.navigate('FreelancerDetails', { freelancerdetails: val }) 
  }
 
-  searchPage = () =>{
-    alert("searching Page")   
-        }
+ searchPage = () =>{
+  this.setState({ search: false});
+      }
 
   
   render() {
@@ -75,7 +76,16 @@ export default class FindFreelancer extends Component {
      <SafeAreaView
       source={constants.loginbg}
       style={styles.container}>
-    <View style={styles.toolbar} >
+      <View style={styles.topView}>
+       <MyView  hide={this.state.search} style={styles.searchContainer}>
+          <View style={styles.topSearchbar}>
+              <Image source={constants.searchicon} style={styles.newsearchIcon} />
+              <View style={styles.empty}>
+              </View>
+            <TextInput  style={styles.searchContainer} placeholder="Search job"  placeholderTextColor="white" style={styles.topInput}/>
+          </View>
+      </MyView>
+    <MyView style={styles.tabsToolbar} hide={!this.state.search}>
         <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
         </TouchableOpacity>
@@ -83,11 +93,12 @@ export default class FindFreelancer extends Component {
          <TouchableOpacity onPress={() => this.searchPage()}>
         <Image source={constants.searchicon} style={styles.searchIcon} />
         </TouchableOpacity>
+     </MyView>
      </View>
      <View style={styles.listCenter}>
      <FlatList
         data={this.state.freelancers.freelancer}
-        style={styles.listCardWidth}
+        style={styles.freelancerlistCardWidth}
         renderItem={({ item }) => (
            <View  style={styles.spaceFromTop}>
               <TouchableOpacity style={styles.listCardFreelancer} onPress={() => this.openFreelancerDetails(item)}>

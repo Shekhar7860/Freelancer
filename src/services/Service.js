@@ -13,9 +13,6 @@ export default class Service {
     
   }
 
-  
-
-
 saveUserData = async (key, value) => {
   //console.log(key ,value);
   try {
@@ -27,10 +24,7 @@ saveUserData = async (key, value) => {
 };
 
 getUserData = async (key) => {
-  
-    var data = await AsyncStorage.getItem(key) || 'none';
-    // console.log("check data ")
-  
+  var data = await AsyncStorage.getItem(key) || 'none';
   return data;
 }
 
@@ -152,6 +146,18 @@ getFeedList = (token) =>
 findFreelancer = (token) => 
 {
  return  fetch(constants.apiUrl + `/find-freelancer?&api_token=${token}`,
+    {
+      method: "GET"
+   }).then((response) => 
+   response.json())
+   .catch((error) => {
+     console.error(error);
+   });
+}
+
+jobs = (token) => 
+{
+ return fetch(constants.apiUrl + `/user/jobs?&api_token=${token}`,
     {
       method: "GET"
    }).then((response) => 

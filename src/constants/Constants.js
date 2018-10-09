@@ -43,4 +43,5 @@ export default class Constants  {
   heartIconfilled=  require('../images/heartfilled.png');
   clockIcon=  require('../images/clock.png');
   editIcon=  require('../images/edit2.png');
+  closeIcon=  require('../images/close.png');
 }
