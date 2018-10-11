@@ -933,12 +933,12 @@ cardContainerSignUp:{
         marginLeft:20,
         borderWidth: 1,
         borderColor:'white',
-        height :30,
+        height :40,
         width:'90%'
       },
       topSearchbar:{
         flexDirection:'row',
-        paddingTop :5
+        paddingTop :8
       },
       listCardWidth : {
         width: '100%'
@@ -1064,6 +1064,39 @@ cardContainerSignUp:{
   },
   defaultTextSize:{
     fontSize:20
+  },
+  bottomViewrequest:{
+  height: 50, 
+  backgroundColor: '#FF9800', 
+  position:'absolute',
+  bottom :0
+  },
+  MainContainerRequest:
+  {
+   flex: 1,
+   alignItems:'center'
+  },
+  rowAlignSideMenuRequest :{
+    flexDirection:'row'
+  },
+  emptySpaceRequest :{
+    width:'10%'
+  },
+  buttonWidthRequest :{
+    width:'35%',
+    backgroundColor: colors.themeColor,
+    color:'#fff'
+  },
+  requestButton :{
+    width:0,
+    color :'white'
+  },
+  footer:{
+    position:'absolute',
+    bottom:10
   }
+  
+  
+
   
 })

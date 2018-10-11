@@ -26,6 +26,10 @@ export default class FindFreelancer extends Component {
   this.setState({ failed: true });
 }
  componentDidMount ()   {
+  if(this.props.navigation.state.params)
+  {
+   console.log(this.props.navigation.state.params)
+   }  
   this.setState ({ loading: true});
   setTimeout(() => {
     this.setState ({ loading: false});
@@ -56,8 +60,13 @@ export default class FindFreelancer extends Component {
    }
 
    openFreelancerDetails = (val) => {
-    console.log(this.props);
-   this.props.navigation.navigate('FreelancerDetails', { freelancerdetails: val }) 
+   var clientDetails = 
+   {
+     clt_Details : this.props.navigation.state.params.client_Details,
+     freelancerDetails : val
+
+   }
+   this.props.navigation.navigate('FreelancerDetails', { freelancerdetails: clientDetails }) 
  }
 
  searchPage = () =>{

@@ -228,6 +228,65 @@ console.error(error);
 });
 }
 
+sendProposal= (api_token, freelancerId, jobId) => 
+{
+var data = {
+api_token: api_token,
+freelancer_id: freelancerId ,
+job_id: jobId
+
+}
+console.log(data);
+return fetch(constants.apiUrl + '/client/sendJobRequest',
+{
+method: "POST",
+headers: {
+"Accept": "application/json",
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}).then((response) => 
+response.json())
+.catch((error) => {
+console.error(error);
+});
+}
+
+post_project = (api_token,title,description,country,category,job_type,budget,start_date,end_date) => 
+{
+var data = {
+"api_token":api_token ,
+"title": title,
+"description": description,
+"country":"",
+"category":"",
+"job_type":"",
+"budget":"",
+"start_date":"2018-10-04",
+"end_date":"2018-10-11",
+"skills_name": {
+"lastname": "",
+"email": "",
+"phone": ""
+},
+"publics":1
+}
+console.log(data)
+console.log(constants.apiUrl + '/submit-job')
+return fetch(constants.apiUrl + '/submit-job',
+{
+method: "POST",
+headers: {
+"Accept": "application/json",
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}).then((response) => 
+response.json())
+.catch((error) => {
+console.error(error);
+});
+}
  
   
   

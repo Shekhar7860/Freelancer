@@ -10,7 +10,8 @@ import {
   ImageBackground,
   Button,
   TextInput, 
-  TouchableOpacity
+  TouchableOpacity,
+  Modal
 } from "react-native";
 import Constants from "../constants/Constants";
 import Service from "../services/Service";
@@ -28,11 +29,28 @@ export default class Jobs extends Component {
       failed: false,
       search : true,
       loading:false,
-      dummyText : ""
+      dummyText : "",
+      modalVisible: false
     };
-    _onError = () => {
-      this.setState({ failed: true });
-    };
+   
+    service.getUserData('count').then((keyValue) => {
+      console.log("local", keyValue);
+      if(keyValue === "none")
+      {
+        this.setState ({ loading: false});
+        this.setModalVisible(true);
+      }
+      else
+      {
+       this.setState ({ loading: true});
+      }
+   }, (error) => {
+      console.log(error) //Display error
+    });
+  }
+
+  setModalVisible(visible) {
+    this.setState({modalVisible: visible});
   }
 
   findFreelancer = () => {
@@ -40,7 +58,6 @@ export default class Jobs extends Component {
   }
 
   componentDidMount() {
-    this.setState ({ loading: true});
   setTimeout(() => {
     this.setState ({ loading: false});
     service.getUserData("user").then(
@@ -55,8 +72,9 @@ export default class Jobs extends Component {
         console.log(error); //Display error
       }
     );
+    service.saveUserData('count', 1);
   
-    }, 2000)
+    }, 3000)
   }
 
   openDrawer = () => {
@@ -88,8 +106,11 @@ export default class Jobs extends Component {
   };
 
   openDetails = (val) => {
-    console.log(this.props);
-   this.props.navigation.navigate('JobDetails',  { details: val }) 
+   var jobData = {
+     token : this.state.userResponse.api_token,
+     details : val
+   }
+   this.props.navigation.navigate('JobDetails',  { details: jobData }) 
   }
 
   render() {
@@ -190,6 +211,28 @@ export default class Jobs extends Component {
         </View>
         <Loader
               loading={this.state.loading} />
+                    <Modal
+            transparent={true}
+            animationType={'none'}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {console.log('close modal')}}>
+            <View style={styles.homemodalBackground}>
+              <View style={styles.homeModalStyle}>
+                    <View style={styles.modalToolbar}>
+                        <TouchableOpacity style={styles.commontoolbarButton} >
+                        </TouchableOpacity>
+                        <Text style={styles.modalTitle}>Modal</Text>
+                        <TouchableOpacity  style={styles.commontoolbarButton} onPress={() => {
+                            this.setModalVisible(!this.state.modalVisible);
+                          }}>
+                          <Image source={constants.closeIcon} style={styles.commonBackIcon}/>
+                        </TouchableOpacity>
+                    </View>
+                    <Text>About Us</Text>
+                    <Text>Know About the Application</Text>
+              </View>
+            </View>
+          </Modal>      
       </SafeAreaView>
     );
   }

@@ -4,6 +4,7 @@ import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 import Loader from './Loader';
 import HTMLView from 'react-native-htmlview';
+import CustomToast from './CustomToast';
 export default class FreelancerDetails extends Component {
   constructor(props){
     super(props);
@@ -22,7 +23,7 @@ export default class FreelancerDetails extends Component {
       if(this.props.navigation.state.params)
   {
    console.log(this.props.navigation.state.params.freelancerdetails)
-   this.setState({ freelancerDetails: this.props.navigation.state.params.freelancerdetails})
+   this.setState({ freelancerDetails: this.props.navigation.state.params.freelancerdetails.freelancerDetails})
   }    
       }, 1000)
    
@@ -31,6 +32,17 @@ export default class FreelancerDetails extends Component {
   submitProposal = () => {
     this.setState ({ loading: true});
   setTimeout(() => {
+    service.sendProposal(this.props.navigation.state.params.freelancerdetails.clt_Details.apiToken, this.state.freelancerDetails.id,  this.props.navigation.state.params.freelancerdetails.clt_Details.jobId).then((res) => {
+      console.log("checkres", res);
+      if(res.status == "success")
+      {
+        this.refs.defaultToastBottom.ShowToastFunction("Request Send Successfully");
+      }
+      else 
+      {
+        this.refs.defaultToastBottom.ShowToastFunction("Already Sent Request"); 
+      }
+    })
     this.setState ({ loading: false});
     }, 2000)
   }
@@ -59,7 +71,8 @@ export default class FreelancerDetails extends Component {
               loading={this.state.loading} /> 
     <TouchableOpacity style={ styles.bottomView} onPress={() => this.submitProposal()}>
       <Text style={styles.textStyle}>Submit Proposal</Text>
-      </TouchableOpacity>     
+      </TouchableOpacity> 
+      <CustomToast ref = "defaultToastBottom"/>     
    </SafeAreaView>
 	   
     );

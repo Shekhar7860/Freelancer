@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,ScrollView, SafeAreaView,Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
+import {Platform, StyleSheet, Text, View, Button, ScrollView, SafeAreaView,Image, ImageBackground, ActivityIndicator, TouchableOpacity, TouchableNativeFeedback} from 'react-native';
 import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 import Loader from './Loader';
 import HTMLView from 'react-native-htmlview';
+import CustomToast from './CustomToast';
 export default class Details extends Component {
   constructor(props){
     super(props);
@@ -26,6 +27,21 @@ export default class Details extends Component {
     
   }
 
+  requestAcceptReject = (val) => 
+  {
+  this.setState ({ loading: true});
+  setTimeout(() => {
+    this.setState ({ loading: false});
+    if(val == "a")
+    {
+      this.refs.defaultToastBottom.ShowToastFunction('Request Accepted Successfully');
+    }
+    else
+    {
+      this.refs.defaultToastBottom.ShowToastFunction('Request Rejected');
+    }
+    }, 2000)
+  }
   goBack = () =>{
     this.props.navigation.pop()
    }
@@ -33,7 +49,7 @@ export default class Details extends Component {
   render() {
       console.log(this.state.details)
     return (
-  <SafeAreaView>
+  <SafeAreaView style = { styles.MainContainerRequest }>
   <ScrollView>
         <View style={styles.commontoolbar}>
           <TouchableOpacity style={styles.commontoolbarButton} onPress={() => this.goBack()}>
@@ -82,13 +98,34 @@ export default class Details extends Component {
                     </View>
                     <View style={styles.space}>
                     <Text style={styles.jobTitle}>Details</Text>
-                    <HTMLView value={this.state.details.description} style={styles.jobTitle}/>
+                    <View style={styles.jobTitle}>
+                    <HTMLView value={this.state.details.description} />
+                    </View>
                     </View>
             </View>
 	     </View>
-         <Loader
-              loading={this.state.loading} /> 
-     </ScrollView>    
+     </ScrollView> 
+     <Loader
+              loading={this.state.loading} />
+    <View style={styles.footer}>
+              <View  style={styles.rowAlignSideMenu}>
+              <View style={styles.emptySpaceRequest}>
+              </View>
+              <View style={styles.buttonWidthRequest}>
+                <Button  color='white'  title="Accept" onPress={() => this.requestAcceptReject('a')}></Button>
+              </View>
+              <View style={styles.emptySpaceRequest}>
+              </View>
+              <View style={styles.buttonWidthRequest}>
+                <Button  color='white' title="Reject" onPress={() => this.requestAcceptReject('r')}></Button>
+              </View>
+                <View style={styles.emptySpaceRequest}>
+              </View>
+              </View> 
+              <View style={styles.emptySpaceRequest}>
+              </View> 
+      </View> 
+      <CustomToast ref = "defaultToastBottom"/>  
    </SafeAreaView>
 	   
     );

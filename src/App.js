@@ -57,6 +57,36 @@ export const Menu = DrawerNavigator({
   Balance : {screen : Balance},
   PostProject :{screen :PostProject},
   JobDetails :{screen : JobDetails},
+  Login: { screen: MobileSignin },
+  Welcome: { screen: Welcome},
+  Details : {screen : Details},
+  Otp : { screen: Otp}
+}, {
+  contentComponent: SideMenu,
+  drawerWidth: 300
+});
+
+export const ClientNav = DrawerNavigator({
+  Jobs: { screen: Jobs},
+  Messages: { screen: Messages},
+  Payment: { screen: Payment},
+  Projects: { screen: Projects},
+  Account: { screen: Account},
+  Settings: { screen: Settings},
+  About: { screen: About},
+  Feedback: { screen: Feedback},
+  Notifications: { screen: Notifications},
+  FindFreelancer: { screen: FindFreelancer},
+  FreelancerDetails : {screen : FreelancerDetails},
+  UpdateProfile : {screen : UpdateProfile},
+  Home : {screen : Home},
+  Balance : {screen : Balance},
+  PostProject :{screen :PostProject},
+  JobDetails :{screen : JobDetails},
+  Login: { screen: MobileSignin },
+  Welcome: { screen: Welcome},
+  Details : {screen : Details},
+  Otp : { screen: Otp}
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300
@@ -90,6 +120,7 @@ export default class App extends Component {
     };
     console.reportErrorsAsExceptions = false;
   }
+
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     SplashScreen.hide()
@@ -97,18 +128,10 @@ export default class App extends Component {
       console.log("local", keyValue);
       var parsedData = JSON.parse(keyValue);
       console.log("sidemenujson", parsedData);
-      if(parsedData.usertype !== null)
-      {
-        if(parsedData.usertype == 1 )
-       {
-       this.props.navigation.navigate('Jobs')
-       }
-       else
-       {
-        this.props.navigation.navigate('Home') 
-       }
-      }
-      this.setState({ userResponse: parsedData});
+     
+       this.setState({ userResponse: parsedData});
+     
+     
    }, (error) => {
       console.log(error) //Display error
     });
@@ -128,7 +151,7 @@ export default class App extends Component {
   
   handleBackButton = () => {
     
-     if(this.state.navState.routeName == "Home" || this.state.navState.routeName == "FindFreelancer")
+     if(this.state.navState.routeName == "Home" || this.state.navState.routeName == "Jobs")
     {
       Alert.alert(
         'Exit App',
@@ -147,13 +170,38 @@ export default class App extends Component {
     }
      
    } 
+
   render() {
-    return (
-      <AppNavigator
-      onNavigationStateChange={this.onNavigationChange}
-    />
-    );
-  }
+      if(this.state.userResponse.usertype != undefined)
+      {
+        if (this.state.userResponse.usertype == 1){
+          return (
+              <ClientNav/>
+          ) 
+        } 
+        else if (this.state.userResponse.usertype == 2)
+        {
+          return(
+              <Menu/>
+          ) 
+        }
+        else 
+        {
+          return(
+            null
+          ) 
+        }
+    }
+      else
+      {
+        return(
+          <AppNavigator  onNavigationStateChange={this.onNavigationChange}/>
+      ) 
+       }
+       
+      }
+
+
 }
 
 

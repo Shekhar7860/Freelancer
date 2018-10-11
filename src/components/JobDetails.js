@@ -20,24 +20,28 @@ export default class JobDetails extends Component {
       this.setState ({ loading: false});
       if(this.props.navigation.state.params)
     {
-    this.setState({ details: this.props.navigation.state.params.details})
+    this.setState({ details: this.props.navigation.state.params.details.details})
      }    
       }, 1000)
     
   }
 
   goToFreelancerPage = () => {
-    this.props.navigation.navigate('FindFreelancer')
+    var clientDetails = {
+      apiToken : this.props.navigation.state.params.details.token,
+      jobId : this.state.details.jobid
+    }
+    this.props.navigation.navigate('FindFreelancer', { client_Details: clientDetails })
    }
 
   goBack = () => {
-    this.props.navigation.pop()
+    this.props.navigation.navigate('Jobs');
    }
 
    
   
   render() {
-      console.log(this.state.details)
+      console.log(this.props.navigation.state.params.details)
     return (
   <SafeAreaView style = { styles.MainContainer }>
   <ScrollView>

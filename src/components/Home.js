@@ -15,8 +15,8 @@ export default class Home extends Component {
      constants = new Constants();
      this.state = {
       userResponse: {},
-      feeds : {user:{ Job: [] }},
-      favourites : { Job: [] },
+      feeds : {request_list: [] },
+      favourites : { request_list: [] },
       heartIcon : constants.heartIcon,
       showSoundImg: true,
       isFeed : true,
@@ -25,18 +25,21 @@ export default class Home extends Component {
       isCat : false,
       search : true,
       itemFav : false,
-     modalVisible: false
+     modalVisible: false,
+     noText : true,
+     dummyText : ""
     };
       
     service.getUserData('count').then((keyValue) => {
       console.log("local", keyValue);
-      var parsedData = JSON.parse(keyValue);
-      console.log("json", parsedData);
-      if(parsedData != 1)
+      if(keyValue === "none")
       {
-        Alert.alert(
-          'Please update profile'
-       )
+        this.setState ({ loading: false});
+        this.setModalVisible(true);
+      }
+      else
+      {
+       this.setState ({ loading: true});
       }
    }, (error) => {
       console.log(error) //Display error
@@ -75,7 +78,6 @@ openDetails = (val) => {
 }
 
 componentDidMount ()   {
- this.setState ({ loading: true});
  setTimeout(() => {
    this.setState ({ loading: false});
    service.getUserData('user').then((keyValue) => {
@@ -89,7 +91,7 @@ componentDidMount ()   {
      console.log(error) //Display error
    });
    service.saveUserData('count', 1);
-   }, 2000)
+   }, 3000)
 }
 
 
@@ -110,9 +112,14 @@ getFeedRes = () => {
    console.log("checkres", res);
    if(res != undefined)
     {
-   newres = JSON.stringify(res);
-   json = JSON.parse(newres);
-   this.setState({ feeds: json});
+      if(res.request_list == "")
+      {
+        this.setState ({ dummyText: "No Request Found"});
+        this.setState ({  noText: false});
+      }
+      newres = JSON.stringify(res);
+      json = JSON.parse(newres);
+      this.setState({ feeds: json});
     }
  })
 }
@@ -206,21 +213,24 @@ hideTab = () => {
             <View style={styles.empty}>
             </View>
        </View>
+         <MyView style={styles.noTextContainer} hide={this.state.noText}>
+         <Text style = {styles.defaultTextSize}>{this.state.dummyText}</Text>
+          </MyView>
        <ScrollView>
        <MyView hide={!this.state.isFeed}>
             <FlatList
-              data={this.state.feeds.user.Job}
+              data={this.state.feeds.request_list}
               keyExtractor={(item, index) => index}
               style={{marginTop :0}}
-              extraData={this.state.feeds.user.Job}
+              extraData={this.state.feeds.request_list}
               renderItem={({ item, index }) => (
                 <View  style={styles.spaceFromTop}>
                     <TouchableOpacity style={styles.listCard} onPress={() => this.openDetails(item)}>
-                        <View style={styles.textInRow}> 
+                        <View style={styles.textInRow} > 
                         <Text style={styles.textWrap}> {item.title} 
                         </Text>
                         </View>
-                        <View style={styles.textInRow}> 
+                        <View style={styles.textInRow} > 
                           <View >
                               <Text style={styles.priceText}>Fixed Price</Text>
                             </View>
@@ -232,7 +242,7 @@ hideTab = () => {
                             </View>
                         </View>
                         <View style={styles.paddingAbove}>
-                            <View style={styles.textInRow2}> 
+                            <View style={styles.textInRow2} > 
                               <View style={styles.skillWidth}>
                                   <Text style={styles.skillText}>Skill Level</Text>
                                 </View>
@@ -246,14 +256,13 @@ hideTab = () => {
                         </View>
                         <View style={styles.paddingAbove}>
                             <View style={styles.textInRow2}> 
-                              <View style={styles.skillWidth}>
+                               <View style={styles.skillWidth} >
                                   <Text style={styles.skillText}>Expert</Text>
                                 </View>
-                                <View style={styles.budgetWidth}>
-                                  <Text style={styles.skillText}>1000</Text>
+                                <View style={styles.budgetWidth} >
                                 </View>
-                                <View style={styles.leftSpace}>
-                                  <TouchableOpacity   onPress={() => this.pressIcon(item, index)}>
+                                <View style={styles.leftSpace} >
+                                  <TouchableOpacity onPress={() => this.pressIcon(item, index)}>
                                     <MyView style={styles.topMargin} hide={!this.state.isFav }> 
                                           <Image source={ constants.heartIconfilled } style={styles.iconHeart}/>
                                   </MyView>
@@ -271,11 +280,11 @@ hideTab = () => {
             </MyView>
             </ScrollView>
             <ScrollView>
-            <MyView hide={!this.state.isFav}>
+            <MyView hide={!this.state.isFav} style={{flex:1}}>
             <FlatList
-              data={this.state.favourites.Job}
+              data={this.state.favourites.request_list}
               keyExtractor={(item, index) => index}
-              extraData={this.state.favourites.Job}
+              extraData={this.state.favourites.request_list}
               renderItem={({ item, index }) => (
                 <View  style={styles.spaceFromTop}>
                     <TouchableOpacity style={styles.listCard} onPress={() => this.openDetails(item)}>
@@ -346,8 +355,8 @@ hideTab = () => {
                     <Image source={constants.closeIcon} style={styles.commonBackIcon}/>
                   </TouchableOpacity>
               </View>
-              <Text>Hi</Text>
-              <Text>This is a basic Modal</Text>
+              <Text>About Us</Text>
+              <Text>Know About the Application</Text>
         </View>
       </View>
     </Modal>      
