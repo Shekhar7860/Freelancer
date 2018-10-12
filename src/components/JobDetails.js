@@ -4,13 +4,20 @@ import styles from '../styles/styles';
 import Constants from '../constants/Constants';
 import Loader from './Loader';
 import HTMLView from 'react-native-htmlview';
+import CustomToast from './CustomToast';
+import Service from '../services/Service';
+import MyView from './MyView';
 export default class JobDetails extends Component {
   constructor(props){
     super(props);
     constants = new Constants();
+    service = new Service();
     this.state = { 
+      userResponse: {},
         details : {},
-        loading:false
+        loading:false,
+        hireText : "Find Freelancer",
+        hired : false
       }
   }
 
@@ -18,26 +25,71 @@ export default class JobDetails extends Component {
     this.setState ({ loading: true});
     setTimeout(() => {
       this.setState ({ loading: false});
+      service.getUserData('user').then((keyValue) => {
+        console.log("local", keyValue);
+        var parsedData = JSON.parse(keyValue);
+        console.log("json", parsedData);
+        this.setState({ userResponse: parsedData});
+     }, (error) => {
+        console.log(error) //Display error
+      });
       if(this.props.navigation.state.params)
     {
+      if(this.props.navigation.state.params.details.details.request_status == "Accepted")
+      {
+        this.setState({ hireText: "Hire Freelancer"})
+      }
+      else if(this.props.navigation.state.params.details.details.request_status == "Hired")
+      {
+        this.setState({ hired: true})
+      }
     this.setState({ details: this.props.navigation.state.params.details.details})
      }    
       }, 1000)
     
   }
 
-  goToFreelancerPage = () => {
+  goToFreelancerPage = (status) => {
     var clientDetails = {
       apiToken : this.props.navigation.state.params.details.token,
       jobId : this.state.details.jobid
     }
+    if (status == "Find Freelancer")
+    {
     this.props.navigation.navigate('FindFreelancer', { client_Details: clientDetails })
+    }
+    else
+    {
+      this.setState ({ loading: true});
+      setTimeout(() => {
+        this.setState ({ loading: false});
+        service.requestResponse(this.state.userResponse.api_token, "Hired", this.props.navigation.state.params.details.details.jobid).then((res) => {
+          console.log("checkres", res);
+          if(res.status == "success")
+          {
+            this.refs.defaultToastBottom.ShowToastFunction('Hired Successfully');
+             this.goToHome();
+          }
+          else 
+          {
+            this.refs.defaultToastBottom.ShowToastFunction("An Error Occured"); 
+          }
+        })
+        
+      }, 1000)
+    }
    }
 
   goBack = () => {
     this.props.navigation.navigate('Jobs');
    }
 
+   goToHome()
+   {
+   setTimeout(() => {
+   this.props.navigation.navigate('Jobs')
+   }, 1000)
+   }
    
   
   render() {
@@ -99,9 +151,12 @@ export default class JobDetails extends Component {
          <Loader
               loading={this.state.loading} /> 
      </ScrollView>
-     <TouchableOpacity style={ styles.bottomView} onPress={() => this.goToFreelancerPage()}>
-         <Text style={styles.textStyle}>Find Freelancer</Text>
-      </TouchableOpacity>    
+     <MyView style = { styles.MainContainer } hide={this.state.hired}>
+     <TouchableOpacity style={ styles.bottomView} onPress={() => this.goToFreelancerPage(this.state.hireText)}>
+         <Text style={styles.textStyle}>{this.state.hireText}</Text>
+      </TouchableOpacity>
+      </MyView>
+      <CustomToast ref = "defaultToastBottom"/>   
    </SafeAreaView>
 	   
     );

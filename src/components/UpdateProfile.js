@@ -17,11 +17,17 @@ export default class UpdateProfile extends Component {
         name:'',
         about:'',
         loading: false,
-        userType : ""
+        userType : "",
+        category :'Category'
       }
   }
  
   componentDidMount ()   {
+    if(this.props.navigation.state.params)
+    {
+      console.log(this.props.navigation.state.params.category)
+      this.setState ({ category: this.props.navigation.state.params.category});
+    }
     service.getUserData('user').then((keyValue) => {
       console.log("local", keyValue);
       var parsedData = JSON.parse(keyValue);
@@ -53,14 +59,14 @@ export default class UpdateProfile extends Component {
           setTimeout(() => 
           {
           this.setState({loading: false})
-          service.profile_update(this.state.userResponse.api_token,this.state.name,this.state.email,this.state.about).then((res) => {
+          service.profile_update(this.state.userResponse.api_token,this.state.name, " ",this.state.about).then((res) => {
             console.log(res)
             if(res)
             {
               if(res.status == "success")
               {
                 this.refs.defaultToastBottom.ShowToastFunction('Profile Updated Successfully');
-                this.goToHome();
+                // this.goToHome(res);
               }
              
             }
@@ -72,11 +78,23 @@ export default class UpdateProfile extends Component {
           }, 3000)
  }
 
- goToHome = () => {
+ goToHome = (user) => {
+   console.log(user);
   setTimeout(() => {
-    this.props.navigation.navigate('HomePage')
+    if(user.user.usertype == 1 )
+    {
+    this.props.navigation.navigate('Jobs')
+    }
+    else
+    {
+      this.props.navigation.navigate('Home') 
+    }
     }, 1000)
  }
+
+ openCategory = () => {
+  this.props.navigation.navigate("Cat",  { page: 'settings' });
+}
 
  goBack = () =>{
   this.props.navigation.navigate('Profile')
@@ -86,7 +104,7 @@ export default class UpdateProfile extends Component {
     const  NewImage =   <Image source={constants.defaultImage} style={styles.profilePic}/>
     // const fbImage = <Image source={{uri: this.state.userFbData.picture_large.data.url}} style={styles.profilePic} />;
     return (
-  <SafeAreaView style={styles.MainContainer}>
+  <SafeAreaView style={styles.MainContainerProfile}>
 	    <View style={styles.toolbar}>
 			<Text style={styles.backButton} onPress={() => this.goBack()}>
 			<Image source={constants.backicon} style={styles.icon}/>
@@ -98,47 +116,79 @@ export default class UpdateProfile extends Component {
       </View>
       <View style={styles.profileContainer}>
       {NewImage}
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>UserName</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Name" onChangeText={(text)=>this.setState({ name:text})} value={this.state.userResponse.username}></TextInput>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>Email</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <TextInput  placeholder = "Email" onChangeText={(text)=>this.setState({ email:text})} value={this.state.userResponse.email}></TextInput>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>About Me</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <TextInput  placeholder = "About me" onChangeText={(text)=>this.setState({ about:text})}  value={this.state.userResponse.short_bio}></TextInput>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>User Type</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <TextInput  placeholder = " User Type" value={this.state.userType} editable={false}></TextInput>
-            </View>
-         </View>
-         </View>
       </View>
+      <View style={{padding:10}}>
+      <Text >
+           Name
+      </Text>
+      <TextInput
+            style={styles.postprojectinputprofile}
+            underlineColorAndroid="transparent"
+            placeholder="Name"
+            onChangeText={(text)=>this.setState({ name:text})}
+            placeholderTextColor="#AEA9A8"
+            autoCapitalize="none"
+            returnKeyType='done'
+            value={this.state.userResponse.username}
+          />
+          </View>
+          <View style={{padding:10}}>
+      <Text >
+           Email
+      </Text>
+      <TextInput
+            style={styles.postprojectinputprofile}
+            underlineColorAndroid="transparent"
+            placeholder="Email"
+            onChangeText={(text)=>this.setState({ title:text})}
+            placeholderTextColor="#AEA9A8"
+            autoCapitalize="none"
+            returnKeyType='done'
+            editable={false}
+            value={this.state.userResponse.email}
+          />
+          </View>
+          <View style={{padding:10}}>
+      <Text >
+          About Me
+      </Text>
+      <TextInput
+            style={styles.postprojectinputprofile}
+            underlineColorAndroid="transparent"
+            placeholder="About Me"
+            onChangeText={(text)=>this.setState({ about:text})}
+            placeholderTextColor="#AEA9A8"
+            autoCapitalize="none"
+            returnKeyType='done'
+            value={this.state.userResponse.short_bio}
+          />
+          </View>
+          <View style={{padding:10}}>
+      <Text >
+           User Type
+      </Text>
+      <TextInput
+            style={styles.postprojectinputprofile}
+            underlineColorAndroid="transparent"
+            placeholder="User Type"
+            onChangeText={(text)=>this.setState({ title:text})}
+            placeholderTextColor="#AEA9A8"
+            autoCapitalize="none"
+            returnKeyType='done'
+            value={this.state.userType} editable={false}
+          />
+          </View>
+          <View style={{padding:10}}>
+      <Text >
+           Category
+      </Text>
+      <View  style={styles.categoryTextProfile}>
+           <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+           {this.state.category}
+          </Text>
+      </View>
+          </View>
+
 	    <CustomToast ref = "defaultToastBottom"/> 
       <Loader
           loading={this.state.loading} />

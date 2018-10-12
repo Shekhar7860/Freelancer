@@ -205,14 +205,19 @@ getFavJobList = (token) =>
 
 profile_update = (api_token,username,email,about_me) => 
 {
+
 var data = {
 api_token: api_token,
 user_name: username,
 email:email,
 about_me:about_me,
+CV_file : "",
+identity_Id : "",
+categoryId : "",
+image_file : ""
 
 }
-console.log(username)
+console.log(data)
 return fetch(constants.apiUrl + '/user/update/profile',
 {
 method: "POST",
@@ -252,18 +257,18 @@ console.error(error);
 });
 }
 
-post_project = (api_token,title,description,country,category,job_type,budget,start_date,end_date) => 
+post_project = (api_token,title,description,country,category,job_type,budget,start_date,end_date, skills) => 
 {
 var data = {
 "api_token":api_token ,
 "title": title,
 "description": description,
-"country":"",
-"category":"",
-"job_type":"",
-"budget":"",
-"start_date":"2018-10-04",
-"end_date":"2018-10-11",
+"country": country,
+"category": category,
+"job_type": job_type,
+"budget": budget,
+"start_date": start_date,
+"end_date":end_date,
 "skills_name": {
 "lastname": "",
 "email": "",
@@ -281,6 +286,44 @@ headers: {
 "Content-Type": "application/json"
 },
 body: JSON.stringify(data)
+}).then((response) => 
+response.json())
+.catch((error) => {
+console.error(error);
+});
+}
+
+requestResponse = (api_token, requestStatus, jobId) => 
+{
+var data = {
+"api_token":api_token ,
+"request_status" :requestStatus,
+"job_id" : jobId
+
+}
+console.log(data)
+console.log(constants.apiUrl + '/user/accept/jobs')
+return fetch(constants.apiUrl + '/user/accept/jobs',
+{
+method: "POST",
+headers: {
+"Accept": "application/json",
+"Content-Type": "application/json"
+},
+body: JSON.stringify(data)
+}).then((response) => 
+response.json())
+.catch((error) => {
+console.error(error);
+});
+}
+
+
+category = () => 
+{
+return fetch(constants.apiUrl + `/categories`,
+{
+method: "GET"
 }).then((response) => 
 response.json())
 .catch((error) => {

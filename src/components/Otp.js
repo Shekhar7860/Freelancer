@@ -91,14 +91,8 @@ import CustomToast from './CustomToast';
      }
 
    goToHome = (res) => {
-     if(res.user.usertype == 1 )
-     {
-     this.props.navigation.navigate('Jobs')
-     }
-     else
-     {
-      this.props.navigation.navigate('Home') 
-     }
+     
+    this.props.navigation.navigate('Profile')
    }
 
    resendOtp()

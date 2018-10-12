@@ -141,7 +141,6 @@ getActiveJobs = () => {
 }
 
 hideTab = () => {
-  
   if(this.state.isFeed)
   {
     this.setState({ isFeed: false});
@@ -213,11 +212,12 @@ hideTab = () => {
             <View style={styles.empty}>
             </View>
        </View>
-         <MyView style={styles.noTextContainer} hide={this.state.noText}>
-         <Text style = {styles.defaultTextSize}>{this.state.dummyText}</Text>
-          </MyView>
        <ScrollView>
-       <MyView hide={!this.state.isFeed}>
+        
+          <MyView hide={!this.state.isFeed}>
+          <MyView style={styles.noTextContainer} hide={this.state.noText}>
+          <Text style = {styles.defaultTextSize}>{this.state.dummyText}</Text>
+          </MyView>
             <FlatList
               data={this.state.feeds.request_list}
               keyExtractor={(item, index) => index}
@@ -280,7 +280,7 @@ hideTab = () => {
             </MyView>
             </ScrollView>
             <ScrollView>
-            <MyView hide={!this.state.isFav} style={{flex:1}}>
+            <MyView hide={!this.state.isFav}>
             <FlatList
               data={this.state.favourites.request_list}
               keyExtractor={(item, index) => index}

@@ -40,6 +40,8 @@ import Service from './services/Service';
 import Balance from './components/Balance';
 import PostProject from './components/PostProject';
 import JobDetails from './components/JobDetails';
+import CATEGORY from './components/Category';
+import SubCategory from './components/SubCategory';
 export const Menu = DrawerNavigator({
   Home: { screen: Home},
   Messages: { screen: Messages},
@@ -57,36 +59,8 @@ export const Menu = DrawerNavigator({
   Balance : {screen : Balance},
   PostProject :{screen :PostProject},
   JobDetails :{screen : JobDetails},
-  Login: { screen: MobileSignin },
-  Welcome: { screen: Welcome},
-  Details : {screen : Details},
-  Otp : { screen: Otp}
-}, {
-  contentComponent: SideMenu,
-  drawerWidth: 300
-});
-
-export const ClientNav = DrawerNavigator({
-  Jobs: { screen: Jobs},
-  Messages: { screen: Messages},
-  Payment: { screen: Payment},
-  Projects: { screen: Projects},
-  Account: { screen: Account},
-  Settings: { screen: Settings},
-  About: { screen: About},
-  Feedback: { screen: Feedback},
-  Notifications: { screen: Notifications},
-  FindFreelancer: { screen: FindFreelancer},
-  FreelancerDetails : {screen : FreelancerDetails},
-  UpdateProfile : {screen : UpdateProfile},
-  Home : {screen : Home},
-  Balance : {screen : Balance},
-  PostProject :{screen :PostProject},
-  JobDetails :{screen : JobDetails},
-  Login: { screen: MobileSignin },
-  Welcome: { screen: Welcome},
-  Details : {screen : Details},
-  Otp : { screen: Otp}
+  Sub: { screen: SubCategory},
+  Cat: { screen: CATEGORY}
 }, {
   contentComponent: SideMenu,
   drawerWidth: 300
@@ -101,7 +75,7 @@ const AppNavigator = createStackNavigator(
     Login2: { screen: MobileSignin2 },
     SignUp: { screen: SignUp},
     Forgot: { screen: ForgotPassword },
-    Home: { screen: Menu },
+    Home2: { screen: Menu },
     Otp : { screen: Otp},
     Profile : { screen: Profile},
     Details : {screen : Details}
@@ -120,21 +94,10 @@ export default class App extends Component {
     };
     console.reportErrorsAsExceptions = false;
   }
-
   componentDidMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
     SplashScreen.hide()
-    service.getUserData('user').then((keyValue) => {
-      console.log("local", keyValue);
-      var parsedData = JSON.parse(keyValue);
-      console.log("sidemenujson", parsedData);
-     
-       this.setState({ userResponse: parsedData});
-     
-     
-   }, (error) => {
-      console.log(error) //Display error
-    });
+    
   }
 
   componentWillUnmount = () =>{
@@ -151,7 +114,7 @@ export default class App extends Component {
   
   handleBackButton = () => {
     
-     if(this.state.navState.routeName == "Home" || this.state.navState.routeName == "Jobs")
+     if(this.state.navState.routeName == "Home" || this.state.navState.routeName == "Jobs" || this.state.navState.routeName == "Profile")
     {
       Alert.alert(
         'Exit App',
@@ -170,38 +133,13 @@ export default class App extends Component {
     }
      
    } 
-
   render() {
-      if(this.state.userResponse.usertype != undefined)
-      {
-        if (this.state.userResponse.usertype == 1){
-          return (
-              <ClientNav/>
-          ) 
-        } 
-        else if (this.state.userResponse.usertype == 2)
-        {
-          return(
-              <Menu/>
-          ) 
-        }
-        else 
-        {
-          return(
-            null
-          ) 
-        }
-    }
-      else
-      {
-        return(
-          <AppNavigator  onNavigationStateChange={this.onNavigationChange}/>
-      ) 
-       }
-       
-      }
-
-
+    return (
+      <AppNavigator
+      onNavigationStateChange={this.onNavigationChange}
+    />
+    );
+  }
 }
 
 

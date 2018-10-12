@@ -69,47 +69,57 @@ export default class Profile extends Component {
       </View>
       <View style={styles.profileContainer}>
       {NewImage}
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>UserName</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <Text>{this.state.userResponse.username}</Text>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>Email</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <Text>{this.state.userResponse.email}</Text>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>About Me</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <Text>{this.state.userResponse.short_bio}</Text>
-            </View>
-         </View>
-         </View>
-         <View style={styles.containerBorder}>
-          <View style={styles.textItemsContainer}>
-            <View style={styles.nameContainer}>
-            <Text>User Type</Text>
-            </View>
-            <View style={styles.boxContainer}>
-            <Text>{this.state.userType}</Text>
-            </View>
-         </View>
-         </View>
       </View>
+      <View style={{padding:10}}>
+      <Text >
+           Name
+      </Text>
+      <View  style={styles.categoryTextProfile}>
+          <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+         {this.state.userResponse.username}
+          </Text>
+       </View>
+          </View>
+          <View style={{padding:10}}>
+          <Text >
+              Email
+          </Text>
+          <View style={styles.categoryTextProfile}>
+                  <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+                  {this.state.userResponse.email}
+                  </Text>
+              </View>
+            </View>
+          <View style={{padding:10}}>
+            <Text >
+                About Me
+            </Text>
+            <View  style={styles.categoryTextProfile}>
+                  <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+                  {this.state.userResponse.short_bio}
+                  </Text>
+              </View>
+          </View>
+          <View style={{padding:10}}>
+            <Text >
+             User Type
+            </Text>
+             <View  style={styles.categoryTextProfile}>
+                  <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+                  Client
+                  </Text>
+              </View>
+          </View>
+          <View style={{padding:10}}>
+              <Text >
+                  Category
+              </Text>
+              <View  style={styles.categoryTextProfile}>
+                  <Text style={styles.dateTextColorProfile} onPress={() => this.openCategory()}>
+                  Developer
+                  </Text>
+              </View>
+          </View>
       
 	    
        </SafeAreaView>

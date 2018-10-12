@@ -130,7 +130,7 @@ export default class Jobs extends Component {
         <TouchableOpacity onPress={() => this.openDrawer()}>
         <Image source={constants.menuicon} style={styles.hamburgerIcon} />
         </TouchableOpacity>
-         <Text style={styles.toolbarTitle}>Projects</Text>
+         <Text style={styles.toolbarTitle}>My Projects</Text>
          <TouchableOpacity onPress={() => this.goToNotification()}>
         </TouchableOpacity>
          <TouchableOpacity onPress={() => this.searchPage()}>
@@ -194,7 +194,7 @@ export default class Jobs extends Component {
               )}
             />
        </View>
-        <View style={styles.MainContainer}>
+     
           <TouchableOpacity
             activeOpacity={0.5}
             onPress={() => this.goToPostproject()}
@@ -208,7 +208,7 @@ export default class Jobs extends Component {
               style={styles.FloatingButtonStyle}
             />
           </TouchableOpacity>
-        </View>
+        
         <Loader
               loading={this.state.loading} />
                     <Modal

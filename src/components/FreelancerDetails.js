@@ -5,10 +5,12 @@ import Constants from '../constants/Constants';
 import Loader from './Loader';
 import HTMLView from 'react-native-htmlview';
 import CustomToast from './CustomToast';
+import Service from '../services/Service';
 export default class FreelancerDetails extends Component {
   constructor(props){
     super(props);
     constants = new Constants();
+    service = new Service();
     this.state = { 
         freelancerDetails : "",
         loading:false,
@@ -37,6 +39,7 @@ export default class FreelancerDetails extends Component {
       if(res.status == "success")
       {
         this.refs.defaultToastBottom.ShowToastFunction("Request Send Successfully");
+        this.goToHome();
       }
       else 
       {
@@ -46,6 +49,13 @@ export default class FreelancerDetails extends Component {
     this.setState ({ loading: false});
     }, 2000)
   }
+
+  goToHome()
+{
+setTimeout(() => {
+this.props.navigation.navigate('Jobs')
+}, 1000)
+}
 
   
   goBack = () =>{

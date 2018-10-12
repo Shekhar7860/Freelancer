@@ -999,7 +999,7 @@ cardContainerSignUp:{
       FloatingButtonStyle: {
       resizeMode: 'contain',
       width: 70,
-      height: 70,
+      height: 70
       },
       TouchableOpacityStyle:{
       position: 'absolute',
@@ -1094,7 +1094,46 @@ cardContainerSignUp:{
   footer:{
     position:'absolute',
     bottom:10
-  }
+  },
+  dateTextColor :{
+    color : '#AEA9A8',
+    padding :8
+  },
+  categoryText:{
+    color : '#AEA9A8',
+    textAlign: 'left',
+    borderColor: '#AEA9A8',
+    borderWidth: 1,
+    width:'95%',
+    height:40
+  },
+  MainContainerProfile:
+  {
+   flex: 1,
+   paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
+  },
+  postprojectinputprofile: {
+    height: 40,
+    borderColor: '#AEA9A8',
+    borderWidth: 1,
+    padding:5,
+    width:'95%',
+    marginTop :5 
+    },
+    categoryTextProfile:{
+      color : '#AEA9A8',
+      textAlign: 'left',
+      borderColor: '#AEA9A8',
+      borderWidth: 1,
+      width:'95%',
+      height:40,
+      marginTop :8
+    },
+    dateTextColorProfile :{
+      color : '#AEA9A8',
+      padding :8
+    }
+  
   
   
 

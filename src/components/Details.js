@@ -5,13 +5,18 @@ import Constants from '../constants/Constants';
 import Loader from './Loader';
 import HTMLView from 'react-native-htmlview';
 import CustomToast from './CustomToast';
+import Service from '../services/Service';
+import MyView from './MyView';
 export default class Details extends Component {
   constructor(props){
     super(props);
     constants = new Constants();
+    service = new Service();
     this.state = { 
+      userResponse: {},
         details : {},
-        loading:false
+        loading:false,
+        accepted : false
       }
   }
 
@@ -19,9 +24,21 @@ export default class Details extends Component {
     this.setState ({ loading: true});
     setTimeout(() => {
       this.setState ({ loading: false});
+      service.getUserData('user').then((keyValue) => {
+        console.log("local", keyValue);
+        var parsedData = JSON.parse(keyValue);
+        console.log("json", parsedData);
+        this.setState({ userResponse: parsedData});
+     }, (error) => {
+        console.log(error) //Display error
+      });
       if(this.props.navigation.state.params)
     {
     this.setState({ details: this.props.navigation.state.params.details})
+      if(this.props.navigation.state.params.details.request_status != "Pending")
+      {
+        this.setState({ accepted : true})
+      }
      }    
       }, 1000)
     
@@ -34,17 +51,48 @@ export default class Details extends Component {
     this.setState ({ loading: false});
     if(val == "a")
     {
-      this.refs.defaultToastBottom.ShowToastFunction('Request Accepted Successfully');
+      service.requestResponse(this.state.userResponse.api_token, "Accepted", this.state.details.jobid).then(res => {
+        console.log("reslocal", res);
+        if(res)
+        {
+          this.refs.defaultToastBottom.ShowToastFunction('Request Accepted Successfully');
+          this.goToHome();
+        }
+        else
+        {
+          this.refs.defaultToastBottom.ShowToastFunction('An Error Occured');
+        }
+      });
+     
     }
     else
     {
-      this.refs.defaultToastBottom.ShowToastFunction('Request Rejected');
+      service.requestResponse(this.state.userResponse.api_token, "Decline", this.state.details.jobid).then(res => {
+        console.log("reslocal", res);
+        if(res)
+        {
+          this.refs.defaultToastBottom.ShowToastFunction('Request Rejected');
+          this.goToHome();
+        }
+        else
+        {
+          this.refs.defaultToastBottom.ShowToastFunction('An Error Occured');
+        }
+      });
     }
     }, 2000)
   }
+
   goBack = () =>{
-    this.props.navigation.pop()
+    this.props.navigation.navigate('Home')
    }
+
+goToHome()
+{
+setTimeout(() => {
+this.props.navigation.navigate('Home')
+}, 1000)
+}
   
   render() {
       console.log(this.state.details)
@@ -107,7 +155,7 @@ export default class Details extends Component {
      </ScrollView> 
      <Loader
               loading={this.state.loading} />
-    <View style={styles.footer}>
+    <MyView style={styles.footer} hide={this.state.accepted}>
               <View  style={styles.rowAlignSideMenu}>
               <View style={styles.emptySpaceRequest}>
               </View>
@@ -124,7 +172,7 @@ export default class Details extends Component {
               </View> 
               <View style={styles.emptySpaceRequest}>
               </View> 
-      </View> 
+      </MyView> 
       <CustomToast ref = "defaultToastBottom"/>  
    </SafeAreaView>
 	   
